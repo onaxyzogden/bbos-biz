@@ -65,7 +65,7 @@ function RCInteractiveCard({ rows, attrName, attrAr, attrTitle, attrFrame, selec
               <button
                 type="button"
                 className={`rc-i-cell rc-i-cell--yes${val === true ? ' chosen' : ''}${val === false ? ' dimmed' : ''}`}
-                onClick={() => onSelect(row.id, true)}
+                onClick={() => onSelect(row.id, val === true ? null : true)}
                 aria-pressed={val === true}
               >
                 {row.governing}
@@ -73,7 +73,7 @@ function RCInteractiveCard({ rows, attrName, attrAr, attrTitle, attrFrame, selec
               <button
                 type="button"
                 className={`rc-i-cell rc-i-cell--nyt${val === false ? ' chosen' : ''}${val === true ? ' dimmed' : ''}`}
-                onClick={() => onSelect(row.id, false)}
+                onClick={() => onSelect(row.id, val === false ? null : false)}
                 aria-pressed={val === false}
               >
                 {row.notYet}

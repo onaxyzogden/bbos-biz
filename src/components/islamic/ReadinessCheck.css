@@ -195,11 +195,12 @@
 }
 
 .rc-i-cell.dimmed {
-  opacity: 0.4;
-  color: var(--text2);
+  opacity: 0.35;
 }
 .rc-i-cell.dimmed:hover {
   opacity: 1;
+  background: none;
+  color: var(--text2);
 }
 
 @media (max-width: 400px) {
