@@ -116,7 +116,10 @@ export default function AppShell() {
   const panelCol = islamicPanelOpen && !mobile ? ' var(--islamic-panel-w)' : '';
   const gridCols = mobile ? '1fr' : `${sidebarCol} 1fr${panelCol}`;
 
-  // Minutes until the lock screen activates (for warning display)
+  // Minutes until prayer itself, and minutes until the lock screen activates
+  const minutesUntilPrayer = nextPrayer?.remainingMs != null
+    ? Math.ceil(nextPrayer.remainingMs / 60000)
+    : 0;
   const minutesUntilLock = nextPrayer?.remainingMs != null
     ? Math.ceil((nextPrayer.remainingMs - PRESENCE_CONFIG.PRAYER_LEAD_MS) / 60000)
     : 0;
@@ -148,6 +151,7 @@ export default function AppShell() {
       {prayerWarningName && !prayerWarningDismissed && !isPrayerLocked && (
         <PrayerWarning
           prayerName={prayerWarningName}
+          minutesUntilPrayer={minutesUntilPrayer}
           minutesUntilLock={minutesUntilLock}
           onDismiss={dismissPrayerWarning}
         />

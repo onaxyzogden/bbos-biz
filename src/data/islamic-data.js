@@ -27,15 +27,57 @@ export const MODULE_ATTRS = {
     },
     readiness: {
       frame: 'Al-Muhsin asks: are you bringing ihsan to this work, or just getting it done?',
+      // Structured rows for interactive readiness check (6-bit binary key: M1 M2 M3 W1 W2 W3)
+      rows: [
+        {
+          id: 'M1', attr: 'Al-Muhsin', attr_ar: 'الْمُحْسِن', attrTitle: 'The Excellence-Giver',
+          attrFrame: 'Are you bringing ihsan to this work, or just getting it done?',
+          governing: 'You approach the next task with the intention of excellence, not just completion.',
+          notYet: 'You are rushing through tasks to clear the board rather than doing each one well.',
+        },
+        {
+          id: 'M2', attr: 'Al-Muhsin',
+          governing: 'The quality of your work holds your focus — not just whether the task gets done.',
+          notYet: 'The work feels like an obligation to discharge rather than an act to offer.',
+        },
+        {
+          id: 'M3', attr: 'Al-Muhsin',
+          governing: 'You would redo this if it fell short — from genuine care, not perfectionism.',
+          notYet: 'You are doing the minimum that will pass, not the most genuinely possible right now.',
+        },
+        {
+          id: 'W1', attr: 'Al-Wakil', attr_ar: 'الْوَكِيل', attrTitle: 'The Trustee',
+          attrFrame: 'Are you at peace with the fact that the outcomes belong to Allah?',
+          governing: 'You have made your plan and are ready to trust Al-Wakil with the outcome.',
+          notYet: 'Anxiety about results is driving your work more than devotion to the craft.',
+        },
+        {
+          id: 'W2', attr: 'Al-Wakil',
+          governing: 'The work is being offered as worship — the result is not the measure of the act.',
+          notYet: 'You are distracted and have not yet settled into focused presence.',
+        },
+        {
+          id: 'W3', attr: 'Al-Wakil',
+          governing: 'You are present in this task, not braced against the outcome of the next.',
+          notYet: 'The outcome carries so much weight you cannot yet be fully present to the work.',
+        },
+      ],
+      // Flat arrays for backward compatibility with display-only ReadinessCheck
       governing: [
         'You approach the next task with the intention of excellence, not just completion.',
+        'The quality of your work holds your focus — not just whether the task gets done.',
+        'You would redo this if it fell short — from genuine care, not perfectionism.',
         'You have made your plan and are ready to trust Al-Wakil with the outcome.',
-        'Your workspace and mind are ordered — you are present, not scattered.',
+        'The work is being offered as worship — the result is not the measure of the act.',
+        'You are present in this task, not braced against the outcome of the next.',
       ],
       notYet: [
         'You are rushing through tasks to clear the board rather than doing each one well.',
+        'The work feels like an obligation to discharge rather than an act to offer.',
+        'You are doing the minimum that will pass, not the most genuinely possible right now.',
         'Anxiety about results is driving your work more than devotion to the craft.',
         'You are distracted and have not yet settled into focused presence.',
+        'The outcome carries so much weight you cannot yet be fully present to the work.',
       ],
     },
     reflection: {
@@ -315,15 +357,55 @@ export const UNIVERSAL_EQUIV = {
     resumeMindfulness: 'Welcome back. Take a breath and reconnect with your intention before continuing.',
     readiness: {
       frame: 'Are you bringing your best to this work, or just getting through it?',
+      rows: [
+        {
+          id: 'M1', attr: 'Excellence', attrTitle: 'Craft & Intention',
+          attrFrame: 'Are you bringing your best to this work, or just getting through it?',
+          governing: 'You approach the next task with the intention of excellence, not just completion.',
+          notYet: 'You are rushing through tasks to clear the board rather than doing each one well.',
+        },
+        {
+          id: 'M2', attr: 'Excellence',
+          governing: 'The quality of your work holds your focus — not just whether the task gets done.',
+          notYet: 'The work feels like an obligation to discharge rather than something to take pride in.',
+        },
+        {
+          id: 'M3', attr: 'Excellence',
+          governing: 'You would redo this if it fell short — from genuine care, not compulsion.',
+          notYet: 'You are doing the minimum that will pass, not the most genuinely possible right now.',
+        },
+        {
+          id: 'W1', attr: 'Trust', attrTitle: 'Presence & Release',
+          attrFrame: 'Are you at peace with releasing what you cannot control?',
+          governing: 'You have a clear plan and are ready to focus without distraction.',
+          notYet: 'Anxiety about results is driving your work more than care for the craft.',
+        },
+        {
+          id: 'W2', attr: 'Trust',
+          governing: 'The work itself is the goal — not what it might produce.',
+          notYet: 'You are distracted and have not yet settled into focused presence.',
+        },
+        {
+          id: 'W3', attr: 'Trust',
+          governing: 'You are present in this task, not bracing against the outcome of the next.',
+          notYet: 'The outcome carries so much weight you cannot yet be fully present to the work.',
+        },
+      ],
       governing: [
         'You approach the next task with the intention of excellence, not just completion.',
+        'The quality of your work holds your focus — not just whether the task gets done.',
+        'You would redo this if it fell short — from genuine care, not compulsion.',
         'You have a clear plan and are ready to focus without distraction.',
-        'Your workspace and mind are ordered — you are present.',
+        'The work itself is the goal — not what it might produce.',
+        'You are present in this task, not bracing against the outcome of the next.',
       ],
       notYet: [
         'You are rushing through tasks to clear the board rather than doing each one well.',
+        'The work feels like an obligation to discharge rather than something to take pride in.',
+        'You are doing the minimum that will pass, not the most genuinely possible right now.',
         'Anxiety about results is driving your work more than care for the craft.',
         'You are distracted and have not yet settled into focused presence.',
+        'The outcome carries so much weight you cannot yet be fully present to the work.',
       ],
     },
     reflection: {

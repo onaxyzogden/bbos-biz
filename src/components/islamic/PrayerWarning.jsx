@@ -2,18 +2,19 @@ import { X } from 'lucide-react';
 import { useSettingsStore } from '../../store/settings-store';
 import './PrayerWarning.css';
 
-export default function PrayerWarning({ prayerName, minutesUntilLock, onDismiss }) {
+export default function PrayerWarning({ prayerName, minutesUntilPrayer, minutesUntilLock, onDismiss }) {
   const valuesLayer = useSettingsStore((s) => s.valuesLayer);
   const isIslamic = valuesLayer === 'islamic';
-  const mins = Math.max(1, minutesUntilLock || 0);
+  const prayerMins = Math.max(1, minutesUntilPrayer || 0);
+  const lockMins = Math.max(1, minutesUntilLock || 0);
 
   return (
     <div className="prayer-warning">
       <div className="prayer-warning-content">
         <span className="prayer-warning-text">
           {isIslamic
-            ? `${prayerName} in ${mins}m \u2014 screen will pause for prayer`
-            : `Break in ${mins}m`
+            ? `${prayerName} in ${prayerMins}m \u2014 screen will pause in ${lockMins} minute${lockMins !== 1 ? 's' : ''}`
+            : `Break in ${lockMins}m`
           }
         </span>
         <button className="prayer-warning-dismiss" onClick={onDismiss} title="Dismiss">

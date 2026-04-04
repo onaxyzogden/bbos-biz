@@ -6,11 +6,35 @@ import {
   getModuleData, ONGOING_DUA, ISTIRJA, PAUSE_ACKNOWLEDGMENT,
   PAUSE_QUESTIONS, PAUSE_UNIVERSAL, DEFER_CONTENT, DEFER_UNIVERSAL,
 } from '../../data/islamic-data';
+import { lookupReadinessAyah } from '../../data/work-readiness-ayat';
 import { useSettingsStore } from '../../store/settings-store';
 import AttributeCard from './AttributeCard';
 import DuaSection from './DuaSection';
 import ReadinessCheck from './ReadinessCheck';
 import './ThresholdModal.css';
+
+// Initial selections — null means not yet answered
+const INITIAL_SELECTIONS = { M1: null, M2: null, M3: null, W1: null, W2: null, W3: null };
+
+function buildReadinessKey(selections) {
+  return ['M1', 'M2', 'M3', 'W1', 'W2', 'W3']
+    .map((k) => (selections[k] === true ? '1' : '0'))
+    .join('');
+}
+
+function allFilled(selections) {
+  return Object.values(selections).every((v) => v !== null);
+}
+
+function allYes(selections) {
+  return Object.values(selections).every((v) => v === true);
+}
+
+function countNotYet(selections, prefix) {
+  return Object.entries(selections)
+    .filter(([k, v]) => k.startsWith(prefix) && v === false)
+    .length;
+}
 
 export default function ThresholdModal({ type }) {
   const openingModuleId = useThresholdStore((s) => s.openingModuleId);
@@ -26,6 +50,7 @@ export default function ThresholdModal({ type }) {
   const [confirmed, setConfirmed] = useState(false);
   const [paused, setPaused] = useState(false);
   const [showingDeferScreen, setShowingDeferScreen] = useState(false);
+  const [readinessSelections, setReadinessSelections] = useState({ ...INITIAL_SELECTIONS });
 
   const isOpening = type === 'opening';
   const moduleId = isOpening ? openingModuleId : closingModuleId;
@@ -36,6 +61,9 @@ export default function ThresholdModal({ type }) {
   const data = getModuleData(moduleId, valuesLayer);
   const isIslamic = valuesLayer === 'islamic';
   const accentColor = 'var(--accent)';
+
+  // Is this module using interactive readiness? (work module with rows)
+  const hasInteractiveReadiness = isOpening && data?.readiness?.rows;
 
   // Dynamic steps — Pause inserts between Readiness and Confirm when triggered
   const baseSteps = isOpening
@@ -48,11 +76,27 @@ export default function ThresholdModal({ type }) {
 
   const currentStepName = steps[step];
 
+  // Readiness state derived values
+  const readinessFilled = allFilled(readinessSelections);
+  const readinessAllYes = allYes(readinessSelections);
+  const readinessKey = buildReadinessKey(readinessSelections);
+  const muhsinNotYet = countNotYet(readinessSelections, 'M');
+  const wakilNotYet = countNotYet(readinessSelections, 'W');
+
+  // Pause button label — matches mockup
+  const getPauseLabel = () => {
+    if (muhsinNotYet > 0 && wakilNotYet > 0) return 'Not yet aligned with the truth';
+    if (muhsinNotYet > 0) return 'Not yet rested in Al-Muhsin';
+    if (wakilNotYet > 0) return 'Not yet rested in Al-Wakil';
+    return 'Not yet ready';
+  };
+
   const resetState = () => {
     setStep(0);
     setConfirmed(false);
     setPaused(false);
     setShowingDeferScreen(false);
+    setReadinessSelections({ ...INITIAL_SELECTIONS });
   };
 
   const close = () => {
@@ -90,6 +134,25 @@ export default function ThresholdModal({ type }) {
 
   const returnToReadiness = () => { setStep(2); };
 
+  // Handle Next on the Readiness step — auto-trigger pause if any NOT YET
+  const handleNext = () => {
+    if (currentStepName === 'Readiness' && hasInteractiveReadiness && readinessFilled && !readinessAllYes && !paused) {
+      triggerPause();
+      return;
+    }
+    next();
+  };
+
+  // Handle readiness row selection
+  const handleReadinessSelect = (id, value) => {
+    setReadinessSelections((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // Can proceed from Readiness step?
+  const canAdvanceFromReadiness = hasInteractiveReadiness
+    ? readinessFilled && readinessAllYes
+    : true;
+
   const pauseQuestion = isIslamic
     ? (PAUSE_QUESTIONS[moduleId] || PAUSE_QUESTIONS.work)
     : (PAUSE_UNIVERSAL.questions[moduleId] || PAUSE_UNIVERSAL.questions.work);
@@ -101,6 +164,11 @@ export default function ThresholdModal({ type }) {
 
   const deferAck = isIslamic ? DEFER_CONTENT.acknowledgment : DEFER_UNIVERSAL.acknowledgment;
   const deferHolding = isIslamic ? DEFER_CONTENT.holdingMessage : DEFER_UNIVERSAL.holdingMessage;
+
+  // Look up condition-specific ayah from the matrix
+  const pauseAyah = (hasInteractiveReadiness && isIslamic && readinessKey !== '111111')
+    ? lookupReadinessAyah(readinessKey)
+    : null;
 
   return (
     <div className="thr-overlay">
@@ -211,10 +279,19 @@ export default function ThresholdModal({ type }) {
 
               {(currentStepName === 'Readiness' || currentStepName === 'Reflection') && data && (
                 <div className="thr-step-content fade-in">
-                  {isOpening
-                    ? <ReadinessCheck readiness={data.readiness} color={accentColor} />
-                    : <ReadinessCheck reflection={data.reflection} color={accentColor} />
-                  }
+                  {isOpening && hasInteractiveReadiness ? (
+                    <ReadinessCheck
+                      readiness={data.readiness}
+                      color={accentColor}
+                      interactive={true}
+                      selections={readinessSelections}
+                      onSelect={handleReadinessSelect}
+                    />
+                  ) : isOpening ? (
+                    <ReadinessCheck readiness={data.readiness} color={accentColor} />
+                  ) : (
+                    <ReadinessCheck reflection={data.reflection} color={accentColor} />
+                  )}
                 </div>
               )}
 
@@ -223,6 +300,22 @@ export default function ThresholdModal({ type }) {
                   <p className="thr-pause-ack">
                     {isIslamic ? PAUSE_ACKNOWLEDGMENT : PAUSE_UNIVERSAL.acknowledgment}
                   </p>
+
+                  {/* Condition-specific ayah from readiness matrix */}
+                  {pauseAyah && (
+                    <div className="thr-pause-ayah">
+                      <p className="thr-pause-ayah-framing">{pauseAyah.framing}</p>
+                      <div className="dua" style={{ borderColor: 'var(--border2)', background: 'var(--bg)' }}>
+                        <p className="dua-arabic arabic">{pauseAyah.arabic}</p>
+                        <p className="dua-trans">{pauseAyah.transliteration}</p>
+                        <p className="dua-meaning" style={{ borderLeftColor: 'var(--border2)' }}>
+                          {pauseAyah.translation}
+                        </p>
+                        <p className="dua-source">{pauseAyah.source}</p>
+                      </div>
+                    </div>
+                  )}
+
                   {isIslamic ? (
                     <div className="thr-pause-istirja">
                       <div className="dua" style={{ borderColor: 'var(--border2)', background: 'var(--bg)' }}>
@@ -270,16 +363,48 @@ export default function ThresholdModal({ type }) {
                   {step > 0 && (
                     <button className="thr-btn thr-btn-ghost" onClick={prev}>Previous</button>
                   )}
-                  {(currentStepName === 'Readiness' || currentStepName === 'Reflection') && isOpening && !paused && (
+
+                  {/* Interactive readiness: show contextual pause button when any NOT YET */}
+                  {currentStepName === 'Readiness' && hasInteractiveReadiness && readinessFilled && !readinessAllYes && !paused && (
+                    <button className="thr-btn thr-btn-pause" onClick={triggerPause}>
+                      {getPauseLabel()}
+                    </button>
+                  )}
+
+                  {/* Non-interactive readiness: original "I'm not yet ready" button */}
+                  {currentStepName === 'Readiness' && !hasInteractiveReadiness && isOpening && !paused && (
                     <button className="thr-btn thr-btn-pause" onClick={triggerPause}>I'm not yet ready</button>
                   )}
+
+                  {/* Interactive readiness hint text */}
+                  {currentStepName === 'Readiness' && hasInteractiveReadiness && (
+                    <span className={`thr-readiness-hint ${readinessFilled ? (readinessAllYes ? 'thr-readiness-hint--yes' : 'thr-readiness-hint--nyt') : ''}`}>
+                      {!readinessFilled
+                        ? `${Object.values(readinessSelections).filter((v) => v === null).length} row${Object.values(readinessSelections).filter((v) => v === null).length !== 1 ? 's' : ''} still need a selection.`
+                        : readinessAllYes
+                          ? 'All conditions confirmed. You may proceed.'
+                          : ''
+                      }
+                    </span>
+                  )}
+
                   <div style={{ flex: 1 }} />
                   {currentStepName === 'Confirm' ? (
                     <button className="thr-btn thr-btn-primary thr-btn-confirm" onClick={complete} disabled={!confirmed} style={{ opacity: confirmed ? 1 : 0.4 }}>
                       <Check size={16} /> {isOpening ? 'Begin Module' : 'Complete Session'}
                     </button>
                   ) : currentStepName !== 'Pause' && (
-                    <button className="thr-btn thr-btn-primary" onClick={next}>Next</button>
+                    <button
+                      className="thr-btn thr-btn-primary"
+                      onClick={handleNext}
+                      disabled={currentStepName === 'Readiness' && hasInteractiveReadiness && (!readinessFilled || !readinessAllYes)}
+                      style={{
+                        opacity: (currentStepName === 'Readiness' && hasInteractiveReadiness && (!readinessFilled || !readinessAllYes)) ? 0.4 : 1,
+                        cursor: (currentStepName === 'Readiness' && hasInteractiveReadiness && (!readinessFilled || !readinessAllYes)) ? 'not-allowed' : 'pointer',
+                      }}
+                    >
+                      Next
+                    </button>
                   )}
                 </>
               )}
