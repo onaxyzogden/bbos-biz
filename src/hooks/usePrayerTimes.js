@@ -128,17 +128,40 @@ export function usePrayerTimes() {
     }
   }, []);
 
-  // Update countdown every 30 seconds
+  // Memoized update — recalculates activePrayer and nextPrayer from current timings
+  const update = useCallback(() => {
+    setNextPrayer(getNextPrayer(timings));
+    setActivePrayer(getActivePrayer(timings));
+  }, [timings]);
+
+  // Poll every 30 seconds as a safety net
   useEffect(() => {
     if (!timings) return;
-    const update = () => {
-      setNextPrayer(getNextPrayer(timings));
-      setActivePrayer(getActivePrayer(timings));
-    };
     update();
     const interval = setInterval(update, 30000);
     return () => clearInterval(interval);
-  }, [timings]);
+  }, [timings, update]);
+
+  // Immediately recheck when the tab becomes visible (screen wake / tab switch)
+  useEffect(() => {
+    if (!timings) return;
+    const handleVisibility = () => {
+      if (!document.hidden) update();
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, [timings, update]);
+
+  // Precision timer: fire exactly when the next prayer window opens
+  useEffect(() => {
+    if (!nextPrayer?.remainingMs) return;
+    const LEAD_MS = 5 * 60 * 1000;
+    const msUntilWindow = nextPrayer.remainingMs - LEAD_MS;
+    // Skip if already in the window, or prayer is more than 4 hours away
+    if (msUntilWindow <= 0 || msUntilWindow > 4 * 60 * 60 * 1000) return;
+    const t = setTimeout(() => update(), msUntilWindow + 500);
+    return () => clearTimeout(t);
+  }, [nextPrayer?.remainingMs, update]);
 
   return {
     timings,
