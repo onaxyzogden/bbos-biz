@@ -1,0 +1,74 @@
+.prayer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.prayer-content {
+  text-align: center;
+  max-width: 420px;
+  padding: var(--space-8);
+}
+
+.prayer-basmala {
+  font-size: 1.6rem;
+  color: rgba(201, 160, 90, 0.7);
+  margin-bottom: var(--space-8);
+  line-height: 2;
+}
+
+.prayer-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: var(--space-3);
+}
+
+.prayer-name-universal {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: var(--space-3);
+}
+
+.prayer-prompt {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: var(--space-8);
+  line-height: 1.6;
+}
+
+.prayer-countdown {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: var(--space-10);
+  letter-spacing: 0.1em;
+}
+
+.prayer-dismiss {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.25);
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: var(--space-2) var(--space-6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.prayer-dismiss:hover {
+  color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.25);
+}

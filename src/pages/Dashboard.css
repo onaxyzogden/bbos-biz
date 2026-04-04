@@ -1,0 +1,199 @@
+/* Dashboard Layout */
+.dashboard {
+  max-width: 960px;
+}
+
+/* Header row */
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.dash-welcome h1 {
+  font-size: 1.6rem;
+  margin-bottom: var(--space-1);
+}
+
+.dash-welcome p {
+  color: var(--text2);
+  font-size: 0.9rem;
+}
+
+/* Prayer card (compact inline) */
+.dash-prayer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.dash-prayer-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.dash-prayer-time {
+  font-size: 0.8rem;
+  color: var(--text2);
+}
+
+.dash-prayer-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--accent-border);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+}
+
+/* Stat cards */
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.dash-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.dash-stat-icon {
+  margin-bottom: var(--space-3);
+}
+
+.dash-stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.dash-stat-label {
+  font-size: 0.85rem;
+  color: var(--text2);
+  margin-top: var(--space-1);
+}
+
+/* Row 2: Chart + Pulse */
+.dash-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.dash-chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.dash-chart-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+/* Section headers */
+.dash-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.dash-section-header h3 {
+  font-size: 1.1rem;
+}
+
+.dash-section-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Module grid */
+.dash-module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+/* Project grid */
+.dash-project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.dash-project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  transition: all var(--duration) var(--ease);
+}
+
+.dash-project-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.dash-project-body {
+  padding: var(--space-5);
+}
+
+.dash-project-body h4 {
+  margin-bottom: var(--space-1);
+}
+
+.dash-project-body p {
+  font-size: 0.85rem;
+  color: var(--text2);
+}
+
+/* Empty states */
+.dash-empty {
+  background: var(--surface);
+  border: 1px dashed var(--border2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-10);
+  text-align: center;
+}
+
+.dash-empty h4 {
+  margin-bottom: var(--space-2);
+}
+
+.dash-empty p {
+  color: var(--text2);
+  margin-bottom: var(--space-4);
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .dash-header { flex-direction: column; }
+  .dash-row-2 { grid-template-columns: 1fr; }
+  .dash-module-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}

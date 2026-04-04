@@ -1,0 +1,50 @@
+.mod-health-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.mhc-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.mhc-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.mhc-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mhc-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.mhc-status-done { color: var(--success); }
+.mhc-status-deferred { color: var(--warning); }
+.mhc-status-pending { color: var(--text3); }
+
+.mhc-metric {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text2);
+}
+
+.mhc-coming-soon {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text3);
+}

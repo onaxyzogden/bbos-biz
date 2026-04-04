@@ -1,0 +1,165 @@
+import { Link, useNavigate } from 'react-router-dom';
+import { Plus, Folder, Archive, MoreHorizontal, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { useProjectStore } from '../store/project-store';
+import { useThresholdStore } from '../store/threshold-store';
+import CeremonyGate from '../components/islamic/CeremonyGate';
+
+export default function Work() {
+  const navigate = useNavigate();
+  const projects = useProjectStore((s) => s.projects);
+  const hasCompletedOpening = useThresholdStore((s) => !!s.completedOpening['work']);
+  const createProject = useProjectStore((s) => s.createProject);
+  const deleteProject = useProjectStore((s) => s.deleteProject);
+  const archiveProject = useProjectStore((s) => s.archiveProject);
+  const [showArchived, setShowArchived] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(null);
+
+  if (!hasCompletedOpening) {
+    return <CeremonyGate moduleId="work" />;
+  }
+
+  const active = projects.filter((p) => !p.archived);
+  const archived = projects.filter((p) => p.archived);
+  const displayed = showArchived ? archived : active;
+
+  const handleNew = () => {
+    const project = createProject({ name: 'New Project' });
+    navigate(`/app/work/${project.id}`);
+  };
+
+  return (
+    <div style={{ maxWidth: 900 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-6)' }}>
+        <div>
+          <h2 style={{ marginBottom: 'var(--space-1)' }}>Projects</h2>
+          <p style={{ color: 'var(--text2)', fontSize: '0.9rem' }}>
+            {active.length} active project{active.length !== 1 ? 's' : ''}
+            {archived.length > 0 && ` · ${archived.length} archived`}
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+          {archived.length > 0 && (
+            <button
+              className="btn btn-ghost"
+              onClick={() => setShowArchived(!showArchived)}
+              style={{ fontSize: '0.85rem' }}
+            >
+              <Archive size={16} /> {showArchived ? 'Active' : 'Archived'}
+            </button>
+          )}
+          <button className="btn btn-primary" onClick={handleNew}>
+            <Plus size={16} /> New Project
+          </button>
+        </div>
+      </div>
+
+      {displayed.length === 0 ? (
+        <div style={{
+          background: 'var(--surface)', border: '1px dashed var(--border2)',
+          borderRadius: 'var(--radius-lg)', padding: 'var(--space-12)',
+          textAlign: 'center',
+        }}>
+          <Folder size={48} style={{ color: 'var(--text3)', marginBottom: 'var(--space-4)' }} />
+          <h3 style={{ marginBottom: 'var(--space-2)' }}>
+            {showArchived ? 'No archived projects' : 'Create your first project'}
+          </h3>
+          <p style={{ color: 'var(--text2)', marginBottom: 'var(--space-5)' }}>
+            {showArchived ? 'Archived projects will appear here.' : 'Get started by creating a project with Kanban boards and task management.'}
+          </p>
+          {!showArchived && (
+            <button className="btn btn-primary btn-lg" onClick={handleNew}>
+              <Plus size={18} /> New Project
+            </button>
+          )}
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
+          {displayed.map((p) => (
+            <div
+              key={p.id}
+              style={{
+                background: 'var(--surface)', border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-lg)', overflow: 'hidden',
+                transition: 'all var(--duration) var(--ease)',
+                position: 'relative',
+              }}
+            >
+              <div style={{ height: 4, background: p.color }} />
+              <Link
+                to={`/app/work/${p.id}`}
+                style={{ display: 'block', padding: 'var(--space-5)', textDecoration: 'none', color: 'var(--text)' }}
+              >
+                <h4 style={{ marginBottom: 'var(--space-1)' }}>{p.name}</h4>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text2)', marginBottom: 'var(--space-3)' }}>
+                  {p.description || 'No description'}
+                </p>
+                <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+                  {p.columns.map((col) => (
+                    <span key={col.id} style={{
+                      fontSize: '0.75rem', padding: '2px 8px',
+                      background: 'var(--bg3)', borderRadius: 'var(--radius-full)',
+                      color: 'var(--text2)',
+                    }}>{col.name}</span>
+                  ))}
+                </div>
+              </Link>
+              {/* Menu */}
+              <div style={{ position: 'absolute', top: 12, right: 12 }}>
+                <button
+                  onClick={(e) => { e.stopPropagation(); setMenuOpen(menuOpen === p.id ? null : p.id); }}
+                  style={{
+                    width: 28, height: 28, borderRadius: 'var(--radius-xs)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: 'var(--text3)', background: 'var(--surface)',
+                    border: '1px solid transparent', cursor: 'pointer',
+                  }}
+                >
+                  <MoreHorizontal size={16} />
+                </button>
+                {menuOpen === p.id && (
+                  <div
+                    style={{
+                      position: 'absolute', right: 0, top: 32,
+                      background: 'var(--surface)', border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius)', boxShadow: 'var(--shadow-lg)',
+                      padding: 'var(--space-1)', minWidth: 150, zIndex: 10,
+                    }}
+                    onClick={() => setMenuOpen(null)}
+                  >
+                    <button
+                      onClick={() => archiveProject(p.id)}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 'var(--space-2)',
+                        width: '100%', padding: 'var(--space-2) var(--space-3)',
+                        fontSize: '0.85rem', borderRadius: 'var(--radius-xs)',
+                        color: 'var(--text2)', cursor: 'pointer', border: 'none', background: 'none',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg3)'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+                    >
+                      <Archive size={14} /> {p.archived ? 'Unarchive' : 'Archive'}
+                    </button>
+                    <button
+                      onClick={() => { if (confirm('Delete this project?')) deleteProject(p.id); }}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 'var(--space-2)',
+                        width: '100%', padding: 'var(--space-2) var(--space-3)',
+                        fontSize: '0.85rem', borderRadius: 'var(--radius-xs)',
+                        color: 'var(--danger)', cursor: 'pointer', border: 'none', background: 'none',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'var(--danger-bg)'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+                    >
+                      <Trash2 size={14} /> Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

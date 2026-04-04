@@ -1,0 +1,60 @@
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.budget-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.budget-over {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+}
+
+.budget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.budget-cat-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.budget-bar-track {
+  height: 8px;
+  background: var(--bg4);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.budget-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width var(--duration-lg) var(--ease);
+}
+
+.budget-amounts {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.budget-over-warning {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--danger);
+}

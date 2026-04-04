@@ -1,0 +1,59 @@
+.pnl-statement {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.pnl-title {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: var(--space-1);
+}
+
+.pnl-period {
+  font-size: 0.85rem;
+  color: var(--text2);
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.pnl-section {
+  margin-bottom: var(--space-5);
+}
+
+.pnl-section-header {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-2);
+}
+
+.pnl-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) 0 var(--space-2) var(--space-4);
+  font-size: 0.875rem;
+}
+
+.pnl-total {
+  font-weight: 600;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.pnl-net {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4);
+  border-top: 2px solid var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+}

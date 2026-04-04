@@ -1,0 +1,45 @@
+.dua {
+  border: 1px solid;
+  border-radius: var(--radius);
+  padding: var(--space-4);
+}
+
+.dua-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--space-3);
+}
+
+.dua-arabic {
+  font-size: 1.4rem;
+  line-height: 2;
+  margin-bottom: var(--space-3);
+  color: var(--text);
+}
+
+.dua-trans {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--text3);
+  margin-bottom: var(--space-3);
+  line-height: 1.6;
+}
+
+.dua-meaning {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--text2);
+  border-left: 2px solid;
+  padding-left: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.dua-source {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text3);
+  margin-top: var(--space-2);
+}

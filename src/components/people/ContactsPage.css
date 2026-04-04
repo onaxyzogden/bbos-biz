@@ -1,0 +1,41 @@
+.contacts-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: calc(100vh - var(--topbar-h) - var(--space-12));
+  overflow: hidden;
+}
+
+.contacts-page__content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  padding-bottom: 24px;
+}
+
+.contacts-page__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 80px 0;
+  color: var(--text3);
+  font-size: 14px;
+}
+
+.contacts-page__empty-cta {
+  padding: 9px 20px;
+  background: var(--mod-people);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}

@@ -1,0 +1,50 @@
+.doc-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.doc-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-4);
+  cursor: pointer; transition: all var(--duration) var(--ease);
+  position: relative;
+}
+.doc-card:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+
+.doc-card-icon { font-size: 1.5rem; margin-bottom: var(--space-2); }
+.doc-card-name { font-weight: 600; font-size: 0.9rem; margin-bottom: var(--space-1); }
+.doc-card-meta { font-size: 0.75rem; color: var(--text3); }
+
+.doc-card-delete {
+  position: absolute; top: var(--space-2); right: var(--space-2);
+  opacity: 0; transition: opacity var(--duration) var(--ease);
+}
+.doc-card:hover .doc-card-delete { opacity: 1; }
+
+/* Document viewer */
+.doc-viewer { display: flex; flex-direction: column; }
+
+.doc-viewer-header {
+  display: flex; align-items: center; gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.doc-meta {
+  font-size: 0.8rem; color: var(--text3);
+  margin-bottom: var(--space-4); padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-editor {
+  width: 100%; min-height: 400px; padding: var(--space-4);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  font-size: 0.9rem; line-height: 1.7; resize: vertical;
+  background: var(--surface); color: var(--text); font-family: 'DM Sans', sans-serif;
+}
+.doc-editor:focus { border-color: var(--mod-office); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+.doc-content {
+  padding: var(--space-4); min-height: 200px;
+  font-size: 0.9rem; line-height: 1.7; color: var(--text);
+  white-space: pre-wrap;
+}

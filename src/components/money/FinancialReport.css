@@ -1,0 +1,105 @@
+.report-month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.report-month-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  min-width: 180px;
+  text-align: center;
+}
+
+.report-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.report-section-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+.report-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.report-bar-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 100px;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.report-bar-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text2);
+}
+
+.report-bar-track {
+  height: 20px;
+  background: var(--bg3);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.report-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-xs);
+  transition: width var(--duration-lg) var(--ease);
+  min-width: 2px;
+}
+
+.report-bar-amount {
+  text-align: right;
+  font-size: 0.8rem;
+}
+
+.report-bar-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.report-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.report-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.report-card-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-2);
+}
+
+@media (max-width: 767px) {
+  .report-bar-row { grid-template-columns: 100px 1fr 80px; }
+}

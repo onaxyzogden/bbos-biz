@@ -1,0 +1,44 @@
+.prayer-warning {
+  position: fixed;
+  top: var(--space-3);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8000;
+  animation: fadeIn 0.3s ease;
+}
+
+.prayer-warning-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+}
+
+.prayer-warning-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.prayer-warning-dismiss {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  flex-shrink: 0;
+}
+
+.prayer-warning-dismiss:hover {
+  background: var(--bg3);
+  color: var(--text);
+}

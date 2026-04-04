@@ -1,0 +1,39 @@
+.attr-card {
+  border-left: 3px solid var(--accent);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--bg);
+  margin-bottom: var(--space-2);
+}
+
+.attr-card-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2);
+}
+
+.attr-card-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.attr-card-name-ar {
+  font-size: 1rem;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.attr-card-title {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text3);
+}
+
+.attr-card-body {
+  font-size: 0.825rem;
+  color: var(--text2);
+  line-height: 1.7;
+}

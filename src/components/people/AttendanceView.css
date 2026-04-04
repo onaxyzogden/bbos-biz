@@ -1,0 +1,9 @@
+.att-date-nav {
+  display: flex; align-items: center; justify-content: center;
+  gap: var(--space-3); margin-bottom: var(--space-4);
+}
+.att-date-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 1rem;
+  min-width: 280px; text-align: center;
+}

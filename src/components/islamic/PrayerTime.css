@@ -1,0 +1,118 @@
+.pt-container {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.pt-enable {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  justify-content: center;
+}
+.pt-enable:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.pt-loading, .pt-error {
+  font-size: 0.75rem;
+  color: var(--text3);
+  text-align: center;
+  padding: var(--space-2);
+}
+.pt-error { color: var(--danger); }
+
+/* Next prayer highlight */
+.pt-next {
+  text-align: center;
+  margin-bottom: var(--space-3);
+}
+
+.pt-next-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  margin-bottom: var(--space-1);
+}
+
+.pt-next-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.pt-next-time {
+  font-size: 0.8rem;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.pt-countdown {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-bg);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+}
+
+/* All prayers list */
+.pt-all {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.pt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-xs);
+  font-size: 0.75rem;
+}
+
+.pt-row-next {
+  background: var(--accent-bg);
+}
+
+.pt-prayer-name {
+  font-weight: 500;
+  color: var(--text2);
+}
+
+.pt-row-next .pt-prayer-name {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.pt-prayer-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text3);
+}
+
+.pt-row-next .pt-prayer-time {
+  color: var(--accent);
+}

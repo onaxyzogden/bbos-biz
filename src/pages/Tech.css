@@ -1,0 +1,36 @@
+.tech-mod { max-width: 960px; }
+.tech-header { margin-bottom: var(--space-4); }
+.tech-header h2 { font-size: 1.5rem; }
+
+.tech-tabs {
+  display: flex; gap: var(--space-1);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--space-2); margin-bottom: var(--space-5);
+  overflow-x: auto;
+}
+.tech-tabs::-webkit-scrollbar { display: none; }
+
+.tech-tab {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-full);
+  font-size: 0.85rem; font-weight: 500; color: var(--text2);
+  white-space: nowrap; cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  background: none; border: none;
+}
+.tech-tab:hover { color: var(--text); background: var(--bg3); }
+.tech-tab.active { color: var(--mod-tech); background: rgba(249, 115, 22, 0.08); font-weight: 600; }
+
+.tech-content { min-height: 300px; }
+
+/* Tech-specific status badges */
+.status-up { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+.status-down { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+.status-degraded { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.status-unknown { background: var(--bg4); color: var(--text3); }
+.status-acknowledged { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.status-resolved { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+
+.severity-critical { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+.severity-warning { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.severity-info { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
