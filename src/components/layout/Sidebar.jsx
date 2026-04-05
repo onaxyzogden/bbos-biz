@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Kanban, Wallet, Users, Building2, Shield, Heart,
+  Kanban, Wallet, Users, Building2, Shield, Heart, Home, UsersRound, Landmark, BookOpen, ScrollText,
   LayoutDashboard, Settings, Plus, ChevronLeft, ChevronRight,
   ChevronDown, Bell, BookHeart, HeartPulse, Brain, Coins, TreePine,
 } from 'lucide-react';
@@ -14,7 +14,7 @@ import { MAQASID_PILLARS, getPillarLabel } from '../../data/maqasid';
 import NotificationsPanel from './NotificationsPanel';
 import './Sidebar.css';
 
-const ICON_MAP = { Kanban, Wallet, Users, Building2, Shield, Heart };
+const ICON_MAP = { Kanban, Wallet, Users, Building2, Shield, Heart, Home, UsersRound, Landmark, BookOpen, ScrollText };
 const PILLAR_ICON_MAP = { BookHeart, HeartPulse, Brain, Users, Coins, TreePine };
 
 const MODULE_ROUTES = {
@@ -24,6 +24,11 @@ const MODULE_ROUTES = {
   office: '/app/office',
   tech: '/app/tech',
   family: '/app/family',
+  neighbors: '/app/neighbors',
+  community: '/app/community',
+  'five-pillars': '/app/five-pillars',
+  quran: '/app/quran',
+  hadith: '/app/hadith',
 };
 
 const modulesById = Object.fromEntries(MODULES.map((m) => [m.id, m]));

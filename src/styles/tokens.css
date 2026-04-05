@@ -119,20 +119,25 @@
   --mod-tech: #f97316;
   --mod-crm: #ec4899;
   --mod-family: #AD6E9E;
+  --mod-neighbors: #8E6EAD;
+  --mod-community: #6E8EAD;
+  --mod-five-pillars: #C8A96E;
+  --mod-quran: #D4A853;
+  --mod-hadith: #B8956E;
 
   /* Maqasid pillar colors */
-  --pillar-religion: #C8A96E;
-  --pillar-religion-bg: rgba(200, 169, 110, 0.08);
-  --pillar-religion-border: rgba(200, 169, 110, 0.25);
+  --pillar-faith: #C8A96E;
+  --pillar-faith-bg: rgba(200, 169, 110, 0.08);
+  --pillar-faith-border: rgba(200, 169, 110, 0.25);
   --pillar-life: #6EAD8A;
   --pillar-life-bg: rgba(110, 173, 138, 0.08);
   --pillar-life-border: rgba(110, 173, 138, 0.25);
   --pillar-intellect: #6E8EAD;
   --pillar-intellect-bg: rgba(110, 142, 173, 0.08);
   --pillar-intellect-border: rgba(110, 142, 173, 0.25);
-  --pillar-progeny: #AD6E9E;
-  --pillar-progeny-bg: rgba(173, 110, 158, 0.08);
-  --pillar-progeny-border: rgba(173, 110, 158, 0.25);
+  --pillar-family: #AD6E9E;
+  --pillar-family-bg: rgba(173, 110, 158, 0.08);
+  --pillar-family-border: rgba(173, 110, 158, 0.25);
   --pillar-wealth: #8EAD6E;
   --pillar-wealth-bg: rgba(142, 173, 110, 0.08);
   --pillar-wealth-border: rgba(142, 173, 110, 0.25);
@@ -195,18 +200,18 @@
   --overlay: rgba(0, 0, 0, 0.6);
 
   /* Maqasid pillar colors (dark) */
-  --pillar-religion: #D4B87A;
-  --pillar-religion-bg: rgba(212, 184, 122, 0.1);
-  --pillar-religion-border: rgba(212, 184, 122, 0.25);
+  --pillar-faith: #D4B87A;
+  --pillar-faith-bg: rgba(212, 184, 122, 0.1);
+  --pillar-faith-border: rgba(212, 184, 122, 0.25);
   --pillar-life: #7EBD9A;
   --pillar-life-bg: rgba(126, 189, 154, 0.1);
   --pillar-life-border: rgba(126, 189, 154, 0.25);
   --pillar-intellect: #7E9EBD;
   --pillar-intellect-bg: rgba(126, 158, 189, 0.1);
   --pillar-intellect-border: rgba(126, 158, 189, 0.25);
-  --pillar-progeny: #BD7EAE;
-  --pillar-progeny-bg: rgba(189, 126, 174, 0.1);
-  --pillar-progeny-border: rgba(189, 126, 174, 0.25);
+  --pillar-family: #BD7EAE;
+  --pillar-family-bg: rgba(189, 126, 174, 0.1);
+  --pillar-family-border: rgba(189, 126, 174, 0.25);
   --pillar-wealth: #9EBD7E;
   --pillar-wealth-bg: rgba(158, 189, 126, 0.1);
   --pillar-wealth-border: rgba(158, 189, 126, 0.25);

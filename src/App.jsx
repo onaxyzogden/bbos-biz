@@ -10,7 +10,12 @@ import Money from './pages/Money';
 import People from './pages/People';
 import Office from './pages/Office';
 import Tech from './pages/Tech';
-import Family from './pages/Family';
+import FamilyPage from './pages/FamilyPage';
+import Neighbors from './pages/Neighbors';
+import Community from './pages/Community';
+import FivePillars from './pages/FivePillars';
+import QuranPage from './pages/QuranPage';
+import HadithPage from './pages/HadithPage';
 import Settings from './pages/Settings';
 
 function ProtectedRoute({ children }) {
@@ -39,7 +44,12 @@ export default function App() {
         <Route path="people" element={<People />} />
         <Route path="office" element={<Office />} />
         <Route path="tech" element={<Tech />} />
-        <Route path="family" element={<Family />} />
+        <Route path="family" element={<FamilyPage />} />
+        <Route path="neighbors" element={<Neighbors />} />
+        <Route path="community" element={<Community />} />
+        <Route path="five-pillars" element={<FivePillars />} />
+        <Route path="quran" element={<QuranPage />} />
+        <Route path="hadith" element={<HadithPage />} />
         <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>

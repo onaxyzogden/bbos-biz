@@ -15,6 +15,11 @@ const MODULE_ROUTES = {
   office: '/app/office',
   tech: '/app/tech',
   family: '/app/family',
+  neighbors: '/app/neighbors',
+  community: '/app/community',
+  'five-pillars': '/app/five-pillars',
+  hadith: '/app/hadith',
+  quran: '/app/quran',
 };
 
 export default function PillarCard({ pillar, subModules, valuesLayer, completedOpening, deferred }) {

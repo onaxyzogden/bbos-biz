@@ -3,9 +3,9 @@
 
 export const MAQASID_PILLARS = [
   {
-    id: 'religion',
+    id: 'faith',
     order: 1,
-    sidebarLabel: 'Religion',
+    sidebarLabel: 'Faith',
     universalLabel: 'Purpose',
     stewardshipLabel: 'Spiritual Governance',
     universalStewardship: 'Purpose Alignment',
@@ -14,8 +14,8 @@ export const MAQASID_PILLARS = [
     rootAction: 'Aligning',
     accentColor: '#C8A96E',
     icon: 'BookHeart',
-    subModuleIds: [],
-    status: 'scaffold',
+    subModuleIds: ['five-pillars', 'quran', 'hadith'],
+    status: 'active',
     readinessAyatKey: 'spirituality',
   },
   {
@@ -51,9 +51,9 @@ export const MAQASID_PILLARS = [
     readinessAyatKey: 'learning',
   },
   {
-    id: 'progeny',
+    id: 'family',
     order: 4,
-    sidebarLabel: 'Progeny',
+    sidebarLabel: 'People',
     universalLabel: 'Legacy',
     stewardshipLabel: 'Lineage & Legacy',
     universalStewardship: 'Legacy Stewardship',
@@ -62,7 +62,7 @@ export const MAQASID_PILLARS = [
     rootAction: 'Connecting',
     accentColor: '#AD6E9E',
     icon: 'Users',
-    subModuleIds: ['family'],
+    subModuleIds: ['family', 'neighbors', 'community'],
     status: 'active',
     readinessAyatKey: 'family',
   },
