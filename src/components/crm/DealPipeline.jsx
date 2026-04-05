@@ -13,13 +13,12 @@ function DealForm({ deal, onClose }) {
   const [contactId, setContactId] = useState(deal?.contactId || '');
   const [value, setValue] = useState(deal?.value || '');
   const [stage, setStage] = useState(deal?.stage || pipeline[0]?.id || '');
-  const [probability, setProbability] = useState(deal?.probability || 50);
   const [expectedClose, setExpectedClose] = useState(deal?.expectedClose || '');
   const [notes, setNotes] = useState(deal?.notes || '');
 
   const handleSave = () => {
     if (!name.trim()) return;
-    const data = { name, contactId, value: Number(value), stage, probability: Number(probability), expectedClose, notes };
+    const data = { name, contactId, value: Number(value), stage, expectedClose, notes };
     if (isEdit) updateDeal(deal.id, data); else addDeal(data);
     onClose();
   };
@@ -44,7 +43,6 @@ function DealForm({ deal, onClose }) {
             </div>
             <div className="expense-form-field" style={{ flex: 1 }}><label>Expected Close</label><input type="date" value={expectedClose} onChange={(e) => setExpectedClose(e.target.value)} /></div>
           </div>
-          <div className="expense-form-field"><label>Probability (%)</label><input type="range" min="0" max="100" value={probability} onChange={(e) => setProbability(e.target.value)} /><span style={{ fontSize: '0.8rem', color: 'var(--text2)' }}>{probability}%</span></div>
           <div className="expense-form-field"><label>Notes</label><textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Deal notes..." rows={2} /></div>
         </div>
         <div className="expense-form-footer">

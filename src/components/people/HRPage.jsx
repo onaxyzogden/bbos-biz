@@ -7,6 +7,11 @@ import { EMPLOYEE_STATUSES } from '../../data/people-departments';
 import EmployeeCard from './EmployeeCard';
 import AddEmployeeModal from './AddEmployeeModal';
 import AddDepartmentModal from './AddDepartmentModal';
+import DetailPanel from './DetailPanel';
+import TimesheetTab from './TimesheetTab';
+import SalariesTab from './SalariesTab';
+import StatsTab from './StatsTab';
+import OrganizationTab from './OrganizationTab';
 import './HRPage.css';
 
 const HR_TABS = [
@@ -21,6 +26,8 @@ export default function HRPage() {
   const peopleEmployees = usePeopleStore((s) => s.employees);
   const departments     = usePeopleStore((s) => s.departments);
   const contacts        = useContactsStore((s) => s.contacts);
+  const selectContact   = useContactsStore((s) => s.selectContact);
+  const panelOpen       = useContactsStore((s) => s.panelOpen);
 
   // Merge people-store employees + contacts-store employee-type contacts
   const employees = useMemo(() => {
@@ -107,6 +114,10 @@ export default function HRPage() {
     const ids = new Set(employees.map((e) => e.department).filter(Boolean));
     return departments.filter((d) => ids.has(d.id));
   }, [employees, departments]);
+
+  const handleSelectEmployee = (id) => {
+    selectContact(id);
+  };
 
   return (
     <div className="hr-page">
@@ -230,6 +241,7 @@ export default function HRPage() {
                   key={emp.id}
                   employee={emp}
                   department={deptMap[emp.department]}
+                  onClick={() => handleSelectEmployee(emp.id)}
                 />
               ))
             )}
@@ -237,15 +249,29 @@ export default function HRPage() {
         </div>
       )}
 
-      {/* Placeholder tabs */}
-      {activeTab !== 'employees' && (
-        <div className="hr-placeholder">
-          {HR_TABS.find((t) => t.id === activeTab)?.label} — coming soon
-        </div>
+      {/* Timesheet tab */}
+      {activeTab === 'timesheet' && (
+        <TimesheetTab employees={employees} onSelectEmployee={handleSelectEmployee} />
+      )}
+
+      {/* Salaries tab */}
+      {activeTab === 'salaries' && (
+        <SalariesTab employees={employees} onSelectEmployee={handleSelectEmployee} />
+      )}
+
+      {/* Stats tab */}
+      {activeTab === 'stats' && (
+        <StatsTab employees={employees} />
+      )}
+
+      {/* Organization tab */}
+      {activeTab === 'organization' && (
+        <OrganizationTab employees={employees} />
       )}
 
       {showAddEmp && <AddEmployeeModal onClose={() => setShowAddEmp(false)} />}
       {showAddDept && <AddDepartmentModal onClose={() => setShowAddDept(false)} />}
+      {panelOpen && <DetailPanel />}
     </div>
   );
 }

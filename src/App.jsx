@@ -10,7 +10,6 @@ import Money from './pages/Money';
 import People from './pages/People';
 import Office from './pages/Office';
 import Tech from './pages/Tech';
-import CRM from './pages/CRM';
 import Settings from './pages/Settings';
 
 function ProtectedRoute({ children }) {
@@ -39,7 +38,6 @@ export default function App() {
         <Route path="people" element={<People />} />
         <Route path="office" element={<Office />} />
         <Route path="tech" element={<Tech />} />
-        <Route path="crm" element={<CRM />} />
         <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>

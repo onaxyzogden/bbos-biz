@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Kanban, Wallet, Users, Building2, Shield, Handshake, LayoutDashboard, Settings, Plus, Folder, ChevronLeft, ChevronRight, Bell } from 'lucide-react';
+import { Kanban, Wallet, Users, Building2, Shield, LayoutDashboard, Settings, Plus, Folder, ChevronLeft, ChevronRight, Bell } from 'lucide-react';
 import { useAppStore } from '../../store/app-store';
 import { useProjectStore } from '../../store/project-store';
 import { useMobile } from '../../hooks/useMobile';
@@ -8,7 +8,7 @@ import { MODULES } from '../../data/modules';
 import NotificationsPanel from './NotificationsPanel';
 import './Sidebar.css';
 
-const ICON_MAP = { Kanban, Wallet, Users, Building2, Shield, Handshake };
+const ICON_MAP = { Kanban, Wallet, Users, Building2, Shield };
 
 const MODULE_ROUTES = {
   work: '/app/work',
@@ -16,7 +16,6 @@ const MODULE_ROUTES = {
   people: '/app/people',
   office: '/app/office',
   tech: '/app/tech',
-  crm: '/app/crm',
 };
 
 export default function Sidebar() {
