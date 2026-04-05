@@ -71,6 +71,32 @@
 }
 .il-close:hover { background: var(--bg3); color: var(--text); }
 
+/* Pillar context */
+.il-pillar-context {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-left: 3px solid var(--accent);
+  margin: 0 var(--space-3);
+  background: var(--bg3);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+}
+
+.il-pillar-label {
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text3);
+}
+
+.il-pillar-root {
+  font-size: 0.7rem; color: var(--text3);
+  opacity: 0.8;
+}
+
+.il-pillar-ar {
+  font-size: 0.85rem; color: var(--text3);
+  margin-left: auto;
+}
+
 /* Module badge */
 .il-module-badge {
   padding: var(--space-3) var(--space-4);

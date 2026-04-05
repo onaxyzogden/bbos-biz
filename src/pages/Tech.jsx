@@ -7,6 +7,7 @@ import IntegrationsTab from '../components/tech/IntegrationsTab';
 import WebsitesTab from '../components/tech/WebsitesTab';
 import DarkWebTab from '../components/tech/DarkWebTab';
 import EmailCampaignsTab from '../components/tech/EmailCampaignsTab';
+import PillarHeader from '../components/shared/PillarHeader';
 import './Tech.css';
 
 const TABS = [
@@ -27,7 +28,7 @@ export default function Tech() {
 
   return (
     <div className="tech-mod">
-      <div className="tech-header"><h2>Tech</h2></div>
+      <PillarHeader moduleId="tech" />
       <div className="tech-tabs">
         {TABS.map((tab) => {
           const Icon = tab.icon;

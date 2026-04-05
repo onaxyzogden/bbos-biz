@@ -9,6 +9,13 @@
   max-width: 1200px;
 }
 
+/* ── Maqasid Pillars grid ── */
+.insight-pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-3);
+}
+
 /* ── Greeting bar ── */
 .insight-greeting {
   display: flex;

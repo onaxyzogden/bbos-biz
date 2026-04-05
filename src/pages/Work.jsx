@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useProjectStore } from '../store/project-store';
 import { useThresholdStore } from '../store/threshold-store';
 import CeremonyGate from '../components/islamic/CeremonyGate';
+import PillarHeader from '../components/shared/PillarHeader';
 
 export default function Work() {
   const navigate = useNavigate();
@@ -30,14 +31,12 @@ export default function Work() {
 
   return (
     <div style={{ maxWidth: 900 }}>
+      <PillarHeader moduleId="work" />
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-6)' }}>
-        <div>
-          <h2 style={{ marginBottom: 'var(--space-1)' }}>Projects</h2>
-          <p style={{ color: 'var(--text2)', fontSize: '0.9rem' }}>
-            {active.length} active project{active.length !== 1 ? 's' : ''}
-            {archived.length > 0 && ` · ${archived.length} archived`}
-          </p>
-        </div>
+        <p style={{ color: 'var(--text2)', fontSize: '0.9rem' }}>
+          {active.length} active project{active.length !== 1 ? 's' : ''}
+          {archived.length > 0 && ` · ${archived.length} archived`}
+        </p>
         <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
           {archived.length > 0 && (
             <button

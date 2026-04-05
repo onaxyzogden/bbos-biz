@@ -13,6 +13,8 @@ import { useThresholdStore } from '../store/threshold-store';
 import { useOfficeStore } from '../store/office-store';
 import { usePrayerTimes } from '../hooks/usePrayerTimes';
 import { MODULES } from '../data/modules';
+import { MAQASID_PILLARS } from '../data/maqasid';
+import PillarCard from '../components/dashboard/PillarCard';
 import './Dashboard.css';
 
 /* ── Greeting by time of day ── */
@@ -385,6 +387,25 @@ export default function Dashboard() {
             <CalendarDays size={13} /> View Calendar
           </Link>
         </div>
+      </div>
+
+      {/* ── Maqasid Pillars ── */}
+      <div className="insight-pillars">
+        {MAQASID_PILLARS.map((pillar) => {
+          const subModules = pillar.subModuleIds
+            .map((id) => MODULES.find((m) => m.id === id))
+            .filter(Boolean);
+          return (
+            <PillarCard
+              key={pillar.id}
+              pillar={pillar}
+              subModules={subModules}
+              valuesLayer={valuesLayer}
+              completedOpening={completedOpening}
+              deferred={deferred}
+            />
+          );
+        })}
       </div>
 
       {/* ── Main grid ── */}

@@ -7,6 +7,7 @@ import IncomeTab from '../components/money/IncomeTab';
 import ProposalTab from '../components/money/ProposalTab';
 import AccountsTab from '../components/money/AccountsTab';
 import VendorsTab from '../components/money/VendorsTab';
+import PillarHeader from '../components/shared/PillarHeader';
 import './Money.css';
 
 const TABS = [
@@ -27,9 +28,7 @@ export default function Money() {
 
   return (
     <div className="money">
-      <div className="money-header">
-        <h2>Money</h2>
-      </div>
+      <PillarHeader moduleId="money" />
 
       <div className="money-tabs">
         {TABS.map((tab) => {

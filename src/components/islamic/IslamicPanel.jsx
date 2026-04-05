@@ -6,6 +6,7 @@ import { useThresholdStore } from '../../store/threshold-store';
 import { useMobile } from '../../hooks/useMobile';
 import { MODULES } from '../../data/modules';
 import { getModuleData, ONGOING_DUA, ONGOING_UNIVERSAL } from '../../data/islamic-data';
+import { getPillarForModule, getPillarLabel } from '../../data/maqasid';
 import AttributeCard from './AttributeCard';
 import DuaSection from './DuaSection';
 import ReadinessCheck from './ReadinessCheck';
@@ -76,6 +77,21 @@ export default function IslamicPanel() {
 
       {/* Prayer Times — only in Islamic mode */}
       {isIslamic && <PrayerTime />}
+
+      {/* Pillar context */}
+      {(() => {
+        const pillar = getPillarForModule(activeModule);
+        if (!pillar) return null;
+        return (
+          <div className="il-pillar-context" style={{ borderLeftColor: pillar.accentColor }}>
+            <span className="il-pillar-label">{getPillarLabel(pillar, valuesLayer)}</span>
+            <span className="il-pillar-root">
+              {isIslamic ? pillar.arabicRoot : pillar.rootAction}
+            </span>
+            {isIslamic && <span className="il-pillar-ar arabic">{pillar.arabicRootAr}</span>}
+          </div>
+        );
+      })()}
 
       {/* Module context badge */}
       {mod && (

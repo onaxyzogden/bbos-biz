@@ -1,0 +1,26 @@
+.pillar-hdr {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: var(--space-4);
+}
+
+.pillar-hdr__name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.pillar-hdr__stewardship {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text2);
+}
+
+.pillar-hdr__root {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ph-color, var(--accent));
+  letter-spacing: 0.02em;
+}

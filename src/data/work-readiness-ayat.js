@@ -21,7 +21,7 @@
  *   3:159(2), 29:69(2), 23:60(2)
  * - All Arabic text sourced from ar-simple-clean via quran.ai MCP
  * - All translations from en-sahih-international via quran.ai MCP
- * - Framing sentences: all <= 20 words, 2nd person, warm
+ * - Framing sentences: all <= 20 words, 1st person, warm
  * - No two adjacent keys (Hamming distance 1) share identical framing
  *
  * Grounded with quran.ai: fetch_quran(34 ayat, ar-simple-clean),
@@ -319,213 +319,213 @@ export const READINESS_AYAT_WORK = {
   // Each addresses the single unmet condition
 
   '011111': { ..._21_37,
-    framing: 'You were shaped with urgency in you — but this work asks for your steadiness first.' },
+    framing: 'I was shaped with urgency in me — but this work asks for my steadiness first.' },
 
   '101111': { ..._98_5,
-    framing: 'Return the intention to its origin — not obligation, but sincere offering.' },
+    framing: 'I return the intention to its origin — not obligation, but sincere offering.' },
 
   '110111': { ..._2_195,
-    framing: 'You are being invited to give this work your best — Allah loves those who do.' },
+    framing: 'I am being invited to give this work my best — Allah loves those who do.' },
 
   '111011': { ..._65_3,
-    framing: 'Your craft is ready. Now release the weight of the outcome to the One who provides.' },
+    framing: 'My craft is ready. Now I release the weight of the outcome to the One who provides.' },
 
   '111101': { ..._7_205,
-    framing: 'Before you begin, return to quiet presence — remember your Lord and do not be heedless.' },
+    framing: 'Before I begin, I return to quiet presence — remembering my Lord, not among the heedless.' },
 
   '111110': { ..._9_51,
-    framing: 'Nothing will reach you except what He has written. Let that knowing steady your hands.' },
+    framing: 'Nothing will reach me except what He has written. I let that knowing steady my hands.' },
 
   // ═══ TWO ZEROS — SAME ATTRIBUTE (6) ═══
 
   '001111': { ..._16_90,
-    framing: 'Allah commands both justice and ihsan — let this call recalibrate your approach to the work.' },
+    framing: 'Allah commands both justice and ihsan — I let this call recalibrate my approach to the work.' },
 
   '010111': { ..._103_1_3,
-    framing: 'Time is passing. The exception from loss requires both righteous deeds and mutual counsel in truth.' },
+    framing: 'Time is passing. I am called to righteous deeds and mutual counsel in truth to be excepted.' },
 
   '100111': { ..._39_11,
-    framing: 'The work ahead asks for more than completion — it asks for sincerity in how you worship through it.' },
+    framing: 'The work ahead asks for more than completion — it asks for sincerity in how I worship through it.' },
 
   '111001': { ..._33_3,
-    framing: 'Allah is sufficient as your Disposer of affairs — lean on that before you proceed.' },
+    framing: 'Allah is sufficient as my Disposer of affairs — I lean on that before I proceed.' },
 
   '111010': { ..._57_23,
-    framing: 'Do not grieve what has escaped you or cling to what is given — both are from Him.' },
+    framing: 'I do not grieve what has escaped me or cling to what is given — both are from Him.' },
 
   '111100': { ..._64_11,
-    framing: 'Whatever reaches you is by His permission. Believe, and He will guide your heart through it.' },
+    framing: 'Whatever reaches me is by His permission. I believe, and He will guide my heart through it.' },
 
   // ═══ TWO ZEROS — CROSS ATTRIBUTE (9) ═══
 
   '011011': { ..._94_5_6,
-    framing: 'You are carrying a heavy moment. Remember: with every hardship, ease is already woven in.' },
+    framing: 'I am carrying a heavy moment. I remember: with every hardship, ease is already woven in.' },
 
   '011101': { ..._62_10,
-    framing: 'Go forth with remembrance — seek from Allah\'s bounty and let that seeking be your worship.' },
+    framing: 'I go forth with remembrance — seeking from Allah\'s bounty and letting that seeking be my worship.' },
 
   '011110': { ..._18_24,
-    framing: 'Say "if Allah wills" — and remember your Lord when you forget. He may guide you closer still.' },
+    framing: 'I say "if Allah wills" — and remember my Lord when I forget. He may guide me closer still.' },
 
   '101011': { ..._29_2,
-    framing: 'This difficulty is not a sign of failure — it is the nature of being tested in what you profess.' },
+    framing: 'This difficulty is not a sign of failure — it is the nature of being tested in what I profess.' },
 
   '101101': { ..._51_56,
-    framing: 'You were not created for productivity alone — you were created for worship. Let that reframe the work.' },
+    framing: 'I was not created for productivity alone — I was created for worship. That reframes the work.' },
 
   '101110': { ..._31_22,
-    framing: 'Whoever turns their face to Allah while doing good has grasped the most trustworthy handhold.' },
+    framing: 'When I turn my face to Allah while doing good, I grasp the most trustworthy handhold.' },
 
   '110011': { ..._3_139,
-    framing: 'Do not weaken and do not grieve — you are higher than this moment if you hold your belief.' },
+    framing: 'I do not weaken or grieve — I am higher than this moment when I hold my belief.' },
 
   '110101': { ..._29_69,
-    framing: 'Those who strive for Allah\'s sake will be guided to His ways. Begin the striving; the path opens.' },
+    framing: 'I strive for Allah\'s sake and trust He will guide me to His ways. The path opens with the striving.' },
 
   '110110': { ..._53_39,
-    framing: 'There is not for you except that for which you strive. The effort itself is the offering.' },
+    framing: 'There is not for me except that for which I strive. The effort itself is the offering.' },
 
   // ═══ THREE ZEROS — 2 MUHSIN + 1 WAKIL (9) ═══
 
   '001011': { ..._48_4,
-    framing: 'He sends tranquility into the hearts of the believers — ask for yours before you begin.' },
+    framing: 'He sends tranquility into the hearts of the believers — I ask for mine before I begin.' },
 
   '001101': { ..._6_162,
-    framing: 'Your prayer, your sacrifice, your living and dying — let them belong to Allah before you start.' },
+    framing: 'My prayer, my sacrifice, my living and dying — I let them belong to Allah before I start.' },
 
   '001110': { ..._28_77,
-    framing: 'Seek the Hereafter through what Allah gave you, and do good as He has been good to you.' },
+    framing: 'I seek the Hereafter through what Allah gave me, and do good as He has been good to me.' },
 
   '010011': { ..._41_30,
-    framing: 'Say "my Lord is Allah" and hold the line — the angels say: do not fear, do not grieve.' },
+    framing: 'I say "my Lord is Allah" and hold the line — the angels say: do not fear, do not grieve.' },
 
   '010101': { ..._20_130,
-    framing: 'Be patient. Exalt your Lord before sunrise and sunset — let the rhythm of remembrance steady you.' },
+    framing: 'I am patient. I exalt my Lord before sunrise and sunset — the rhythm of remembrance steadies me.' },
 
   '010110': { ..._23_60,
-    framing: 'Even the righteous give what they give while their hearts tremble. That trembling is not weakness.' },
+    framing: 'Even the righteous give what they give while their hearts tremble. My trembling is not weakness.' },
 
   '100011': { ..._10_62,
-    framing: 'The allies of Allah carry no fear and no grief. Draw near to that, even from where you are.' },
+    framing: 'The allies of Allah carry no fear and no grief. I draw near to that, even from where I am.' },
 
   '100101': { ..._73_9,
-    framing: 'He is Lord of the East and West. There is no god but Him — so take Him as your Wakil.' },
+    framing: 'He is Lord of East and West. There is no god but Him — I take Him as my Wakil.' },
 
   '100110': { ..._39_53,
-    framing: 'Do not despair of Allah\'s mercy — He forgives all. Bring what you have, even if it feels small.' },
+    framing: 'I do not despair of Allah\'s mercy — He forgives all. I bring what I have, however small.' },
 
   // ═══ THREE ZEROS — 1 MUHSIN + 2 WAKIL (9) ═══
 
   '011001': { ..._48_4,
-    framing: 'Much is unsettled right now. But He is the One who sends sakinah — let it reach you.' },
+    framing: 'Much is unsettled right now. But He is the One who sends sakinah — I let it reach me.' },
 
   '011010': { ..._2_286,
-    framing: 'You are not burdened beyond what you can carry. Allah knows your capacity — trust that.' },
+    framing: 'I am not burdened beyond what I can carry. Allah knows my capacity — I trust that.' },
 
   '011100': { ..._73_9,
-    framing: 'The One who holds East and West holds your work too. Take Him as your Disposer of affairs.' },
+    framing: 'The One who holds East and West holds my work too. I take Him as my Disposer of affairs.' },
 
   '101001': { ..._6_162,
-    framing: 'Before the work, recall the dedication: my life is for Allah. Let that truth steady everything else.' },
+    framing: 'Before the work, I recall the dedication: my life is for Allah. That truth steadies everything else.' },
 
   '101010': { ..._2_286,
-    framing: 'He has not placed on you more than you can bear. What you carry right now is within your reach.' },
+    framing: 'He has not placed on me more than I can bear. What I carry right now is within my reach.' },
 
   '101100': { ..._39_53,
-    framing: 'You are far from ready, and that is known. But do not despair — His mercy covers all of this.' },
+    framing: 'I am far from ready, and that is known. I do not despair — His mercy covers all of this.' },
 
   '110001': { ..._41_30,
-    framing: 'Remain on the straight course even now. Those who hold steady receive the angels\' assurance.' },
+    framing: 'I remain on the straight course even now. Those who hold steady receive the angels\' assurance.' },
 
   '110010': { ..._10_62,
-    framing: 'Even now, the promise holds: Allah\'s close ones are free from fear. You can return to that closeness.' },
+    framing: 'Even now, the promise holds: Allah\'s close ones are free from fear. I can return to that closeness.' },
 
   '110100': { ..._28_77,
-    framing: 'Do not lose your share of this world — but let ihsan, not anxiety, shape how you take it.' },
+    framing: 'I do not lose my share of this world — ihsan, not anxiety, shapes how I take it.' },
 
   // ═══ FOUR ZEROS — ALL MUHSIN + 1 WAKIL (3) ═══
 
   '000011': { ..._48_4,
-    framing: 'Very little is aligned, but tranquility is not earned — it is sent down. Ask for it.' },
+    framing: 'Very little is aligned, but tranquility is not earned — it is sent down. I ask for it.' },
 
   '000101': { ..._20_130,
-    framing: 'Much is unaligned, but patience and praise are still yours. Exalt your Lord and let that be enough.' },
+    framing: 'Much is unaligned, but patience and praise are still mine. I exalt my Lord and let that be enough.' },
 
   '000110': { ..._23_60,
-    framing: 'Your heart is heavy. Know that even those closest to Allah give while their hearts are reverent.' },
+    framing: 'My heart is heavy. I know that even those closest to Allah give while their hearts are reverent.' },
 
   // ═══ FOUR ZEROS — 2M + 2W (9) ═══
 
   '001001': { ..._6_162,
-    framing: 'Much is unsteady, but the anchor remains: your living and striving are for the Lord of all worlds.' },
+    framing: 'Much is unsteady, but the anchor remains: my living and striving are for the Lord of all worlds.' },
 
   '001010': { ..._2_286,
-    framing: 'Allah does not charge a soul beyond its capacity. Even this weight is not beyond yours.' },
+    framing: 'Allah does not charge a soul beyond its capacity. Even this weight is not beyond mine.' },
 
   '001100': { ..._73_9,
-    framing: 'You cannot carry all of this alone. He is the Lord of every horizon — take Him as your trustee.' },
+    framing: 'I cannot carry this alone. He is Lord of every horizon — I take Him as my trustee.' },
 
   '010001': { ..._41_30,
-    framing: 'The path forward begins with one declaration: my Lord is Allah. Then steadfastness. Then peace.' },
+    framing: 'My path forward begins with one declaration: my Lord is Allah. Then steadfastness. Then peace.' },
 
   '010010': { ..._10_62,
-    framing: 'There is a station where fear lifts and grief dissolves. Begin walking toward it — Allah sees you.' },
+    framing: 'There is a station where fear lifts and grief dissolves. I begin walking toward it — Allah sees me.' },
 
   '010100': { ..._28_77,
-    framing: 'Seek what is lasting through what you have been given. Do good as Allah has done good to you.' },
+    framing: 'I seek what is lasting through what I have been given, doing good as Allah has done good to me.' },
 
   '100001': { ..._39_53,
-    framing: 'This is a moment of struggle across many fronts. Do not despair. His mercy is greater than all of it.' },
+    framing: 'This is a moment of struggle across many fronts. I do not despair — His mercy is greater.' },
 
   '100010': { ..._57_23,
-    framing: 'You have not lost what matters. Release the grief of what escaped and the grip on what remains.' },
+    framing: 'I have not lost what matters. I release the grief of what escaped and the grip on what remains.' },
 
   '100100': { ..._20_130,
-    framing: 'The path back runs through patience and the praise of your Lord. Begin there, morning and evening.' },
+    framing: 'The path back runs through patience and the praise of my Lord. I begin there, morning and evening.' },
 
   // ═══ FOUR ZEROS — 1M + ALL WAKIL (3) ═══
 
   '011000': { ..._33_3,
-    framing: 'You are not ready across much of this right now. But Allah is still Al-Wakil — rely on Him.' },
+    framing: 'I am not ready across much of this right now. But Allah is still Al-Wakil — I rely on Him.' },
 
   '101000': { ..._33_3,
-    framing: 'There is much to settle. Begin by placing what you cannot carry in the hands of your Trustee.' },
+    framing: 'There is much to settle. I begin by placing what I cannot carry in the hands of my Trustee.' },
 
   '110000': { ..._3_159,
-    framing: 'When you find your resolve, even partially, place it in Allah\'s hands and begin from there.' },
+    framing: 'When I find my resolve, even partially, I place it in Allah\'s hands and begin from there.' },
 
   // ═══ CORNERS (non-null) ═══
 
   '111000': { ..._3_159,
-    framing: 'Your intention and craft are aligned. Now trust — when you have resolved, rely upon Allah.' },
+    framing: 'My intention and craft are aligned. Now I trust — when I have resolved, I rely upon Allah.' },
 
   '000111': { ..._67_2,
-    framing: 'You are at peace with the outcome. Now the test is: which of you is best in deed?' },
+    framing: 'I am at peace with the outcome. Now the test is: which of us is best in deed?' },
 
   // ═══ FIVE ZEROS (6) ═══
 
   '100000': { ..._13_28,
-    framing: 'You are not rushing — that is enough for now. Let remembrance settle what remains.' },
+    framing: 'I am not rushing — that is enough for now. I let remembrance settle what remains.' },
 
   '010000': { ..._13_28,
-    framing: 'Your sincerity is intact. Let remembrance gather the rest of you.' },
+    framing: 'My sincerity is intact. I let remembrance gather the rest of me.' },
 
   '001000': { ..._94_5_6,
-    framing: 'Your care for quality is still here. With this hardship will come ease — hold onto that.' },
+    framing: 'My care for quality is still here. With this hardship will come ease — I hold onto that.' },
 
   '000100': { ..._57_23,
-    framing: 'You trust Him — that is real. Do not despair over what else has eluded you right now.' },
+    framing: 'I trust Him — that is real. I do not despair over what else has eluded me right now.' },
 
   '000010': { ..._29_69,
-    framing: 'Your presence is the one thing alive right now. Strive from there — Allah guides those who try.' },
+    framing: 'My presence is the one thing alive right now. I strive from there — Allah guides those who try.' },
 
   '000001': { ..._94_5_6,
-    framing: 'You have released the grip on the outcome. That is a beginning. With hardship comes ease.' },
+    framing: 'I have released the grip on the outcome. That is a beginning. With hardship comes ease.' },
 
   // ═══ ALL NOT YET (1) ═══
 
   '000000': { ..._13_28,
-    framing: 'Your heart knows the way back. Rest it in remembrance before you begin.' },
+    framing: 'My heart knows the way back. I rest it in remembrance before I begin.' },
 
 };
 

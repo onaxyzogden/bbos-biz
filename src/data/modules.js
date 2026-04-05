@@ -82,6 +82,21 @@ export const MODULES = [
       'Internal Q&A',
     ],
   },
+  {
+    id: 'family',
+    name: 'Family',
+    description: 'Family relationships and community connections',
+    icon: 'Heart',
+    color: 'var(--mod-family)',
+    attrs: 'Al-Wadud · Ar-Rahman',
+    attrs_ar: 'الودود · الرحمن',
+    ready: true,
+    features: [
+      'Family directory',
+      'Community connections',
+      'Legacy planning',
+    ],
+  },
 ];
 
 export const PROJECT_COLORS = [

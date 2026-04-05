@@ -3,11 +3,17 @@ import { safeGet, safeSet } from '../services/storage';
 
 const EMPTY_FILTERS = { priorities: [], dueDate: null, tags: [] };
 
+function safeGetJSON(key, fallback) {
+  try { const v = safeGet(key, null); return v ? JSON.parse(v) : fallback; }
+  catch { return fallback; }
+}
+
 export const useAppStore = create((set, get) => ({
   sidebarOpen: safeGet('sb_open', 'true') === 'true',
   islamicPanelOpen: safeGet('il_open', 'false') === 'true',
   searchOpen: false,
   activeModule: safeGet('module', 'work'),
+  expandedPillars: safeGetJSON('pillars_exp', {}),
   filters: {}, // { [projectId]: { priorities: [], dueDate: null, tags: [] } }
 
   toggleSidebar: () => set((s) => {
@@ -23,6 +29,12 @@ export const useAppStore = create((set, get) => ({
   }),
 
   setSearchOpen: (open) => set({ searchOpen: open }),
+
+  togglePillar: (pillarId) => set((s) => {
+    const next = { ...s.expandedPillars, [pillarId]: !s.expandedPillars[pillarId] };
+    safeSet('pillars_exp', JSON.stringify(next));
+    return { expandedPillars: next };
+  }),
 
   setActiveModule: (mod) => {
     safeSet('module', mod);

@@ -6,6 +6,7 @@ import ContactsPage from '../components/people/ContactsPage';
 import HRPage from '../components/people/HRPage';
 import SalesPipelinePage from '../components/people/SalesPipelinePage';
 import RecruitmentPage from '../components/people/RecruitmentPage';
+import PillarHeader from '../components/shared/PillarHeader';
 import './People.css';
 
 const SECTIONS = [
@@ -25,6 +26,7 @@ export default function People() {
 
   return (
     <div className="people">
+      <PillarHeader moduleId="people" />
       <div className="people-tabs">
         {SECTIONS.map((sec) => {
           const Icon = sec.icon;

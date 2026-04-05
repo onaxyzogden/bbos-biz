@@ -1,14 +1,21 @@
 import { useState, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Kanban, Wallet, Users, Building2, Shield, LayoutDashboard, Settings, Plus, Folder, ChevronLeft, ChevronRight, Bell } from 'lucide-react';
+import {
+  Kanban, Wallet, Users, Building2, Shield, Heart,
+  LayoutDashboard, Settings, Plus, ChevronLeft, ChevronRight,
+  ChevronDown, Bell, BookHeart, HeartPulse, Brain, Coins, TreePine,
+} from 'lucide-react';
 import { useAppStore } from '../../store/app-store';
 import { useProjectStore } from '../../store/project-store';
+import { useSettingsStore } from '../../store/settings-store';
 import { useMobile } from '../../hooks/useMobile';
 import { MODULES } from '../../data/modules';
+import { MAQASID_PILLARS, getPillarLabel } from '../../data/maqasid';
 import NotificationsPanel from './NotificationsPanel';
 import './Sidebar.css';
 
-const ICON_MAP = { Kanban, Wallet, Users, Building2, Shield };
+const ICON_MAP = { Kanban, Wallet, Users, Building2, Shield, Heart };
+const PILLAR_ICON_MAP = { BookHeart, HeartPulse, Brain, Users, Coins, TreePine };
 
 const MODULE_ROUTES = {
   work: '/app/work',
@@ -16,13 +23,17 @@ const MODULE_ROUTES = {
   people: '/app/people',
   office: '/app/office',
   tech: '/app/tech',
+  family: '/app/family',
 };
+
+const modulesById = Object.fromEntries(MODULES.map((m) => [m.id, m]));
 
 export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const mobile = useMobile();
-  const { sidebarOpen, toggleSidebar, activeModule, setActiveModule } = useAppStore();
+  const { sidebarOpen, toggleSidebar, activeModule, setActiveModule, expandedPillars, togglePillar } = useAppStore();
+  const valuesLayer = useSettingsStore((s) => s.valuesLayer);
   const allProjects = useProjectStore((s) => s.projects);
   const createProject = useProjectStore((s) => s.createProject);
   const projects = useMemo(() => allProjects.filter((p) => !p.archived), [allProjects]);
@@ -63,6 +74,7 @@ export default function Sidebar() {
         <Link
           to="/app"
           className={`sidebar-item ${location.pathname === '/app' ? 'active' : ''}`}
+          onClick={handleNavClick}
           title="Dashboard"
         >
           <LayoutDashboard size={18} />
@@ -71,26 +83,61 @@ export default function Sidebar() {
 
         <div className="sidebar-divider" />
 
-        {MODULES.map((mod) => {
-          const Icon = ICON_MAP[mod.icon];
-          const route = MODULE_ROUTES[mod.id];
-          const isActive = location.pathname.startsWith(route);
+        {MAQASID_PILLARS.map((pillar) => {
+          const PillarIcon = PILLAR_ICON_MAP[pillar.icon];
+          const subModules = pillar.subModuleIds.map((id) => modulesById[id]).filter(Boolean);
+          const hasActiveChild = subModules.some((m) => location.pathname.startsWith(MODULE_ROUTES[m.id]));
+          const isExpanded = expandedPillars[pillar.id] || hasActiveChild;
+          const isScaffold = pillar.status === 'scaffold';
+          const label = getPillarLabel(pillar, valuesLayer);
+
           return (
-            <Link
-              key={mod.id}
-              to={route}
-              className={`sidebar-item ${isActive ? 'active' : ''}`}
-              onClick={() => setActiveModule(mod.id)}
-              title={mod.name}
-            >
-              {Icon && <Icon size={18} style={isActive ? { color: mod.color } : undefined} />}
-              {!collapsed && (
-                <>
-                  <span>{mod.name}</span>
-                  {!mod.ready && <span className="sidebar-badge">Soon</span>}
-                </>
+            <div key={pillar.id} className="pillar-group">
+              <button
+                className={`pillar-header ${hasActiveChild ? 'has-active' : ''}`}
+                style={{ '--pillar-color': `var(--pillar-${pillar.id})` }}
+                onClick={() => !collapsed && togglePillar(pillar.id)}
+                title={label}
+              >
+                {PillarIcon && <PillarIcon size={16} style={{ color: `var(--pillar-${pillar.id})` }} />}
+                {!collapsed && (
+                  <>
+                    <span className="pillar-label">{label}</span>
+                    {isScaffold && <span className="sidebar-badge">Soon</span>}
+                    <ChevronDown
+                      size={12}
+                      className={`pillar-chevron ${isExpanded ? 'expanded' : ''}`}
+                    />
+                  </>
+                )}
+              </button>
+
+              {!collapsed && isExpanded && (
+                <div className="pillar-children">
+                  {isScaffold ? (
+                    <span className="pillar-scaffold">Coming soon</span>
+                  ) : (
+                    subModules.map((mod) => {
+                      const Icon = ICON_MAP[mod.icon];
+                      const route = MODULE_ROUTES[mod.id];
+                      const isActive = location.pathname.startsWith(route);
+                      return (
+                        <Link
+                          key={mod.id}
+                          to={route}
+                          className={`sidebar-item pillar-submodule ${isActive ? 'active' : ''}`}
+                          onClick={() => { setActiveModule(mod.id); handleNavClick(); }}
+                          title={mod.name}
+                        >
+                          {Icon && <Icon size={16} style={isActive ? { color: mod.color } : undefined} />}
+                          <span>{mod.name}</span>
+                        </Link>
+                      );
+                    })
+                  )}
+                </div>
               )}
-            </Link>
+            </div>
           );
         })}
       </nav>
