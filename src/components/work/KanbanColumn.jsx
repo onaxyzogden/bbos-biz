@@ -17,7 +17,7 @@ export default function KanbanColumn({ column, tasks, onSelectTask, onQuickAdd }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') { handleSubmit(); }
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(); }
     if (e.key === 'Escape') { setAdding(false); setNewTitle(''); }
   };
 
@@ -49,13 +49,15 @@ export default function KanbanColumn({ column, tasks, onSelectTask, onQuickAdd }
       <div className="kanban-quickadd">
         {adding ? (
           <div>
-            <input
+            <textarea
               className="kanban-quickadd-input"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => { handleSubmit(); setAdding(false); }}
               placeholder="Task title..."
+              rows={1}
+              onInput={(e) => { e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px'; }}
               autoFocus
             />
           </div>
