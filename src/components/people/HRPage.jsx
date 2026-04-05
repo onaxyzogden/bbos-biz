@@ -1,7 +1,8 @@
 import { useState, useMemo } from 'react';
 import { Search, UserPlus, Building } from 'lucide-react';
 import { usePeopleStore } from '../../store/people-store';
-import { EMPLOYMENT_TYPES } from '../../data/contact-config';
+import { useContactsStore } from '../../store/contacts-store';
+import { EMPLOYMENT_TYPES, getDisplayName } from '../../data/contact-config';
 import { EMPLOYEE_STATUSES } from '../../data/people-departments';
 import EmployeeCard from './EmployeeCard';
 import AddEmployeeModal from './AddEmployeeModal';
@@ -17,8 +18,46 @@ const HR_TABS = [
 ];
 
 export default function HRPage() {
-  const employees   = usePeopleStore((s) => s.employees);
-  const departments = usePeopleStore((s) => s.departments);
+  const peopleEmployees = usePeopleStore((s) => s.employees);
+  const departments     = usePeopleStore((s) => s.departments);
+  const contacts        = useContactsStore((s) => s.contacts);
+
+  // Merge people-store employees + contacts-store employee-type contacts
+  const employees = useMemo(() => {
+    const fromPeople = peopleEmployees.map((e) => ({
+      ...e,
+      _source: 'people',
+    }));
+    const fromContacts = contacts
+      .filter((c) => c.contactType === 'employee' && c.status !== 'archived')
+      .map((c) => ({
+        id: c.id,
+        name: getDisplayName(c),
+        email: c.email || '',
+        phone: c.phone || '',
+        role: c.jobTitle || '',
+        department: c.departmentId || '',
+        employmentType: c.employmentType || 'full_time',
+        startDate: c.startDate || c.createdAt?.slice(0, 10) || '',
+        status: c.status === 'active' ? 'active' : c.status || 'active',
+        createdAt: c.createdAt,
+        updatedAt: c.updatedAt,
+        avatarColor: c.avatarColor,
+        firstName: c.firstName,
+        lastName: c.lastName,
+        _source: 'contacts',
+      }));
+    // Deduplicate by id
+    const seen = new Set();
+    const merged = [];
+    for (const e of [...fromPeople, ...fromContacts]) {
+      if (!seen.has(e.id)) {
+        seen.add(e.id);
+        merged.push(e);
+      }
+    }
+    return merged;
+  }, [peopleEmployees, contacts]);
 
   const [activeTab, setActiveTab]   = useState('employees');
   const [typeFilter, setTypeFilter] = useState('all');

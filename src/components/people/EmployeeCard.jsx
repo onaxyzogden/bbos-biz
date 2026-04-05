@@ -5,6 +5,9 @@ import { EMPLOYEE_STATUSES } from '../../data/people-departments';
 
 export default function EmployeeCard({ employee, department, onClick }) {
   const status = EMPLOYEE_STATUSES.find((s) => s.id === employee.status) || EMPLOYEE_STATUSES[0];
+  const displayName = employee.name || [employee.firstName, employee.lastName].filter(Boolean).join(' ') || 'Unnamed';
+  const first = employee.firstName || (employee.name || '').split(' ')[0] || '';
+  const last = employee.lastName || (employee.name || '').split(' ').slice(1).join(' ') || '';
 
   return (
     <div className="emp-card" onClick={onClick}>
@@ -18,12 +21,12 @@ export default function EmployeeCard({ employee, department, onClick }) {
       </div>
       <div className="emp-card__body">
         <AvatarInitials
-          firstName={employee.name}
-          lastName=""
-          color={getAvatarColor(employee.id)}
+          firstName={first}
+          lastName={last}
+          color={employee.avatarColor || getAvatarColor(employee.id)}
           size={52}
         />
-        <div className="emp-card__name">{employee.name || 'Unnamed'}</div>
+        <div className="emp-card__name">{displayName}</div>
         {department && (
           <div className="emp-card__dept" style={{ color: department.color }}>
             {department.name}
