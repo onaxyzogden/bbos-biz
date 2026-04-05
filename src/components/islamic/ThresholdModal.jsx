@@ -130,7 +130,8 @@ export default function ThresholdModal({ type }) {
   };
 
   const triggerPause = () => {
-    if (!paused) { setPaused(true); setStep(3); }
+    setPaused(true);
+    setStep(3);
   };
 
   // "Defer to Later" — show the compassionate defer screen (don't close yet)
@@ -142,7 +143,7 @@ export default function ThresholdModal({ type }) {
 
   // Handle Next on the Readiness step — auto-trigger pause if any NOT YET
   const handleNext = () => {
-    if (currentStepName === 'Readiness' && hasInteractiveReadiness && readinessFilled && !readinessAllYes && !paused) {
+    if (currentStepName === 'Readiness' && hasInteractiveReadiness && readinessFilled && !readinessAllYes) {
       triggerPause();
       return;
     }
