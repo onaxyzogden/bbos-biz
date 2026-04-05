@@ -1,11 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, Calendar, Tag, Plus, Trash2, CheckSquare, Square, CheckCircle2 } from 'lucide-react';
+import {
+  X, Calendar, Tag, Plus, Trash2, CheckCircle2, Square,
+  MoreVertical, ChevronDown, ChevronUp, Clock, Paperclip, Users,
+} from 'lucide-react';
 import { useTaskStore } from '../../store/task-store';
+import { useAuthStore } from '../../store/auth-store';
 import { useMobile } from '../../hooks/useMobile';
 import { PRIORITIES } from '../../data/modules';
 import './TaskDetailPanel.css';
 
-export default function TaskDetailPanel({ projectId, taskId, onClose }) {
+function formatDate(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleDateString('en', { month: 'short', day: '2-digit', year: 'numeric' });
+}
+
+function formatDateTime(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleString('en', {
+    month: 'short', day: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', hour12: true,
+  });
+}
+
+export default function TaskDetailPanel({ project, projectId, taskId, onClose }) {
   const mobile = useMobile();
   const task = useTaskStore((s) => s.getTask(projectId, taskId));
   const updateTask = useTaskStore((s) => s.updateTask);
@@ -13,12 +30,21 @@ export default function TaskDetailPanel({ projectId, taskId, onClose }) {
   const addSubtask = useTaskStore((s) => s.addSubtask);
   const toggleSubtask = useTaskStore((s) => s.toggleSubtask);
   const removeSubtask = useTaskStore((s) => s.removeSubtask);
+  const moveTask = useTaskStore((s) => s.moveTask);
+  const user = useAuthStore((s) => s.user);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [newSubtask, setNewSubtask] = useState('');
   const [newTag, setNewTag] = useState('');
+  const [expandedSubtask, setExpandedSubtask] = useState(null);
   const saveTimeout = useRef(null);
+
+  const columns = project?.columns || [];
+  const currentCol = columns.find((c) => c.id === task?.columnId);
+  const initials = user?.name
+    ? user.name.split(' ').map((w) => w[0]).join('').toUpperCase().slice(0, 2)
+    : 'U';
 
   useEffect(() => {
     if (task) {
@@ -64,6 +90,12 @@ export default function TaskDetailPanel({ projectId, taskId, onClose }) {
     updateTask(projectId, taskId, { tags: task.tags.filter((t) => t !== tag) });
   };
 
+  const handleStatusChange = (colId) => {
+    if (colId !== task.columnId) {
+      moveTask(projectId, taskId, colId, 0);
+    }
+  };
+
   const handleDelete = () => {
     if (confirm('Delete this task?')) {
       deleteTask(projectId, taskId);
@@ -71,18 +103,31 @@ export default function TaskDetailPanel({ projectId, taskId, onClose }) {
     }
   };
 
-  const subtaskDone = task.subtasks?.filter((s) => s.done).length || 0;
+  const todoSubtasks = task.subtasks?.filter((s) => !s.done) || [];
+  const doneSubtasks = task.subtasks?.filter((s) => s.done) || [];
+  const priorityObj = PRIORITIES.find((p) => p.id === task.priority);
 
   const panel = (
     <div className="task-detail-panel slide-in-right" onClick={(e) => e.stopPropagation()}>
-      {/* Header */}
+      {/* ── Header bar ── */}
       <div className="tdp-header">
-        <span className="tdp-label">Task Detail</span>
-        <button className="tdp-close" onClick={onClose}><X size={18} /></button>
+        <div className="tdp-header__left">
+          <span className="tdp-project-name">{project?.name || 'Project'}</span>
+          {task.id && <span className="tdp-task-id">ID: {task.id.slice(-4)}</span>}
+        </div>
+        <div className="tdp-header__right">
+          {task.dueDate && (
+            <span className="tdp-due-badge">
+              <Calendar size={12} /> Due date
+            </span>
+          )}
+          <button className="tdp-icon-btn"><MoreVertical size={16} /></button>
+          <button className="tdp-icon-btn" onClick={onClose}><X size={16} /></button>
+        </div>
       </div>
 
       <div className="tdp-body">
-        {/* Title */}
+        {/* ── Title ── */}
         <textarea
           className="tdp-title"
           value={title}
@@ -93,132 +138,187 @@ export default function TaskDetailPanel({ projectId, taskId, onClose }) {
           ref={(el) => { if (el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; } }}
         />
 
-        {/* Meta Grid */}
-        <div className="tdp-meta-grid">
-          <div className="tdp-meta-item">
+        {/* ── Assignee + Priority + Status row ── */}
+        <div className="tdp-controls-row">
+          <div className="tdp-assignee">
+            <span className="tdp-assignee-avatar">{initials}</span>
+            <button className="tdp-add-circle"><Plus size={12} /></button>
+          </div>
+
+          <div className="tdp-control-group">
             <label>Priority</label>
             <select
+              className="tdp-select tdp-select--priority"
               value={task.priority}
               onChange={(e) => updateTask(projectId, taskId, { priority: e.target.value })}
-              style={{ borderColor: PRIORITIES.find((p) => p.id === task.priority)?.color }}
+              style={{ borderColor: priorityObj?.color, color: priorityObj?.color }}
             >
               {PRIORITIES.map((p) => (
                 <option key={p.id} value={p.id}>{p.label}</option>
               ))}
             </select>
           </div>
-          <div className="tdp-meta-item">
-            <label>Due Date</label>
-            <input
-              type="date"
-              value={task.dueDate || ''}
-              onChange={(e) => updateTask(projectId, taskId, { dueDate: e.target.value || null })}
-            />
+
+          <div className="tdp-control-group">
+            <label>Status</label>
+            <select
+              className="tdp-select tdp-select--status"
+              value={task.columnId}
+              onChange={(e) => handleStatusChange(e.target.value)}
+            >
+              {columns.map((col) => (
+                <option key={col.id} value={col.id}>{col.name}</option>
+              ))}
+            </select>
           </div>
         </div>
 
-        {/* Tags */}
-        <div className="tdp-section">
-          <label className="tdp-section-label"><Tag size={14} /> Tags</label>
-          <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginBottom: 'var(--space-2)' }}>
-            {task.tags?.map((tag) => (
-              <span key={tag} className="tdp-tag">
-                {tag}
-                <button onClick={() => removeTag(tag)} style={{ color: 'var(--text3)', marginLeft: 4, cursor: 'pointer', background: 'none', border: 'none', padding: 0, lineHeight: 1 }}>
-                  <X size={12} />
-                </button>
-              </span>
-            ))}
-          </div>
-          <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-            <input
-              value={newTag} onChange={(e) => setNewTag(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleAddTag(); }}
-              placeholder="Add tag..."
-              style={{ flex: 1, fontSize: '0.85rem', padding: 'var(--space-1) var(--space-2)' }}
-            />
-          </div>
+        {/* ── Due date ── */}
+        <div className="tdp-due-row">
+          <Calendar size={14} className="tdp-due-icon" />
+          <input
+            type="date"
+            className="tdp-date-input"
+            value={task.dueDate || ''}
+            onChange={(e) => updateTask(projectId, taskId, { dueDate: e.target.value || null })}
+          />
         </div>
 
-        {/* Description */}
-        <div className="tdp-section">
-          <label className="tdp-section-label">Description</label>
+        {/* ── Description ── */}
+        <div className="tdp-desc-section">
           <textarea
             className="tdp-description"
             value={description}
             onChange={handleDescChange}
             placeholder="Add a description..."
-            rows={4}
+            rows={3}
           />
         </div>
 
-        {/* Subtasks */}
-        <div className="tdp-section">
-          <label className="tdp-section-label">
-            <CheckSquare size={14} /> Subtasks
-            {task.subtasks?.length > 0 && (
-              <span style={{ fontWeight: 400, color: 'var(--text3)', marginLeft: 'var(--space-2)' }}>
-                {subtaskDone}/{task.subtasks.length}
-              </span>
-            )}
-          </label>
-
-          {task.subtasks?.length > 0 && (
-            <div className="tdp-subtask-progress">
-              <div style={{ width: `${task.subtasks.length > 0 ? (subtaskDone / task.subtasks.length) * 100 : 0}%` }} />
-            </div>
-          )}
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
-            {task.subtasks?.map((st) => (
-              <div key={st.id} className="tdp-subtask">
-                <button
-                  onClick={() => toggleSubtask(projectId, taskId, st.id)}
-                  style={{ color: st.done ? 'var(--success)' : 'var(--text3)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex' }}
-                >
-                  {st.done ? <CheckCircle2 size={16} /> : <Square size={16} />}
-                </button>
-                <span style={{ flex: 1, fontSize: '0.875rem', textDecoration: st.done ? 'line-through' : 'none', color: st.done ? 'var(--text3)' : 'var(--text)' }}>
-                  {st.title}
-                </span>
-                <button
-                  onClick={() => removeSubtask(projectId, taskId, st.id)}
-                  style={{ color: 'var(--text3)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, opacity: 0.5 }}
-                >
-                  <X size={14} />
-                </button>
-              </div>
-            ))}
+        {/* ── Subtasks ── */}
+        <div className="tdp-subtasks-section">
+          <div className="tdp-subtask-add-row">
+            <Plus size={14} />
+            <input
+              className="tdp-subtask-input"
+              value={newSubtask}
+              onChange={(e) => setNewSubtask(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleAddSubtask(); }}
+              placeholder="Subtask"
+            />
           </div>
 
-          <div style={{ display: 'flex', gap: 'var(--space-2)', marginTop: 'var(--space-2)' }}>
-            <input
-              value={newSubtask} onChange={(e) => setNewSubtask(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleAddSubtask(); }}
-              placeholder="Add subtask..."
-              style={{ flex: 1, fontSize: '0.85rem', padding: 'var(--space-1) var(--space-2)' }}
-            />
-            <button className="btn btn-ghost" onClick={handleAddSubtask} style={{ padding: 'var(--space-1) var(--space-2)' }}>
-              <Plus size={14} />
+          {/* To Do */}
+          {todoSubtasks.length > 0 && (
+            <>
+              <div className="tdp-subtask-group-label">To Do</div>
+              {todoSubtasks.map((st) => (
+                <div key={st.id} className="tdp-subtask-item">
+                  <button
+                    className="tdp-subtask-check"
+                    onClick={() => toggleSubtask(projectId, taskId, st.id)}
+                  >
+                    <Square size={14} />
+                  </button>
+                  <span
+                    className={`tdp-subtask-title ${expandedSubtask === st.id ? 'expanded' : ''}`}
+                    onClick={() => setExpandedSubtask(expandedSubtask === st.id ? null : st.id)}
+                  >
+                    {st.title}
+                  </span>
+                  <button
+                    className="tdp-subtask-expand"
+                    onClick={() => setExpandedSubtask(expandedSubtask === st.id ? null : st.id)}
+                  >
+                    {expandedSubtask === st.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                  </button>
+                </div>
+              ))}
+            </>
+          )}
+
+          {/* Completed */}
+          {doneSubtasks.length > 0 && (
+            <>
+              <div className="tdp-subtask-group-label tdp-subtask-group-label--done">Completed</div>
+              {doneSubtasks.map((st) => (
+                <div key={st.id} className="tdp-subtask-item tdp-subtask-item--done">
+                  <button
+                    className="tdp-subtask-check tdp-subtask-check--done"
+                    onClick={() => toggleSubtask(projectId, taskId, st.id)}
+                  >
+                    <CheckCircle2 size={14} />
+                  </button>
+                  <span className="tdp-subtask-title done">{st.title}</span>
+                  <button
+                    className="tdp-subtask-remove"
+                    onClick={() => removeSubtask(projectId, taskId, st.id)}
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+
+        {/* ── Attachment placeholder ── */}
+        <button className="tdp-attachment-btn">
+          <Plus size={14} /> Attachment
+        </button>
+
+        {/* ── Tags ── */}
+        <div className="tdp-tags-section">
+          <div className="tdp-tags-label">Tags</div>
+          <div className="tdp-tags-row">
+            {task.tags?.map((tag) => (
+              <span key={tag} className="tdp-tag">
+                {tag}
+                <button className="tdp-tag-remove" onClick={() => removeTag(tag)}>
+                  <X size={10} />
+                </button>
+              </span>
+            ))}
+            <button className="tdp-tag-add" onClick={() => {
+              const tag = prompt('Tag name:');
+              if (tag?.trim() && !task.tags.includes(tag.trim())) {
+                updateTask(projectId, taskId, { tags: [...task.tags, tag.trim()] });
+              }
+            }}>
+              <Plus size={12} />
             </button>
           </div>
         </div>
 
-        {/* Timestamps */}
-        <div className="tdp-section" style={{ fontSize: '0.8rem', color: 'var(--text3)' }}>
-          <div>Created: {new Date(task.createdAt).toLocaleString()}</div>
-          <div>Updated: {new Date(task.updatedAt).toLocaleString()}</div>
-          {task.completedAt && <div>Completed: {new Date(task.completedAt).toLocaleString()}</div>}
+        {/* ── Status timeline ── */}
+        <div className="tdp-status-row">
+          <span className="tdp-status-current">
+            {currentCol?.name || 'Unknown'}
+          </span>
+          <span className="tdp-status-time">
+            <Clock size={11} />
+          </span>
         </div>
+      </div>
 
-        {/* Delete */}
-        <button
-          className="btn btn-ghost"
-          onClick={handleDelete}
-          style={{ color: 'var(--danger)', marginTop: 'var(--space-4)', width: '100%', justifyContent: 'center' }}
-        >
-          <Trash2 size={14} /> Delete Task
-        </button>
+      {/* ── Footer ── */}
+      <div className="tdp-footer">
+        <div className="tdp-footer__meta">
+          <span className="tdp-footer__by">
+            By <strong>{user?.name || 'You'}</strong> on{' '}
+            <span className="tdp-footer__date">{formatDateTime(task.createdAt)}</span>
+          </span>
+          <span className="tdp-footer__followers">
+            Followers <Users size={12} />
+          </span>
+        </div>
+        <div className="tdp-footer__actions">
+          <button className="tdp-footer-btn" onClick={handleDelete}>
+            <Trash2 size={13} /> Delete
+          </button>
+          <button className="tdp-footer-btn">Make Recurring</button>
+          <button className="tdp-footer-btn">Show discussion</button>
+        </div>
       </div>
     </div>
   );

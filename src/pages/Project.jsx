@@ -142,6 +142,7 @@ export default function Project() {
 
         {selectedTaskId && (
           <TaskDetailPanel
+            project={project}
             projectId={projectId}
             taskId={selectedTaskId}
             onClose={() => setSelectedTaskId(null)}
