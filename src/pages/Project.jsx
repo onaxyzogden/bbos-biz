@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { Kanban, List } from 'lucide-react';
+import { Kanban, List, GanttChart } from 'lucide-react';
 import { useProjectStore } from '../store/project-store';
 import { useTaskStore } from '../store/task-store';
 import { useAppStore } from '../store/app-store';
@@ -8,6 +8,7 @@ import { useThresholdStore } from '../store/threshold-store';
 import CeremonyGate from '../components/islamic/CeremonyGate';
 import KanbanBoard from '../components/work/KanbanBoard';
 import ListView from '../components/work/ListView';
+import GanttView from '../components/work/GanttView';
 import TaskDetailPanel from '../components/work/TaskDetailPanel';
 import FilterBar from '../components/work/FilterBar';
 
@@ -124,6 +125,19 @@ export default function Project() {
           >
             <List size={14} /> List
           </button>
+          <button
+            onClick={() => setView('gantt')}
+            className="btn btn-ghost"
+            style={{
+              padding: 'var(--space-1) var(--space-3)', fontSize: '0.85rem',
+              borderRadius: 'var(--radius-sm)',
+              background: view === 'gantt' ? 'var(--surface)' : 'transparent',
+              boxShadow: view === 'gantt' ? 'var(--shadow-xs)' : 'none',
+              color: view === 'gantt' ? 'var(--text)' : 'var(--text2)',
+            }}
+          >
+            <GanttChart size={14} /> Gantt
+          </button>
         </div>
       </div>
 
@@ -135,6 +149,8 @@ export default function Project() {
         <div style={{ flex: 1, minWidth: 0 }}>
           {view === 'board' ? (
             <KanbanBoard project={project} onSelectTask={setSelectedTaskId} filters={filters} />
+          ) : view === 'gantt' ? (
+            <GanttView project={project} onSelectTask={setSelectedTaskId} filters={filters} />
           ) : (
             <ListView project={project} onSelectTask={setSelectedTaskId} filters={filters} />
           )}
