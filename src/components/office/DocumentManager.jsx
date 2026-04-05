@@ -1,14 +1,35 @@
 import { useState, useMemo } from 'react';
-import { Plus, FileText, Folder, Pencil, Trash2, Search, X, Save } from 'lucide-react';
+import { Plus, Pencil, Trash2, Search, X, Save, Download } from 'lucide-react';
 import { useOfficeStore } from '../../store/office-store';
 import './DocumentManager.css';
 
-const DOC_TYPES = [
-  { id: 'note', label: 'Note', icon: '📝' },
-  { id: 'doc', label: 'Document', icon: '📄' },
-  { id: 'template', label: 'Template', icon: '📋' },
-  { id: 'policy', label: 'Policy', icon: '📜' },
+const FILE_TYPES = [
+  { id: 'all', label: 'All' },
+  { id: 'pdf', label: 'Pdf' },
+  { id: 'docx', label: 'Docx' },
+  { id: 'xlsx', label: 'Xlsx' },
+  { id: 'pptx', label: 'Pptx' },
+  { id: 'image', label: 'Image' },
+  { id: 'other', label: 'Other' },
 ];
+
+const FILE_TYPE_COLORS = {
+  pdf: '#ef4444',
+  docx: '#3b82f6',
+  xlsx: '#22c55e',
+  pptx: '#f97316',
+  image: '#8b5cf6',
+  other: '#6b7280',
+};
+
+const FILE_TYPE_BADGES = {
+  pdf: 'PDF',
+  docx: 'DOC',
+  xlsx: 'XLS',
+  pptx: 'PPT',
+  image: 'IMG',
+  other: 'FILE',
+};
 
 export default function DocumentManager() {
   const documents = useOfficeStore((s) => s.documents);
@@ -17,34 +38,27 @@ export default function DocumentManager() {
   const deleteDocument = useOfficeStore((s) => s.deleteDocument);
 
   const [search, setSearch] = useState('');
-  const [filterFolder, setFilterFolder] = useState(null);
+  const [filterType, setFilterType] = useState('all');
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [editing, setEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
   const [editName, setEditName] = useState('');
   const [showNew, setShowNew] = useState(false);
   const [newName, setNewName] = useState('');
-  const [newType, setNewType] = useState('note');
-  const [newFolder, setNewFolder] = useState('General');
-
-  const folders = useMemo(() => {
-    const set = new Set(documents.map((d) => d.folder));
-    set.add('General');
-    return [...set].sort();
-  }, [documents]);
+  const [newFileType, setNewFileType] = useState('other');
 
   const filtered = useMemo(() => {
     let list = [...documents];
-    if (search) { const q = search.toLowerCase(); list = list.filter((d) => d.name.toLowerCase().includes(q) || d.content.toLowerCase().includes(q)); }
-    if (filterFolder) list = list.filter((d) => d.folder === filterFolder);
+    if (search) { const q = search.toLowerCase(); list = list.filter((d) => d.name.toLowerCase().includes(q) || d.content?.toLowerCase().includes(q)); }
+    if (filterType !== 'all') list = list.filter((d) => (d.fileType || 'other') === filterType);
     return list.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
-  }, [documents, search, filterFolder]);
+  }, [documents, search, filterType]);
 
   const handleNew = () => {
     if (!newName.trim()) return;
-    const doc = addDocument({ name: newName, type: newType, folder: newFolder });
+    const doc = addDocument({ name: newName, type: 'doc', folder: 'General', fileType: newFileType });
     setSelectedDoc(doc); setEditing(true); setEditContent(''); setEditName(newName);
-    setShowNew(false); setNewName('');
+    setShowNew(false); setNewName(''); setNewFileType('other');
   };
 
   const handleSave = () => {
@@ -58,6 +72,9 @@ export default function DocumentManager() {
   const openDoc = (doc) => {
     setSelectedDoc(doc); setEditName(doc.name); setEditContent(doc.content); setEditing(false);
   };
+
+  const getDocColor = (doc) => FILE_TYPE_COLORS[doc.fileType || 'other'] || FILE_TYPE_COLORS.other;
+  const getDocBadge = (doc) => FILE_TYPE_BADGES[doc.fileType || 'other'] || FILE_TYPE_BADGES.other;
 
   if (selectedDoc) {
     return (
@@ -79,7 +96,8 @@ export default function DocumentManager() {
           )}
         </div>
         <div className="doc-meta">
-          <span>{selectedDoc.folder}</span> · <span>{DOC_TYPES.find((t) => t.id === selectedDoc.type)?.label || selectedDoc.type}</span> · <span>Updated {new Date(selectedDoc.updatedAt).toLocaleDateString()}</span>
+          <span className="doc-meta-badge" style={{ background: getDocColor(selectedDoc) }}>{getDocBadge(selectedDoc)}</span>
+          <span>Updated {new Date(selectedDoc.updatedAt).toLocaleDateString()}</span>
         </div>
         {editing ? (
           <textarea className="doc-editor" value={editContent} onChange={(e) => setEditContent(e.target.value)} placeholder="Start writing..." autoFocus />
@@ -91,48 +109,57 @@ export default function DocumentManager() {
   }
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)', gap: 'var(--space-3)' }}>
-        <div style={{ position: 'relative', flex: 1, maxWidth: 260 }}>
-          <Search size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text3)' }} />
-          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search documents..."
-            style={{ width: '100%', paddingLeft: 30, fontSize: '0.85rem', borderRadius: 'var(--radius)' }} />
+    <div className="doc-manager">
+      {/* File type tabs */}
+      <div className="doc-type-bar">
+        <div className="doc-type-tabs">
+          {FILE_TYPES.map(ft => (
+            <button key={ft.id} className={`doc-type-tab ${filterType === ft.id ? 'active' : ''}`}
+              onClick={() => setFilterType(ft.id)}>
+              {ft.label}
+            </button>
+          ))}
         </div>
-        <button className="btn btn-primary" onClick={() => setShowNew(true)} style={{ background: 'var(--mod-office)' }}>
-          <Plus size={16} /> New Document
-        </button>
-      </div>
-
-      <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-4)', flexWrap: 'wrap' }}>
-        <button className={`cat-filter-pill ${!filterFolder ? 'active' : ''}`} onClick={() => setFilterFolder(null)}>All</button>
-        {folders.map((f) => (
-          <button key={f} className={`cat-filter-pill ${filterFolder === f ? 'active' : ''}`} onClick={() => setFilterFolder(filterFolder === f ? null : f)}>
-            <Folder size={12} /> {f}
-          </button>
-        ))}
+        <div className="doc-search-wrap">
+          <Search size={14} className="doc-search-icon" />
+          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="search" className="doc-search" />
+        </div>
       </div>
 
       {filtered.length === 0 && !showNew ? (
-        <div className="money-empty">
-          <FileText size={40} className="money-empty-icon" />
-          <h4>No documents yet</h4>
-          <p>Create notes, docs, and templates for your team.</p>
+        <div className="doc-empty">
+          <p>No documents found</p>
           <button className="btn btn-primary" onClick={() => setShowNew(true)} style={{ background: 'var(--mod-office)' }}>
-            <Plus size={16} /> Create Document
+            <Plus size={16} /> Upload Document
           </button>
         </div>
       ) : (
         <div className="doc-grid">
           {filtered.map((doc) => (
             <div key={doc.id} className="doc-card" onClick={() => openDoc(doc)}>
-              <div className="doc-card-icon">{DOC_TYPES.find((t) => t.id === doc.type)?.icon || '📄'}</div>
-              <div className="doc-card-name">{doc.name}</div>
-              <div className="doc-card-meta">{doc.folder} · {new Date(doc.updatedAt).toLocaleDateString('en', { month: 'short', day: 'numeric' })}</div>
-              <button className="row-action-btn danger doc-card-delete" onClick={(e) => { e.stopPropagation(); if (confirm('Delete?')) deleteDocument(doc.id); }}><Trash2 size={12} /></button>
+              <div className="doc-card-thumbnail" style={{ background: `${getDocColor(doc)}15` }}>
+                <span className="doc-card-badge" style={{ background: getDocColor(doc) }}>{getDocBadge(doc)}</span>
+              </div>
+              <div className="doc-card-footer">
+                <div className="doc-card-name">{doc.name}</div>
+                <div className="doc-card-actions">
+                  <button className="doc-action-btn" onClick={(e) => { e.stopPropagation(); }} title="Save">
+                    <Download size={13} /> Save
+                  </button>
+                  <button className="doc-action-btn danger" onClick={(e) => { e.stopPropagation(); if (confirm('Delete?')) deleteDocument(doc.id); }} title="Delete">
+                    <Trash2 size={13} /> Delete
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       )}
+
+      {/* FAB to add new doc */}
+      <button className="doc-fab" onClick={() => setShowNew(true)} title="Upload document">
+        <Plus size={24} />
+      </button>
 
       {showNew && (
         <div className="expense-form-overlay">
@@ -140,14 +167,13 @@ export default function DocumentManager() {
             <div className="expense-form-header"><h3>New Document</h3><button className="expense-form-close" onClick={() => setShowNew(false)}><X size={18} /></button></div>
             <div className="expense-form-body">
               <div className="expense-form-field"><label>Name *</label><input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Document name" autoFocus /></div>
-              <div className="expense-form-row">
-                <div className="expense-form-field" style={{ flex: 1 }}>
-                  <label>Type</label>
-                  <select value={newType} onChange={(e) => setNewType(e.target.value)}>
-                    {DOC_TYPES.map((t) => <option key={t.id} value={t.id}>{t.icon} {t.label}</option>)}
-                  </select>
-                </div>
-                <div className="expense-form-field" style={{ flex: 1 }}><label>Folder</label><input value={newFolder} onChange={(e) => setNewFolder(e.target.value)} placeholder="General" /></div>
+              <div className="expense-form-field">
+                <label>File Type</label>
+                <select value={newFileType} onChange={(e) => setNewFileType(e.target.value)}>
+                  {FILE_TYPES.filter(ft => ft.id !== 'all').map(ft => (
+                    <option key={ft.id} value={ft.id}>{ft.label}</option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className="expense-form-footer">

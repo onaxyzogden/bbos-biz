@@ -36,6 +36,7 @@ export const genEventId = () => 'evt_' + nanoid(12);
 export const genDocumentId = () => 'doc_' + nanoid(12);
 export const genQAId = () => 'qa_' + nanoid(12);
 export const genAnswerId = () => 'ans_' + nanoid(8);
+export const genAnnouncementId = () => 'ann_' + nanoid(12);
 
 // Tech module
 export const genMonitorId = () => 'mon_' + nanoid(12);

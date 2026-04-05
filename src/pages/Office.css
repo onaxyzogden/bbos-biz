@@ -1,24 +1,26 @@
-.office { max-width: 960px; }
-.office-header { margin-bottom: var(--space-4); }
-.office-header h2 { font-size: 1.5rem; }
+.office { width: 100%; }
 
 .office-tabs {
-  display: flex; gap: var(--space-1);
+  display: flex; gap: 0;
   border-bottom: 1px solid var(--border);
-  padding-bottom: var(--space-2); margin-bottom: var(--space-5);
+  margin-bottom: var(--space-5);
   overflow-x: auto;
 }
 .office-tabs::-webkit-scrollbar { display: none; }
 
 .office-tab {
-  display: flex; align-items: center; gap: var(--space-2);
-  padding: var(--space-2) var(--space-4); border-radius: var(--radius-full);
-  font-size: 0.85rem; font-weight: 500; color: var(--text2);
+  padding: var(--space-3) var(--space-5);
+  font-size: 0.875rem; font-weight: 500; color: var(--text2);
   white-space: nowrap; cursor: pointer;
   transition: all var(--duration) var(--ease);
   background: none; border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
 }
-.office-tab:hover { color: var(--text); background: var(--bg3); }
-.office-tab.active { color: var(--mod-office); background: rgba(59, 130, 246, 0.08); font-weight: 600; }
+.office-tab:hover { color: var(--text); }
+.office-tab.active {
+  color: var(--text); font-weight: 600;
+  border-bottom-color: var(--text);
+}
 
 .office-content { min-height: 300px; }
