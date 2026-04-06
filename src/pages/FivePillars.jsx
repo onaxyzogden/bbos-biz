@@ -1,5 +1,6 @@
-import { CheckCircle2, Clock, Coins, Sun, Landmark, ChevronRight } from 'lucide-react';
+import { CheckCircle2, Clock, Coins, Sun, Landmark, ChevronRight, MapPin } from 'lucide-react';
 import { useThresholdStore } from '../store/threshold-store';
+import { usePrayerTimes } from '../hooks/usePrayerTimes';
 import CeremonyGate from '../components/islamic/CeremonyGate';
 import './FivePillars.css';
 
@@ -13,18 +14,35 @@ const PULSE = [
   { label: 'Hajj',    pct: 15 },
 ];
 
-const SALAT = [
-  { id: 'fajr',    name: 'Fajr',    subtitle: 'Subh Prayer',      time: '05:12 AM', done: true  },
-  { id: 'dhuhr',   name: 'Dhuhr',   subtitle: 'Mid-day Prayer',   time: '12:34 PM', done: true  },
-  { id: 'asr',     name: 'Asr',     subtitle: 'Afternoon Prayer', time: '03:55 PM', done: true  },
-  { id: 'maghrib', name: 'Maghrib', subtitle: 'Sunset Prayer',    time: '06:42 PM', done: false },
-  { id: 'isha',    name: 'Isha',    subtitle: 'Night Prayer',     time: '08:05 PM', done: false },
-];
+const PRAYER_SUBTITLES = {
+  Fajr: 'Subh Prayer',
+  Dhuhr: 'Mid-day Prayer',
+  Asr: 'Afternoon Prayer',
+  Maghrib: 'Sunset Prayer',
+  Isha: 'Night Prayer',
+};
+
+function hasPassed(timeStr) {
+  if (!timeStr) return false;
+  const [h, m] = timeStr.split(':').map(Number);
+  const now = new Date();
+  const t = new Date();
+  t.setHours(h, m, 0, 0);
+  return now > t;
+}
 
 /* ── Page ── */
 
 export default function FivePillars() {
   const hasCompletedOpening = useThresholdStore((s) => !!s.completedOpening['five-pillars']);
+  const { allPrayers, loading, requestLocation } = usePrayerTimes();
+
+  const salat = allPrayers.map((p) => ({
+    ...p,
+    id: p.name.toLowerCase(),
+    subtitle: PRAYER_SUBTITLES[p.name] || '',
+    done: hasPassed(p.time),
+  }));
 
   if (!hasCompletedOpening) {
     return <CeremonyGate moduleId="five-pillars" />;
@@ -67,7 +85,25 @@ export default function FivePillars() {
       <section className="fp2-salat">
         <h3 className="fp2-salat__title">Daily Salat</h3>
         <div className="fp2-salat__grid">
-          {SALAT.map((prayer) => (
+          {loading && (
+            <p style={{ color: 'var(--text3)', fontSize: '0.875rem', gridColumn: '1 / -1' }}>
+              Loading prayer times...
+            </p>
+          )}
+          {!loading && salat.length === 0 && (
+            <button
+              onClick={requestLocation}
+              style={{
+                gridColumn: '1 / -1', display: 'flex', alignItems: 'center', gap: 8,
+                background: 'var(--primary-bg)', border: '1px dashed var(--primary-border)',
+                borderRadius: 'var(--radius)', padding: 'var(--space-4)', cursor: 'pointer',
+                color: 'var(--primary)', fontSize: '0.875rem', fontWeight: 500,
+              }}
+            >
+              <MapPin size={16} /> Enable location for live prayer times
+            </button>
+          )}
+          {salat.map((prayer) => (
             <div
               key={prayer.id}
               className={`fp2-salat__card ${prayer.done ? 'fp2-salat__card--done' : 'fp2-salat__card--pending'}`}

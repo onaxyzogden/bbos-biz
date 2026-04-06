@@ -8,16 +8,8 @@ import {
   ChevronLeft,
   PlayCircle,
 } from 'lucide-react';
+import { usePrayerTimes } from '../hooks/usePrayerTimes';
 import './FaithDashboard.css';
-
-/* ── Static data (placeholder until live APIs are wired up) ── */
-
-const PRAYER = {
-  name: 'Dhuhr',
-  countdown: '02h 14m',
-  time: '12:42 PM',
-  location: 'London, UK',
-};
 
 const ADHKAR = [
   { id: 'morning', label: 'Morning', count: 24, icon: 'sun' },
@@ -60,6 +52,8 @@ const INSIGHTS = [
 /* ── Component ── */
 
 export default function FaithDashboard() {
+  const { nextPrayer, cityName, loading, timings, requestLocation } = usePrayerTimes();
+
   return (
     <div className="faith-dash font-manrope">
 
@@ -83,15 +77,36 @@ export default function FaithDashboard() {
           <div className="faith-prayer-card">
             <div className="faith-prayer-card__left">
               <span className="faith-label">Current Horizon</span>
-              <h3 className="faith-prayer-card__name">{PRAYER.name}</h3>
-              <p className="faith-prayer-card__countdown">Begins in {PRAYER.countdown}</p>
+              <h3 className="faith-prayer-card__name">
+                {loading ? '...' : (nextPrayer?.name ?? '—')}
+              </h3>
+              <p className="faith-prayer-card__countdown">
+                {loading
+                  ? 'Loading...'
+                  : nextPrayer
+                    ? (nextPrayer.remaining === 'tomorrow'
+                        ? 'Tomorrow at dawn'
+                        : `Begins in ${nextPrayer.remaining}`)
+                    : 'Enable location below'}
+              </p>
             </div>
             <div className="faith-prayer-card__right">
               <div className="faith-prayer-card__time-label">Local Time</div>
-              <div className="faith-prayer-card__time">{PRAYER.time}</div>
+              <div className="faith-prayer-card__time">
+                {loading ? '—' : (nextPrayer?.time ?? '—')}
+              </div>
               <div className="faith-prayer-card__location">
                 <MapPin size={16} />
-                <span>{PRAYER.location}</span>
+                {!timings && !loading ? (
+                  <button
+                    onClick={requestLocation}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: 'inherit', fontSize: 'inherit', textDecoration: 'underline' }}
+                  >
+                    Enable prayer times
+                  </button>
+                ) : (
+                  <span>{cityName || 'Your Location'}</span>
+                )}
               </div>
             </div>
           </div>
