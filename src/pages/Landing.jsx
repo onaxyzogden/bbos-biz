@@ -9,10 +9,10 @@ import '../styles/landing.css';
 const ICON_MAP = { Kanban, Wallet, Users, Building2, Shield, Handshake };
 
 const FAQS = [
-  { q: 'What is BBOS?', a: 'BBOS (Barakah Business Operating System) is an all-in-one platform to manage your work, finances, team, and operations — built on principles of ethical stewardship, excellence, and honest reckoning.' },
-  { q: 'Is BBOS free to use?', a: 'Yes. The Starter plan is free and includes full access to the Work module with unlimited projects. Pro and Enterprise plans unlock additional modules and advanced features.' },
-  { q: 'What makes BBOS different from other project management tools?', a: 'BBOS integrates an optional Islamic governance layer alongside modern business tools. It combines project management, finance, HR, and communication in one system — with built-in ethical guardrails.' },
-  { q: 'Can I use BBOS without the Islamic layer?', a: 'Absolutely. During onboarding you choose between the Islamic values path and a universal ethics path. The core business tools work identically either way.' },
+  { q: 'What is MAQASID?', a: 'MAQASID (Islamic Life Operating System) is an all-in-one platform to manage your life, work, finances, and spiritual growth — built on principles of ethical stewardship, excellence, and honest reckoning.' },
+  { q: 'Is MAQASID free to use?', a: 'Yes. The Starter plan is free and includes full access to the Work module with unlimited projects. Pro and Enterprise plans unlock additional modules and advanced features.' },
+  { q: 'What makes MAQASID different from other project management tools?', a: 'MAQASID integrates an optional Islamic governance layer alongside modern business tools. It combines project management, finance, HR, and communication in one system — with built-in ethical guardrails.' },
+  { q: 'Can I use MAQASID without the Islamic layer?', a: 'Absolutely. During onboarding you choose between the Islamic values path and a universal ethics path. The core business tools work identically either way.' },
   { q: 'What modules are available?', a: 'Work (project management and Kanban boards) is available now. Money, People, Office, and Tech modules are coming soon.' },
   { q: 'Can I export my data?', a: 'Yes. All your data can be exported as JSON at any time from Settings. You own your data completely.' },
 ];
@@ -57,7 +57,7 @@ export default function Landing() {
       <nav className="landing-nav">
         <Link to="/" className="landing-logo">
           <div className="logo-icon">B</div>
-          BBOS
+          MAQASID
         </Link>
         <ul className="landing-nav-links">
           <li><a href="#features">Features</a></li>
@@ -85,7 +85,7 @@ export default function Landing() {
         <div className="expense-form-overlay" style={{ zIndex: 300 }}>
           <div className="expense-form-modal" style={{ maxWidth: 400 }}>
             <div className="expense-form-header">
-              <h3>Sign In to BBOS</h3>
+              <h3>Sign In to MAQASID</h3>
               <button className="expense-form-close" onClick={() => setShowLogin(false)}><X size={18} /></button>
             </div>
             <div className="expense-form-body">
@@ -116,7 +116,7 @@ export default function Landing() {
       {/* Hero */}
       <section className="hero-section">
         <div className="hero-badge">
-          <Star size={14} /> Barakah Business Operating System
+          <Star size={14} /> Islamic Life Operating System
         </div>
         <h1 className="hero-title">
           Run your business with <span className="highlight">clarity and purpose</span>
@@ -284,9 +284,9 @@ export default function Landing() {
           <div className="footer-brand">
             <div className="landing-logo" style={{ marginBottom: 'var(--space-3)' }}>
               <div className="logo-icon">B</div>
-              BBOS
+              MAQASID
             </div>
-            <p>Barakah Business Operating System.<br />Built with tawakkul.</p>
+            <p>Islamic Life Operating System.<br />Built with tawakkul.</p>
           </div>
           <div className="footer-col">
             <h6>Product</h6>
@@ -314,7 +314,7 @@ export default function Landing() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>&copy; {new Date().getFullYear()} BBOS. All rights reserved.</span>
+          <span>&copy; {new Date().getFullYear()} MAQASID. All rights reserved.</span>
           <span>Future of Business. With Purpose.</span>
         </div>
       </footer>

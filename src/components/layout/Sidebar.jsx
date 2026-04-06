@@ -108,7 +108,7 @@ export default function Sidebar() {
         {!collapsed && (
           <Link to="/app" className="sidebar-logo">
             <div className="logo-icon">B</div>
-            <span>BBOS</span>
+            <span>MAQASID</span>
           </Link>
         )}
         <button className="sidebar-toggle" onClick={toggleSidebar} title={collapsed ? 'Expand' : 'Collapse'}>

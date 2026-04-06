@@ -70,7 +70,7 @@ export default function Onboarding() {
         {/* Step 0: Profile */}
         {step === 0 && (
           <div className="fade-in">
-            <h2 style={{ marginBottom: 'var(--space-2)' }}>Welcome to BBOS</h2>
+            <h2 style={{ marginBottom: 'var(--space-2)' }}>Welcome to MAQASID</h2>
             <p style={{ color: 'var(--text2)', marginBottom: 'var(--space-6)' }}>Tell us about yourself.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <div>
@@ -154,7 +154,7 @@ export default function Onboarding() {
           <div className="fade-in">
             <h2 style={{ marginBottom: 'var(--space-2)' }}>Choose your path</h2>
             <p style={{ color: 'var(--text2)', marginBottom: 'var(--space-6)' }}>
-              BBOS offers two framing layers. Both have identical business tools.
+              MAQASID offers two framing layers. Both have identical business tools.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
               {[
@@ -209,7 +209,7 @@ export default function Onboarding() {
             </button>
           ) : (
             <button className="btn btn-primary btn-lg" onClick={finish}>
-              Launch BBOS <ArrowRight size={18} />
+              Launch MAQASID <ArrowRight size={18} />
             </button>
           )}
         </div>
