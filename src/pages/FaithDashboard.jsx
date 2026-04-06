@@ -1,208 +1,231 @@
 import {
-  MapPin,
-  Quote,
-  Sun,
+  CheckCircle2,
+  HeartHandshake,
+  HandHeart,
   Moon,
-  MoreHorizontal,
-  ChevronRight,
-  ChevronLeft,
-  PlayCircle,
+  BookOpen,
+  Languages,
+  Star,
+  Sparkles,
+  Lock,
+  ArrowRight,
+  Leaf,
+  Diamond,
+  Infinity,
 } from 'lucide-react';
-import { usePrayerTimes } from '../hooks/usePrayerTimes';
 import './FaithDashboard.css';
 
-const ADHKAR = [
-  { id: 'morning', label: 'Morning', count: 24, icon: 'sun' },
-  { id: 'evening', label: 'Evening', count: 18, icon: 'moon' },
+const HERO_IMG =
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuB7yi2Heav2Z0mqhVMhhut3SHYpURYIRoOs8CGWAQNRGHMHh21moZOuIJz_k-HojEniMWaIgSgOzFcOl_ssP0q59xMBMcKNMK5DPnCzTyzVZZ9ISqoeNGRAvBl10a907uGXQrsWV4-PrKWgMNXgDLOIz7AxMRpqXgCuXIYbCd8JwwDHRqJhbPyDA_bCW3AiFM41zPspFIzfxORnBf0IGrOn3-ETpVDCGt7alE7mzjqMN_ZtILCUEEFI7KHe4xARWOXeUg6yYiFGmrU';
+
+const CORE_PILLARS = [
+  { id: 'shahada', label: 'Shahada', pct: 100, Icon: CheckCircle2, active: true },
+  { id: 'salat', label: 'Salat', pct: 85, Icon: HeartHandshake, active: true },
+  { id: 'zakat', label: 'Zakat & Sadaqah', pct: 32, Icon: HandHeart, active: false },
+  { id: 'siyam', label: 'Siyam', pct: 0, Icon: Moon, active: false },
 ];
 
-const LEARNING = {
-  title: 'The Makkan Period',
-  subtitle: 'Ongoing Study',
-  progress: 65,
-};
-
-const INSIGHTS = [
+const GROWTH_ITEMS = [
   {
-    id: 'architecture',
-    category: 'Architecture',
-    title: 'Geometric Infinity: The Logic of the Unseen',
-    excerpt:
-      'Exploring how Islamic design mirrors the infinite nature of the Divine through mathematical repetition.',
-    gradient: 'linear-gradient(135deg, var(--faith-tertiary-container), var(--faith-surface-container-high))',
+    id: 'names',
+    Icon: BookOpen,
+    title: '99 Names of Allah',
+    desc: 'Internalizing the Divine attributes to reflect them in character and worship.',
+    status: 'ACTIVE STUDY',
+    statusClass: 'faith-badge--active',
+    progress: '24/99 Known',
   },
   {
-    id: 'philosophy',
-    category: 'Philosophy',
-    title: 'Quietude in a Distracted World',
-    excerpt:
-      "The practice of 'Khalwa' in the digital age — finding spiritual isolation within the noise.",
-    gradient: 'linear-gradient(135deg, var(--faith-primary-container), var(--faith-tertiary-container))',
-  },
-  {
-    id: 'ecology',
-    category: 'Ecology',
-    title: 'Stewards of the Earth',
-    excerpt:
-      'A theological perspective on climate responsibility and the mandate of Khilafa.',
-    gradient: 'linear-gradient(135deg, var(--faith-surface-container-high), var(--faith-primary-container))',
+    id: 'prayer',
+    Icon: Languages,
+    title: 'Meaning of Prayer',
+    desc: 'Understanding the Arabic translations of daily adhkar and Juz Amma.',
+    status: 'QUEUED',
+    statusClass: 'faith-badge--queued',
+    progress: 'In Progress',
   },
 ];
 
-/* ── Component ── */
+const EXCELLENCE_ITEMS = [
+  {
+    id: 'representative',
+    Icon: Star,
+    title: 'Representative Excellence',
+    desc: 'Perfecting the outward manifestation of inner faith through conduct.',
+  },
+  {
+    id: 'ascension',
+    Icon: Sparkles,
+    title: 'Spiritual Ascension',
+    desc: 'The final layer of excellence in spiritual intimacy and constant dhikr.',
+  },
+];
 
 export default function FaithDashboard() {
-  const { nextPrayer, cityName, loading, timings, requestLocation } = usePrayerTimes();
-
   return (
     <div className="faith-dash font-manrope">
 
-      {/* Hero */}
-      <section className="faith-hero">
-        <div>
-          <h2 className="faith-hero__title">The Sacred Rhythm</h2>
-          <p className="faith-hero__subtitle">
-            Today is 14 Ramadan 1445 · Peace be upon the seekers.
+      {/* ── Header ── */}
+      <header className="faith-header">
+        <div className="faith-header__left">
+          <span className="faith-badge faith-badge--module">MODULE I</span>
+          <h1 className="faith-header__title">Faith (Deen)</h1>
+          <blockquote className="faith-header__verse">
+            <p>
+              "Those who have believed and whose hearts are assured by the
+              remembrance of Allah. Unquestionably, by the remembrance of Allah
+              hearts are assured."
+            </p>
+            <cite className="faith-header__cite">— Surah Ar-Ra'd 13:28</cite>
+          </blockquote>
+        </div>
+        <div className="faith-header__right">
+          <span className="faith-header__pct">48%</span>
+          <span className="faith-header__pct-label">Progress to Mastery</span>
+          <div className="faith-header__progress-wrap">
+            <div className="faith-progress-bar">
+              <div className="faith-progress-fill" style={{ width: '48%' }} />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* ── Current Focus Hero ── */}
+      <section className="faith-hero-card">
+        <img
+          className="faith-hero-card__image"
+          src={HERO_IMG}
+          alt="Sacred geometry architecture"
+        />
+        <div className="faith-hero-card__gradient" />
+        <div className="faith-hero-card__content">
+          <span className="faith-label faith-label--light">Current Focus</span>
+          <h2 className="faith-hero-card__title">Correct Creed (Aqidah)</h2>
+          <p className="faith-hero-card__desc">
+            Internalizing the foundations of belief and the six pillars of Iman
+            with certainty.
           </p>
+          <button className="faith-hero-card__cta">
+            Continue Practice
+            <ArrowRight size={16} />
+          </button>
         </div>
       </section>
 
-      {/* Bento grid */}
-      <div className="faith-bento">
+      {/* ── Pillars Bento Grid ── */}
+      <section className="faith-pillars">
 
-        {/* ── Main column (8 cols) ── */}
-        <div className="faith-bento__main">
-
-          {/* Prayer card */}
-          <div className="faith-prayer-card">
-            <div className="faith-prayer-card__left">
-              <span className="faith-label">Current Horizon</span>
-              <h3 className="faith-prayer-card__name">
-                {loading ? '...' : (nextPrayer?.name ?? '—')}
-              </h3>
-              <p className="faith-prayer-card__countdown">
-                {loading
-                  ? 'Loading...'
-                  : nextPrayer
-                    ? (nextPrayer.remaining === 'tomorrow'
-                        ? 'Tomorrow at dawn'
-                        : `Begins in ${nextPrayer.remaining}`)
-                    : 'Enable location below'}
-              </p>
-            </div>
-            <div className="faith-prayer-card__right">
-              <div className="faith-prayer-card__time-label">Local Time</div>
-              <div className="faith-prayer-card__time">
-                {loading ? '—' : (nextPrayer?.time ?? '—')}
+        {/* Level 1: Necessities */}
+        <div className="faith-core-card">
+          <span className="faith-badge faith-badge--dark">LEVEL 1: NECESSITIES</span>
+          <h3 className="faith-core-card__title">Core Pillars</h3>
+          <p className="faith-core-card__desc">
+            Foundational elements required for the preservation of faith and soul.
+          </p>
+          <div className="faith-core-list">
+            {CORE_PILLARS.map(({ id, label, pct, Icon, active }) => (
+              <div
+                key={id}
+                className={`faith-core-item${active ? '' : ' faith-core-item--dim'}`}
+              >
+                <div className="faith-core-item__icon-wrap">
+                  <Icon size={20} />
+                </div>
+                <div className="faith-core-item__info">
+                  <div className="faith-core-item__row">
+                    <span className="faith-core-item__label">{label}</span>
+                    <span className="faith-core-item__pct">{pct}%</span>
+                  </div>
+                  <div className="faith-progress-bar faith-progress-bar--sm faith-progress-bar--onprimary">
+                    <div
+                      className="faith-progress-fill faith-progress-fill--light"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="faith-prayer-card__location">
-                <MapPin size={16} />
-                {!timings && !loading ? (
-                  <button
-                    onClick={requestLocation}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: 'inherit', fontSize: 'inherit', textDecoration: 'underline' }}
-                  >
-                    Enable prayer times
-                  </button>
-                ) : (
-                  <span>{cityName || 'Your Location'}</span>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Verse of the Day */}
-          <div className="faith-verse-card">
-            <Quote className="faith-verse-card__icon" size={36} strokeWidth={1} />
-            <div className="faith-verse-card__body">
-              <blockquote className="faith-verse-card__quote">
-                "Unquestionably, by the remembrance of Allah hearts are assured."
-              </blockquote>
-              <div className="faith-verse-card__divider" />
-              <cite className="faith-verse-card__cite">Surah Ar-Ra'd 13:28</cite>
-            </div>
-            <div className="faith-verse-card__actions">
-              <button className="faith-pill-btn">Listen</button>
-              <button className="faith-pill-btn">Tafsir</button>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* ── Side column (4 cols) ── */}
-        <div className="faith-bento__side">
+        {/* Level 2 + 3 sub-grid */}
+        <div className="faith-pillars__right">
 
-          {/* Daily Adhkar */}
-          <div className="faith-adhkar-card">
-            <div className="faith-adhkar-card__header">
-              <span className="faith-label">Daily Adhkar</span>
-              <MoreHorizontal size={20} className="faith-adhkar-card__more" />
-            </div>
-            <div className="faith-adhkar-list">
-              {ADHKAR.map((item) => (
-                <div key={item.id} className="faith-adhkar-item">
-                  <div className="faith-adhkar-item__icon-wrap faith-adhkar-item__icon-wrap--morning">
-                    {item.icon === 'sun' ? <Sun size={18} /> : <Moon size={18} />}
+          {/* Level 2: Needs */}
+          <div className="faith-needs-card">
+            <span className="faith-badge faith-badge--secondary">LEVEL 2: NEEDS</span>
+            <h3 className="faith-needs-card__title">Growth Space</h3>
+            <p className="faith-needs-card__desc">
+              Spiritual expansions that deepen the connection and refine the
+              understanding of Deen.
+            </p>
+            <div className="faith-study-list">
+              {GROWTH_ITEMS.map(({ id, Icon, title, desc, status, statusClass, progress }) => (
+                <div key={id} className="faith-study-item">
+                  <div className="faith-study-item__header">
+                    <Icon size={20} />
+                    <span className="faith-study-item__name">{title}</span>
                   </div>
-                  <div className="faith-adhkar-item__text">
-                    <p className="faith-adhkar-item__label">{item.label}</p>
-                    <p className="faith-adhkar-item__count">{item.count} Supplications</p>
+                  <p className="faith-study-item__desc">{desc}</p>
+                  <div className="faith-study-item__footer">
+                    <span className={statusClass}>{status}</span>
+                    <span className="faith-study-item__progress">{progress}</span>
                   </div>
-                  <ChevronRight size={16} className="faith-adhkar-item__arrow" />
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Learning Highlight */}
-          <div className="faith-learning-card">
-            <div className="faith-learning-card__image" />
-            <div className="faith-learning-card__overlay">
-              <span className="faith-label faith-label--light">{LEARNING.subtitle}</span>
-              <h4 className="faith-learning-card__title">{LEARNING.title}</h4>
-              <div className="faith-learning-card__progress-track">
-                <div
-                  className="faith-learning-card__progress-fill"
-                  style={{ width: `${LEARNING.progress}%` }}
-                />
-              </div>
-              <button className="faith-learning-card__resume">
-                <span>Resume Session</span>
-                <PlayCircle size={18} />
-              </button>
+          {/* Level 3: Excellence */}
+          <div className="faith-excellence-card">
+            <span className="faith-badge faith-badge--tertiary">LEVEL 3: EXCELLENCE</span>
+            <h3 className="faith-excellence-card__title">Embellishments</h3>
+            <p className="faith-excellence-card__desc">
+              The refinement of devotion and representative excellence (Ihsan).
+            </p>
+            <div className="faith-locked-list">
+              {EXCELLENCE_ITEMS.map(({ id, Icon, title, desc }) => (
+                <div key={id} className="faith-locked-item">
+                  <div className="faith-locked-item__header">
+                    <Icon size={20} />
+                    <Lock size={14} />
+                  </div>
+                  <h4 className="faith-locked-item__title">{title}</h4>
+                  <p className="faith-locked-item__desc">{desc}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Curated Insights */}
-      <section className="faith-insights">
-        <div className="faith-insights__header">
-          <h3 className="faith-insights__title">Curated Insights</h3>
-          <div className="faith-insights__nav">
-            <button className="faith-nav-btn" aria-label="Previous">
-              <ChevronLeft size={20} />
-            </button>
-            <button className="faith-nav-btn" aria-label="Next">
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        </div>
-        <div className="faith-insights__grid">
-          {INSIGHTS.map((insight) => (
-            <div key={insight.id} className="faith-insight-card">
-              <div
-                className="faith-insight-card__image"
-                style={{ background: insight.gradient }}
-              />
-              <div className="faith-insight-card__body">
-                <p className="faith-label faith-label--tertiary">{insight.category}</p>
-                <h5 className="faith-insight-card__title">{insight.title}</h5>
-                <p className="faith-insight-card__excerpt">{insight.excerpt}</p>
-              </div>
+          {/* Hajj CTA */}
+          <div className="faith-hajj-cta">
+            <div className="faith-hajj-cta__bg" />
+            <div className="faith-hajj-cta__content">
+              <h4 className="faith-hajj-cta__title">The Journey of Hajj</h4>
+              <p className="faith-hajj-cta__desc">
+                Begin the mandatory prerequisites and symbolic understanding for
+                the ultimate pilgrimage.
+              </p>
             </div>
-          ))}
+            <button className="faith-hajj-cta__btn">Begin Prerequisites</button>
+          </div>
+
         </div>
       </section>
+
+      {/* ── Footer ── */}
+      <footer className="faith-footer">
+        <div className="faith-footer__text">
+          <span>The Modern Manuscript &copy; 2024</span>
+          <div className="faith-footer__dot" />
+          <span>Faith Module Details</span>
+        </div>
+        <div className="faith-footer__icons">
+          <Leaf size={20} />
+          <Diamond size={20} />
+          <Infinity size={20} />
+        </div>
+      </footer>
 
     </div>
   );
