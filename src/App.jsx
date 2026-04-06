@@ -20,6 +20,7 @@ import IslamicKnowledgePage from './pages/IslamicKnowledgePage';
 import PillarDashboard from './pages/PillarDashboard';
 import FaithDashboard from './pages/FaithDashboard';
 import LifeDashboard from './pages/LifeDashboard';
+import IntellectDashboard from './pages/IntellectDashboard';
 import Settings from './pages/Settings';
 import ModulePlaceholder from './pages/ModulePlaceholder';
 
@@ -58,6 +59,7 @@ export default function App() {
         <Route path="islamic-knowledge" element={<IslamicKnowledgePage />} />
         <Route path="pillar/faith" element={<FaithDashboard />} />
         <Route path="pillar/life" element={<LifeDashboard />} />
+        <Route path="pillar/intellect" element={<IntellectDashboard />} />
         <Route path="pillar/:pillarId" element={<PillarDashboard />} />
         <Route path="settings" element={<Settings />} />
         <Route path=":moduleId" element={<ModulePlaceholder />} />
