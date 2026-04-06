@@ -16,6 +16,7 @@ import Community from './pages/Community';
 import FivePillars from './pages/FivePillars';
 import QuranPage from './pages/QuranPage';
 import HadithPage from './pages/HadithPage';
+import IslamicKnowledgePage from './pages/IslamicKnowledgePage';
 import PillarDashboard from './pages/PillarDashboard';
 import FaithDashboard from './pages/FaithDashboard';
 import Settings from './pages/Settings';
@@ -53,6 +54,7 @@ export default function App() {
         <Route path="five-pillars" element={<FivePillars />} />
         <Route path="quran" element={<QuranPage />} />
         <Route path="hadith" element={<HadithPage />} />
+        <Route path="islamic-knowledge" element={<IslamicKnowledgePage />} />
         <Route path="pillar/faith" element={<FaithDashboard />} />
         <Route path="pillar/:pillarId" element={<PillarDashboard />} />
         <Route path="settings" element={<Settings />} />
