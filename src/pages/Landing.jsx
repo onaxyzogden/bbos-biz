@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Kanban, Wallet, Users, Building2, Shield, Check, ChevronDown, ArrowRight, Star, LogIn, X, Handshake } from 'lucide-react';
+import { Kanban, Wallet, Users, Building2, Shield, Check, ChevronDown, ArrowRight, Star, LogIn, X, Handshake, Moon } from 'lucide-react';
 import { MODULES } from '../data/modules';
 import { useAuthStore } from '../store/auth-store';
 import { genUserId } from '../services/id';
@@ -56,7 +56,7 @@ export default function Landing() {
       {/* Nav */}
       <nav className="landing-nav">
         <Link to="/" className="landing-logo">
-          <div className="logo-icon">B</div>
+          <div className="logo-icon"><Moon size={16} /></div>
           MAQASID
         </Link>
         <ul className="landing-nav-links">
@@ -283,7 +283,7 @@ export default function Landing() {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="landing-logo" style={{ marginBottom: 'var(--space-3)' }}>
-              <div className="logo-icon">B</div>
+              <div className="logo-icon"><Moon size={16} /></div>
               MAQASID
             </div>
             <p>Islamic Life Operating System.<br />Built with tawakkul.</p>

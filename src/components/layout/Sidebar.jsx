@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Kanban, Wallet, Users, Building2, Shield, Heart, Home, UsersRound, Landmark, BookOpen, ScrollText,
   LayoutDashboard, Settings, Plus, ChevronLeft, ChevronRight,
-  ChevronDown, Bell, BookHeart, HeartPulse, Brain, Coins, TreePine,
+  ChevronDown, Bell, BookHeart, HeartPulse, Brain, Coins, TreePine, Moon,
   Activity, BrainCircuit, Sparkles, HeartHandshake,
   Library, Wrench, Lightbulb, Share2,
   Baby, CalendarHeart, Handshake,
@@ -107,7 +107,7 @@ export default function Sidebar() {
       <div className="sidebar-header">
         {!collapsed && (
           <Link to="/app" className="sidebar-logo">
-            <div className="logo-icon">B</div>
+            <div className="logo-icon"><Moon size={14} /></div>
             <span>MAQASID</span>
           </Link>
         )}
