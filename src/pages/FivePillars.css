@@ -14,7 +14,7 @@
 .fp-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--mod-five-pillars);
+  border-left: 3px solid var(--fp-accent, var(--mod-five-pillars));
   border-radius: var(--radius-lg);
   padding: var(--space-5) var(--space-6);
   transition: box-shadow var(--duration) var(--ease);

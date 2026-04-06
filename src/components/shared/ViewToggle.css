@@ -1,0 +1,51 @@
+/* ViewToggle — two-button pill toggle for Overview / Framework views */
+.vt {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-1);
+}
+
+.vt__btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--text3);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background var(--duration) var(--ease),
+              color var(--duration) var(--ease);
+  white-space: nowrap;
+}
+
+.vt__btn:hover {
+  color: var(--text2);
+  background: var(--surface-hover);
+}
+
+.vt__btn--active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.vt__btn--active:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ── Dark theme ── */
+[data-theme='dark'] .vt__btn--active {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}

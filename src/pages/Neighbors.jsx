@@ -1,10 +1,18 @@
-import { Home } from 'lucide-react';
+import { useState } from 'react';
 import { useThresholdStore } from '../store/threshold-store';
 import CeremonyGate from '../components/islamic/CeremonyGate';
 import PillarHeader from '../components/shared/PillarHeader';
+import ViewToggle from '../components/shared/ViewToggle';
+import OverviewCards from '../components/shared/OverviewCards';
+import MaqasidTable from '../components/shared/MaqasidTable';
+import { OVERVIEW, MAQASID } from '../data/module-overviews/neighbors-overview';
+
+const GROUNDING =
+  'Grounded with quran.ai: fetch_quran & fetch_translation (ar-simple-clean, en-abdel-haleem) for ayah 4:36. Hadith: Sunan al-Tirmidhi 1944.';
 
 export default function Neighbors() {
   const hasCompletedOpening = useThresholdStore((s) => !!s.completedOpening['neighbors']);
+  const [view, setView] = useState('overview');
 
   if (!hasCompletedOpening) {
     return <CeremonyGate moduleId="neighbors" />;
@@ -13,20 +21,16 @@ export default function Neighbors() {
   return (
     <div style={{ maxWidth: 900 }}>
       <PillarHeader moduleId="neighbors" />
-      <div style={{
-        background: 'var(--surface)',
-        border: '1px dashed var(--border2)',
-        borderRadius: 'var(--radius-lg)',
-        padding: 'var(--space-12)',
-        textAlign: 'center',
-        marginTop: 'var(--space-6)',
-      }}>
-        <Home size={48} style={{ color: 'var(--text3)', marginBottom: 'var(--space-4)' }} />
-        <h3 style={{ marginBottom: 'var(--space-2)' }}>Neighbors</h3>
-        <p style={{ color: 'var(--text2)', maxWidth: 440, margin: '0 auto' }}>
-          Neighbor directory, local connections, and mutual aid tools are coming soon.
-        </p>
-      </div>
+      <ViewToggle view={view} onChange={setView} />
+      {view === 'overview' ? (
+        <OverviewCards
+          items={OVERVIEW}
+          moduleColor="var(--mod-neighbors)"
+          grounding={GROUNDING}
+        />
+      ) : (
+        <MaqasidTable data={MAQASID} moduleColor="var(--mod-neighbors)" />
+      )}
     </div>
   );
 }
