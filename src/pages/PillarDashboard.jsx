@@ -80,7 +80,7 @@ export default function PillarDashboard() {
             ) : (
               tableEntries.map((entry) => {
                 const mod = modulesById[entry.subModuleId];
-                const modName = mod ? mod.name : entry.subModuleId;
+                const modName = entry.label || (mod ? mod.name : entry.subModuleId);
                 const rows = getRows(entry);
                 const isEmpty = !entry.necessities.length && !entry.needs.length && !entry.embelishments.length;
 

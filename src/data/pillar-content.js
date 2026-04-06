@@ -39,22 +39,63 @@ export const PILLAR_CONTENT = {
     },
   ],
 
-  life: [],
-  intellect: [],
+  life: [
+    {
+      subModuleId: 'life-wellness',
+      label: 'Physical Wellness',
+      necessities: [
+        'Halal nutrition, basic hygiene, safety',
+        'Halal food, water, sleep, and basic medical care.',
+      ],
+      needs: [
+        'Preservation of the body and soul',
+        'Ability to perform worship and fulfill daily duties.',
+        'Good role model and image and representation of Islam',
+      ],
+      embelishments: [
+        'Fitness optimization, organic/Tayyib food',
+        'Athletic training, preventative bio-hacking, and choosing Tayyib (wholesome/organic) sources.',
+      ],
+    },
+  ],
+
+  intellect: [
+    {
+      subModuleId: 'intellect-skills',
+      label: 'Skill Development',
+      necessities: ['Education and literacy'],
+      needs: ['Mental clarity and problem solving'],
+      embelishments: ['Mastering a craft or specialized expertise'],
+    },
+  ],
 
   family: [
-    { subModuleId: 'family', necessities: [], needs: [], embelishments: [] },
-    { subModuleId: 'neighbors', necessities: [], needs: [], embelishments: [] },
-    { subModuleId: 'community', necessities: [], needs: [], embelishments: [] },
+    {
+      subModuleId: 'family-relationships',
+      label: 'Relationship Building',
+      necessities: ['Legal marriage, rights of children'],
+      needs: ['Stability of the family unit'],
+      embelishments: ['Emotional intelligence & deep bonding'],
+    },
   ],
 
   wealth: [
-    { subModuleId: 'money', necessities: [], needs: [], embelishments: [] },
-    { subModuleId: 'work', necessities: [], needs: [], embelishments: [] },
-    { subModuleId: 'office', necessities: [], needs: [], embelishments: [] },
-    { subModuleId: 'tech', necessities: [], needs: [], embelishments: [] },
-    { subModuleId: 'people', necessities: [], needs: [], embelishments: [] },
+    {
+      subModuleId: 'wealth-finance',
+      label: 'Financial Literacy',
+      necessities: ['Avoiding interest (Riba) and debt'],
+      needs: ['Financial independence and security'],
+      embelishments: ['Ethical investing & social entrepreneurship'],
+    },
   ],
 
-  environment: [],
+  environment: [
+    {
+      subModuleId: 'environment-sustainability',
+      label: 'Sustainability',
+      necessities: ['Avoiding waste (Israf)'],
+      needs: ['Preservation of Earth for future generations'],
+      embelishments: ['Beautifying the environment (beautification)'],
+    },
+  ],
 };
