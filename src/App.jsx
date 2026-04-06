@@ -18,6 +18,7 @@ import QuranPage from './pages/QuranPage';
 import HadithPage from './pages/HadithPage';
 import PillarDashboard from './pages/PillarDashboard';
 import Settings from './pages/Settings';
+import ModulePlaceholder from './pages/ModulePlaceholder';
 
 function ProtectedRoute({ children }) {
   const user = useAuthStore((s) => s.user);
@@ -53,6 +54,7 @@ export default function App() {
         <Route path="hadith" element={<HadithPage />} />
         <Route path="pillar/:pillarId" element={<PillarDashboard />} />
         <Route path="settings" element={<Settings />} />
+        <Route path=":moduleId" element={<ModulePlaceholder />} />
       </Route>
     </Routes>
   );

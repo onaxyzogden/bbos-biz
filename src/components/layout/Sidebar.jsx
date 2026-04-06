@@ -4,6 +4,12 @@ import {
   Kanban, Wallet, Users, Building2, Shield, Heart, Home, UsersRound, Landmark, BookOpen, ScrollText,
   LayoutDashboard, Settings, Plus, ChevronLeft, ChevronRight,
   ChevronDown, Bell, BookHeart, HeartPulse, Brain, Coins, TreePine,
+  Activity, BrainCircuit, Sparkles, HeartHandshake,
+  Library, Wrench, Lightbulb, Share2,
+  Baby, CalendarHeart, Handshake,
+  GraduationCap, HandHeart, Scale,
+  PiggyBank, Store, Gift, BarChart3,
+  Leaf, TreeDeciduous, ShoppingBag, Hammer,
 } from 'lucide-react';
 import { useAppStore } from '../../store/app-store';
 import { useProjectStore } from '../../store/project-store';
@@ -14,7 +20,15 @@ import { MAQASID_PILLARS, getPillarLabel } from '../../data/maqasid';
 import NotificationsPanel from './NotificationsPanel';
 import './Sidebar.css';
 
-const ICON_MAP = { Kanban, Wallet, Users, Building2, Shield, Heart, Home, UsersRound, Landmark, BookOpen, ScrollText };
+const ICON_MAP = {
+  Kanban, Wallet, Users, Building2, Shield, Heart, Home, UsersRound, Landmark, BookOpen, ScrollText,
+  Activity, BrainCircuit, Sparkles, HeartHandshake,
+  Library, Wrench, Lightbulb, Share2,
+  Baby, CalendarHeart, Handshake,
+  GraduationCap, HandHeart, Scale,
+  PiggyBank, Store, Gift, BarChart3,
+  Leaf, TreeDeciduous, ShoppingBag, Hammer,
+};
 const PILLAR_ICON_MAP = { BookHeart, HeartPulse, Brain, Users, Coins, TreePine };
 
 const MODULE_ROUTES = {
@@ -29,6 +43,34 @@ const MODULE_ROUTES = {
   'five-pillars': '/app/five-pillars',
   quran: '/app/quran',
   hadith: '/app/hadith',
+  // Faith
+  'islamic-knowledge': '/app/islamic-knowledge',
+  'community-engagement': '/app/community-engagement',
+  'ethical-living': '/app/ethical-living',
+  // Life
+  'physical-wellness': '/app/physical-wellness',
+  'mental-health': '/app/mental-health',
+  'spiritual-health': '/app/spiritual-health',
+  'family-health': '/app/family-health',
+  // Intellect
+  'learning-resources': '/app/learning-resources',
+  'skill-development': '/app/skill-development',
+  'critical-thinking': '/app/critical-thinking',
+  'knowledge-sharing': '/app/knowledge-sharing',
+  // Family
+  'parenting-support': '/app/parenting-support',
+  'family-planning': '/app/family-planning',
+  'intergenerational-support': '/app/intergenerational-support',
+  // Wealth
+  'financial-literacy': '/app/financial-literacy',
+  'ethical-business': '/app/ethical-business',
+  'charity-zakat': '/app/charity-zakat',
+  'resource-management': '/app/resource-management',
+  // Environment
+  sustainability: '/app/sustainability',
+  conservation: '/app/conservation',
+  'ethical-consumption': '/app/ethical-consumption',
+  'community-projects': '/app/community-projects',
 };
 
 const modulesById = Object.fromEntries(MODULES.map((m) => [m.id, m]));

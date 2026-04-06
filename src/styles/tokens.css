@@ -125,6 +125,40 @@
   --mod-quran: #D4A853;
   --mod-hadith: #B8956E;
 
+  /* Faith pillar — new submodules */
+  --mod-islamic-knowledge: #D4B870;
+  --mod-community-engagement: #C4986E;
+  --mod-ethical-living: #B8A870;
+
+  /* Life pillar (#6EAD8A base) */
+  --mod-physical-wellness: #5BA87B;
+  --mod-mental-health: #7EB89A;
+  --mod-spiritual-health: #6E9E8A;
+  --mod-family-health: #8EADA0;
+
+  /* Intellect pillar (#6E8EAD base) */
+  --mod-learning-resources: #5B8EA8;
+  --mod-skill-development: #7E9EB8;
+  --mod-critical-thinking: #6E88A0;
+  --mod-knowledge-sharing: #8EA8C0;
+
+  /* Family pillar (#AD6E9E base) */
+  --mod-parenting-support: #B87EAE;
+  --mod-family-planning: #A06E96;
+  --mod-intergenerational-support: #C08EB8;
+
+  /* Wealth pillar (#8EAD6E base) */
+  --mod-financial-literacy: #7BA85B;
+  --mod-ethical-business: #9EB87E;
+  --mod-charity-zakat: #8EA06E;
+  --mod-resource-management: #A8C08E;
+
+  /* Environment pillar (#6EADAD base) */
+  --mod-sustainability: #5BA8A0;
+  --mod-conservation: #7EB8B0;
+  --mod-ethical-consumption: #6E9E9E;
+  --mod-community-projects: #8EADC0;
+
   /* Maqasid pillar colors */
   --pillar-faith: #C8A96E;
   --pillar-faith-bg: rgba(200, 169, 110, 0.08);
