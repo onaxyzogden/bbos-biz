@@ -280,5 +280,13 @@
   --faith-on-surface-variant: #394956;
 }
 
+/* ── Quran Companion palette ── */
+:root {
+  --qc-slate: #3D5A6C;
+  --qc-gold: #C5A059;
+  --qc-cream: #E8DCC4;
+  --qc-mint: #70f7f1;
+}
+
 /* Faith Dashboard — utility classes */
 .font-manrope { font-family: 'Manrope', 'DM Sans', sans-serif; }
