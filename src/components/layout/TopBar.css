@@ -65,6 +65,40 @@
   cursor: pointer;
 }
 
+.topbar-center {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.topbar-tab {
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text2);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: all var(--duration) var(--ease);
+  white-space: nowrap;
+}
+
+.topbar-tab:hover {
+  background: var(--bg3);
+  color: var(--text);
+}
+
+.topbar-tab.active {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
 @media (max-width: 767px) {
+  .topbar { grid-column: 1 / -1; }
   .topbar-search { min-width: auto; }
+  .topbar-center {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .topbar-center::-webkit-scrollbar { display: none; }
 }

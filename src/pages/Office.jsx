@@ -17,17 +17,17 @@ const TABS = [
   { id: 'documents', label: 'Documents' },
 ];
 
-export default function Office() {
+export default function Office({ embedded = false }) {
   const hasCompletedOpening = useThresholdStore((s) => !!s.completedOpening['office']);
   const [activeTab, setActiveTab] = useState('chat');
 
-  if (!hasCompletedOpening) {
+  if (!embedded && !hasCompletedOpening) {
     return <CeremonyGate moduleId="office" />;
   }
 
   return (
     <div className="office">
-      <PillarHeader moduleId="office" />
+      {!embedded && <PillarHeader moduleId="office" />}
       <div className="office-tabs">
         {TABS.map((tab) => (
           <button key={tab.id} className={`office-tab ${activeTab === tab.id ? 'active' : ''}`}

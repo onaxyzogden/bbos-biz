@@ -44,7 +44,7 @@ export const OVERVIEW = [
     description:
       'The bond of \u012Bm\u0101n creates a brotherhood and sisterhood that transcends blood, tribe, and nationality. This bond carries mutual rights, active peacemaking between Muslims, and the prophetic duty to love for your brother what you love for yourself — a standard that reshapes every community interaction.',
     conditions: [
-      'Resolving disputes promptly — not allowing estrangement beyond three days (Hadith)',
+      'Resolving disputes promptly — not allowing estrangement beyond three days (Sahih al-Bukhari 6077, Sahih Muslim 2559)',
       'Visiting the sick, attending funerals, accepting invitations, and returning greetings',
       'Making du\u02bfaa for fellow Muslims in their absence',
       'Covering faults rather than exposing them publicly',
@@ -52,7 +52,7 @@ export const OVERVIEW = [
     ],
     virtues: [
       'Allah declares the believers are brothers — the highest social bond in Islam',
-      'Peacemaking between believers is elevated above voluntary worship (Hadith — Abu Dawud)',
+      'Peacemaking between believers is elevated above voluntary worship (Sunan Abu Dawud 4919)',
       'Active brotherhood earns the shade of Allah on the Day of Judgment',
       'The strength and unity of the Ummah is proportional to the quality of this bond',
     ],
@@ -79,7 +79,7 @@ export const OVERVIEW = [
     ],
     virtues: [
       'Structured cooperation multiplies the capacity of every individual',
-      'Foundation of Islamic economic institutions: Zakat, Waqf, and mutual aid',
+      'Foundation of Islamic economic institutions: Zakah, Waqf, and mutual aid',
       'Ensures no member of the community is abandoned in need',
       'A living proof of Islam\u2019s complete social, economic, and ethical system',
     ],

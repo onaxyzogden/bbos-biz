@@ -24,7 +24,7 @@ export const OVERVIEW = [
       'Beginning with Ta\u02bfawwudh (\u0623\u0639\u0648\u0630 \u0628\u0627\u0644\u0644\u0647) and Basmalah',
     ],
     virtues: [
-      'Each letter earns ten rewards — the Prophet \uFDFA said: "Alif, Lam, Mim is three letters, each a reward" (Tirmidhi)',
+      'Each letter earns ten rewards — the Prophet \uFDFA said: "Alif, Lam, Mim is three letters, each a reward" (Jami at-Tirmidhi 2910)',
       'Recitation elevates the reciter\u2019s rank in this life and the next',
       'The Quran will intercede for its companions on the Day of Judgment',
       'Beautifies the voice and the heart simultaneously',
@@ -79,7 +79,7 @@ export const OVERVIEW = [
     ],
     virtues: [
       'The hafidh will intercede for 10 family members on the Day of Judgment (Abu Dawud)',
-      'Parents of a hafidh are crowned with a light brighter than the sun (Tirmidhi)',
+      'Parents of a hafidh are crowned with a light brighter than the sun (Sunan Abu Dawud 1453)',
       'Elevates the bearer to the highest ranks in Paradise',
       'Preserves the Quran through human memory — a living chain since the Prophet \uFDFA',
     ],

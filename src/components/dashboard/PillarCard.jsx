@@ -6,7 +6,15 @@ import {
 import { getPillarLabel, getPillarStewardship } from '../../data/maqasid';
 import './PillarCard.css';
 
-const PILLAR_ICON_MAP = { BookHeart, HeartPulse, Brain, Users, Coins, TreePine };
+const PILLAR_ICON_MAP = { BookHeart, HeartPulse, Brain, Users, Coins, TreePine, Globe: TreePine };
+
+const RELATIONSHIP_LABELS = {
+  'bbos-contained':     { text: 'BBOS',        color: '#8EAD6E' },
+  'moontrance-partial': { text: 'Moontrance',  color: '#AD6E9E' },
+  'moontrance-atlas':   { text: 'Atlas',       color: '#6EADAD' },
+  'self-contained':     { text: 'Native',      color: '#6EADAD' },
+  'reserved-active':    { text: 'Practice',    color: '#999' },
+};
 
 const MODULE_ROUTES = {
   work: '/app/work',
@@ -17,7 +25,6 @@ const MODULE_ROUTES = {
   family: '/app/family',
   neighbors: '/app/neighbors',
   community: '/app/community',
-  'five-pillars': '/app/five-pillars',
   hadith: '/app/hadith',
   quran: '/app/quran',
 };
@@ -27,6 +34,11 @@ export default function PillarCard({ pillar, subModules, valuesLayer, completedO
   const label = getPillarLabel(pillar, valuesLayer);
   const stewardship = getPillarStewardship(pillar, valuesLayer);
   const isScaffold = pillar.status === 'scaffold';
+  const rel = RELATIONSHIP_LABELS[pillar.relationship];
+
+  // Engine key: pillar is "active" if any module has completed opening AND has tasks
+  const activeModuleCount = subModules.filter((m) => completedOpening?.[m.id]).length;
+  const isKeyed = activeModuleCount > 0;
 
   const content = (
     <div className="pillar-card" style={{ '--pc-color': pillar.accentColor }}>
@@ -36,6 +48,11 @@ export default function PillarCard({ pillar, subModules, valuesLayer, completedO
           <span className="pc-label">{label}</span>
           <span className="pc-stewardship">{stewardship}</span>
         </div>
+        {rel && (
+          <span className="pc-rel-badge" style={{ color: rel.color, borderColor: rel.color + '40', background: rel.color + '12' }}>
+            {rel.text}
+          </span>
+        )}
       </div>
 
       {isScaffold ? (

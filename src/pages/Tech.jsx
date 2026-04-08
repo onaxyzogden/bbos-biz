@@ -18,17 +18,17 @@ const TABS = [
   { id: 'campaigns', label: 'Email Campaigns', icon: Mail },
 ];
 
-export default function Tech() {
+export default function Tech({ embedded = false }) {
   const hasCompletedOpening = useThresholdStore((s) => !!s.completedOpening['tech']);
   const [activeTab, setActiveTab] = useState('overview');
 
-  if (!hasCompletedOpening) {
+  if (!embedded && !hasCompletedOpening) {
     return <CeremonyGate moduleId="tech" />;
   }
 
   return (
     <div className="tech-mod">
-      <PillarHeader moduleId="tech" />
+      {!embedded && <PillarHeader moduleId="tech" />}
       <div className="tech-tabs">
         {TABS.map((tab) => {
           const Icon = tab.icon;

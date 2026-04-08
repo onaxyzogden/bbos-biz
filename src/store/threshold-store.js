@@ -1,7 +1,11 @@
 import { create } from 'zustand';
-import { safeGetJSON, safeSet } from '../services/storage';
+import { safeGet, safeGetJSON, safeSet } from '../services/storage';
 
 export const useThresholdStore = create((set, get) => ({
+  // Daily Niyyah Act — pre-entry orientation
+  niyyahDate: safeGet('thr_niyyah_date', null),        // plain string (YYYY-MM-DD)
+  niyyahFocus: safeGetJSON('thr_niyyah_focus', []),    // array of pillar IDs
+
   // Which module ceremony is active (null = none)
   openingModuleId: null,
   closingModuleId: null,
@@ -18,8 +22,21 @@ export const useThresholdStore = create((set, get) => ({
   isPrayerLocked: false,
   currentPrayerName: null,
   prayerMsRemaining: null,
+  prayerTimeMs: null,
   prayerWarningName: null,
   prayerWarningDismissed: false,
+
+  completeNiyyah: (focusPillars = []) => {
+    const today = new Date().toISOString().slice(0, 10);
+    safeSet('thr_niyyah_date', today);
+    safeSet('thr_niyyah_focus', focusPillars);
+    set({ niyyahDate: today, niyyahFocus: focusPillars });
+  },
+
+  isNiyyahComplete: () => {
+    const today = new Date().toISOString().slice(0, 10);
+    return get().niyyahDate === today;
+  },
 
   setOpeningModuleId: (id) => set({ openingModuleId: id }),
   setClosingModuleId: (id) => set({ closingModuleId: id }),
@@ -55,10 +72,11 @@ export const useThresholdStore = create((set, get) => ({
   // Presence actions
   triggerResume: (moduleId) => set({ resumeModuleId: moduleId }),
   dismissResume: () => set({ resumeModuleId: null }),
-  setPrayerLock: (locked, prayerName, msRemaining) => set({
+  setPrayerLock: (locked, prayerName, msRemaining, prayerTimeMs) => set({
     isPrayerLocked: locked,
     currentPrayerName: locked ? prayerName : null,
     prayerMsRemaining: locked ? msRemaining : null,
+    prayerTimeMs: locked ? (prayerTimeMs ?? null) : null,
   }),
   showPrayerWarning: (name) => set({ prayerWarningName: name, prayerWarningDismissed: false }),
   dismissPrayerWarning: () => set({ prayerWarningDismissed: true }),

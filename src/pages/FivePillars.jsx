@@ -9,7 +9,7 @@ import './FivePillars.css';
 const PULSE = [
   { label: 'Faith',   pct: 85 },
   { label: 'Prayer',  pct: 60 },
-  { label: 'Zakat',   pct: 40 },
+  { label: 'Zakah',   pct: 40 },
   { label: 'Fasting', pct: 25 },
   { label: 'Hajj',    pct: 15 },
 ];
@@ -81,9 +81,9 @@ export default function FivePillars() {
         </div>
       </section>
 
-      {/* Daily Salat */}
+      {/* Daily Salah */}
       <section className="fp2-salat">
-        <h3 className="fp2-salat__title">Daily Salat</h3>
+        <h3 className="fp2-salat__title">Daily Salah</h3>
         <div className="fp2-salat__grid">
           {loading && (
             <p style={{ color: 'var(--text3)', fontSize: '0.875rem', gridColumn: '1 / -1' }}>
@@ -122,17 +122,17 @@ export default function FivePillars() {
         </div>
       </section>
 
-      {/* Editorial: Zakat + Ramadan + Hajj */}
+      {/* Editorial: Zakah + Ramadan + Hajj */}
       <section className="fp2-editorial">
 
         {/* Left column */}
         <div className="fp2-editorial__left">
 
-          {/* Zakat */}
+          {/* Zakah */}
           <div className="fp2-zakat-card">
             <span className="fp2-label fp2-label--on-primary">Purification of Wealth</span>
             <div className="fp2-zakat-card__amount">$1,240.00</div>
-            <p className="fp2-zakat-card__desc">Estimated Zakat due for current Lunar Year</p>
+            <p className="fp2-zakat-card__desc">Estimated Zakah due for current Lunar Year</p>
             <button className="fp2-pill-btn fp2-pill-btn--dark">Rebalance Now</button>
             <div className="fp2-zakat-card__icon-bg" aria-hidden="true">
               <Coins size={120} />

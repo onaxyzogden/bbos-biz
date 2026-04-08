@@ -61,7 +61,7 @@ export const FIVE_PILLARS = [
   },
   {
     id: 'zakat',
-    name: 'Zakat',
+    name: 'Zakah',
     arabic: '\u0627\u0644\u0632\u064E\u0651\u0643\u064E\u0627\u0629',
     meaning: 'Obligatory Alms',
     order: 3,

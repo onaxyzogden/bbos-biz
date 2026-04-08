@@ -1,0 +1,98 @@
+/* BBOS Pipeline Header */
+.bbos-pipeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: var(--space-3);
+  overflow-x: auto;
+}
+
+/* Layer bands */
+.bbos-layers {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 2px;
+}
+
+.bbos-layer-band {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--layer-color);
+  background: color-mix(in srgb, var(--layer-color) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--layer-color) 20%, transparent);
+  border-radius: var(--radius-xs);
+  padding: 2px 0;
+}
+
+/* Stage nodes */
+.bbos-stages {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 2px;
+  position: relative;
+}
+
+.bbos-stage-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2) var(--space-1);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  position: relative;
+}
+
+.bbos-stage-node:hover {
+  border-color: var(--stage-color);
+  background: color-mix(in srgb, var(--stage-color) 6%, transparent);
+}
+
+.bbos-stage-node--current {
+  border-color: var(--stage-color);
+  background: color-mix(in srgb, var(--stage-color) 10%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--stage-color) 20%, transparent);
+}
+
+.bbos-stage-node--filtered {
+  border-color: var(--stage-color);
+  background: color-mix(in srgb, var(--stage-color) 18%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--stage-color) 30%, transparent);
+}
+
+.bbos-stage-node--done {
+  border-color: var(--success);
+  opacity: 0.7;
+}
+
+.bbos-stage-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--stage-color);
+}
+
+.bbos-stage-label {
+  font-size: 0.62rem;
+  color: var(--text2);
+  white-space: nowrap;
+}
+
+/* Responsive: scroll horizontally on small screens */
+@media (max-width: 768px) {
+  .bbos-layers,
+  .bbos-stages {
+    grid-template-columns: repeat(9, minmax(60px, 1fr));
+  }
+}

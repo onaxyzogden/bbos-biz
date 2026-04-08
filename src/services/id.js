@@ -54,6 +54,7 @@ export const genDarkWebEmailId = () => 'dwe_' + nanoid(12);
 export const genVendorId = () => 'ven_' + nanoid(12);
 export const genAccountId = () => 'acc_' + nanoid(12);
 export const genIncomeId = () => 'inc_' + nanoid(12);
+export const genAssetId = () => 'ast_' + nanoid(12);
 
 // CRM module
 export const genContactId = () => 'con_' + nanoid(12);

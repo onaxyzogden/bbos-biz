@@ -6,34 +6,38 @@ import {
   getModuleData, ONGOING_DUA, ISTIRJA, PAUSE_ACKNOWLEDGMENT,
   PAUSE_QUESTIONS, PAUSE_UNIVERSAL, DEFER_CONTENT, DEFER_UNIVERSAL,
 } from '../../data/islamic-data';
-import { lookupReadinessAyah } from '../../data/work-readiness-ayat';
+import { lookupReadinessAyahByKey } from '../../data/readiness-ayat-router';
+import { getPillarForModule } from '../../data/maqasid';
 import { useSettingsStore } from '../../store/settings-store';
 import AttributeCard from './AttributeCard';
 import DuaSection from './DuaSection';
 import ReadinessCheck from './ReadinessCheck';
+import IslamicTerm from '../shared/IslamicTerm';
 import './ThresholdModal.css';
 
-// Initial selections — null means not yet answered
-const INITIAL_SELECTIONS = { M1: null, M2: null, M3: null, W1: null, W2: null, W3: null };
+// ── Row-aware helpers ────────────────────────────────────────────────────────
 
-function buildReadinessKey(selections) {
-  return ['M1', 'M2', 'M3', 'W1', 'W2', 'W3']
-    .map((k) => (selections[k] === true ? '1' : '0'))
-    .join('');
+function buildReadinessKey(rows, selections) {
+  return rows.map((r) => (selections[r.id] === true ? '1' : '0')).join('');
 }
 
-function allFilled(selections) {
-  return Object.values(selections).every((v) => v !== null);
+function allFilled(rows, selections) {
+  return rows.every((r) => selections[r.id] !== null && selections[r.id] !== undefined);
 }
 
-function allYes(selections) {
-  return Object.values(selections).every((v) => v === true);
+function allYes(rows, selections) {
+  return rows.every((r) => selections[r.id] === true);
 }
 
-function countNotYet(selections, prefix) {
-  return Object.entries(selections)
-    .filter(([k, v]) => k.startsWith(prefix) && v === false)
-    .length;
+// ── Pause label — derived from unique attribute names in the NOT YET rows ────
+
+function getPauseLabel(rows, selections) {
+  const notYetAttrs = [...new Set(
+    rows.filter((r) => selections[r.id] === false).map((r) => r.attr)
+  )];
+  if (notYetAttrs.length === 0) return 'Not yet ready';
+  if (notYetAttrs.length === 1) return `Not yet rested in ${notYetAttrs[0]}`;
+  return 'Not yet aligned with the threshold';
 }
 
 export default function ThresholdModal({ type }) {
@@ -50,7 +54,8 @@ export default function ThresholdModal({ type }) {
   const [confirmed, setConfirmed] = useState(false);
   const [paused, setPaused] = useState(false);
   const [showingDeferScreen, setShowingDeferScreen] = useState(false);
-  const [readinessSelections, setReadinessSelections] = useState({ ...INITIAL_SELECTIONS });
+  // Keyed by row id (dynamic per module — starts empty, keys added on selection)
+  const [readinessSelections, setReadinessSelections] = useState({});
 
   const isOpening = type === 'opening';
   const moduleId = isOpening ? openingModuleId : closingModuleId;
@@ -62,8 +67,29 @@ export default function ThresholdModal({ type }) {
   const isIslamic = valuesLayer === 'islamic';
   const accentColor = 'var(--accent)';
 
-  // Is this module using interactive readiness? (work module with rows)
-  const hasInteractiveReadiness = isOpening && data?.readiness?.rows;
+  // ── Pillar fallback for readiness rows ──────────────────────────────────────
+  // If the module has its own rows, use them.
+  // Otherwise fall back to pillar-level rows (e.g. opening a faith sub-module).
+  const pillar = getPillarForModule(moduleId);
+  const pillarData = pillar ? getModuleData(pillar.id, valuesLayer) : null;
+  const readinessRows = data?.readiness?.rows ?? pillarData?.readiness?.rows ?? [];
+  const effectiveReadinessData = readinessRows.length > 0
+    ? (data?.readiness?.rows ? data.readiness : pillarData?.readiness)
+    : data?.readiness;
+
+  // Is this module using interactive readiness? (has rows)
+  const hasInteractiveReadiness = isOpening && readinessRows.length > 0;
+
+  // ── Readiness key and derived state ─────────────────────────────────────────
+  const readinessFilled = hasInteractiveReadiness && allFilled(readinessRows, readinessSelections);
+  const readinessAllYes = hasInteractiveReadiness && allYes(readinessRows, readinessSelections);
+  const readinessKey = hasInteractiveReadiness ? buildReadinessKey(readinessRows, readinessSelections) : '111111';
+
+  // ── Ayat lookup via pillar's readinessAyatKey ────────────────────────────────
+  const readinessAyatKey = pillar?.readinessAyatKey;
+  const pauseAyah = (hasInteractiveReadiness && isIslamic && readinessKey !== '111111')
+    ? lookupReadinessAyahByKey(readinessAyatKey, readinessKey)
+    : null;
 
   // Dynamic steps — Pause inserts between Readiness and Confirm when triggered
   const baseSteps = isOpening
@@ -76,27 +102,12 @@ export default function ThresholdModal({ type }) {
 
   const currentStepName = steps[step];
 
-  // Readiness state derived values
-  const readinessFilled = allFilled(readinessSelections);
-  const readinessAllYes = allYes(readinessSelections);
-  const readinessKey = buildReadinessKey(readinessSelections);
-  const muhsinNotYet = countNotYet(readinessSelections, 'M');
-  const wakilNotYet = countNotYet(readinessSelections, 'W');
-
-  // Pause button label — matches mockup
-  const getPauseLabel = () => {
-    if (muhsinNotYet > 0 && wakilNotYet > 0) return 'Not yet aligned with the truth';
-    if (muhsinNotYet > 0) return 'Not yet rested in Al-Muhsin';
-    if (wakilNotYet > 0) return 'Not yet rested in Al-Wakil';
-    return 'Not yet ready';
-  };
-
   const resetState = () => {
     setStep(0);
     setConfirmed(false);
     setPaused(false);
     setShowingDeferScreen(false);
-    setReadinessSelections({ ...INITIAL_SELECTIONS });
+    setReadinessSelections({});
   };
 
   const close = () => {
@@ -105,7 +116,6 @@ export default function ThresholdModal({ type }) {
     else setClosingModuleId(null);
   };
 
-  // Close from the defer screen — records the deferral, THEN closes
   const closeDeferScreen = () => {
     if (isOpening) deferOpening(moduleId);
     resetState();
@@ -134,14 +144,9 @@ export default function ThresholdModal({ type }) {
     setStep(3);
   };
 
-  // "Defer to Later" — show the compassionate defer screen (don't close yet)
-  const defer = () => {
-    setShowingDeferScreen(true);
-  };
-
+  const defer = () => { setShowingDeferScreen(true); };
   const returnToReadiness = () => { setPaused(false); setStep(2); };
 
-  // Handle Next on the Readiness step — auto-trigger pause if any NOT YET
   const handleNext = () => {
     if (currentStepName === 'Readiness' && hasInteractiveReadiness && readinessFilled && !readinessAllYes) {
       triggerPause();
@@ -150,21 +155,16 @@ export default function ThresholdModal({ type }) {
     next();
   };
 
-  // Handle readiness row selection
   const handleReadinessSelect = (id, value) => {
     setReadinessSelections((prev) => ({ ...prev, [id]: value }));
   };
 
-  // Can proceed from Readiness step?
-  const canAdvanceFromReadiness = hasInteractiveReadiness
-    ? readinessFilled && readinessAllYes
-    : true;
+  const canAdvanceFromReadiness = hasInteractiveReadiness ? readinessFilled && readinessAllYes : true;
 
   const pauseQuestion = isIslamic
     ? (PAUSE_QUESTIONS[moduleId] || PAUSE_QUESTIONS.work)
     : (PAUSE_UNIVERSAL.questions[moduleId] || PAUSE_UNIVERSAL.questions.work);
 
-  // Get the "not yet rested in" guidance for the defer screen
   const deferGuidance = isIslamic
     ? DEFER_CONTENT.getGuidanceQuestion(moduleId)
     : DEFER_UNIVERSAL.getGuidanceQuestion(moduleId);
@@ -172,10 +172,10 @@ export default function ThresholdModal({ type }) {
   const deferAck = isIslamic ? DEFER_CONTENT.acknowledgment : DEFER_UNIVERSAL.acknowledgment;
   const deferHolding = isIslamic ? DEFER_CONTENT.holdingMessage : DEFER_UNIVERSAL.holdingMessage;
 
-  // Look up condition-specific ayah from the matrix
-  const pauseAyah = (hasInteractiveReadiness && isIslamic && readinessKey !== '111111')
-    ? lookupReadinessAyah(readinessKey)
-    : null;
+  // Count unanswered rows for hint text
+  const unfilledCount = readinessRows.filter(
+    (r) => readinessSelections[r.id] === null || readinessSelections[r.id] === undefined
+  ).length;
 
   return (
     <div className="thr-overlay">
@@ -198,10 +198,8 @@ export default function ThresholdModal({ type }) {
 
             <div className="thr-body">
               <div className="thr-defer-content fade-in">
-                {/* 1. Acknowledgment */}
                 <p className="thr-defer-ack">{deferAck}</p>
 
-                {/* 2. One "not yet rested in" item to sit with */}
                 {deferGuidance && (
                   <div>
                     <p className="thr-defer-guidance-label">A question to sit with:</p>
@@ -209,7 +207,6 @@ export default function ThresholdModal({ type }) {
                   </div>
                 )}
 
-                {/* 3. Closing practice — tawakkul (Islamic) or reflection (Universal) */}
                 {isIslamic ? (
                   <DuaSection dua={ONGOING_DUA} color={accentColor} />
                 ) : (
@@ -218,7 +215,6 @@ export default function ThresholdModal({ type }) {
                   </div>
                 )}
 
-                {/* 4. Holding message */}
                 <p className="thr-defer-holding">{deferHolding}</p>
               </div>
             </div>
@@ -235,7 +231,6 @@ export default function ThresholdModal({ type }) {
             {/* NORMAL CEREMONY FLOW                          */}
             {/* ══════════════════════════════════════════════ */}
 
-            {/* Header */}
             <div className="thr-header">
               <div>
                 <span className="thr-module-badge">{mod?.name || 'Module'}</span>
@@ -248,7 +243,6 @@ export default function ThresholdModal({ type }) {
               </button>
             </div>
 
-            {/* Step indicators */}
             <div className="thr-steps">
               {steps.map((s, i) => (
                 <button
@@ -256,12 +250,16 @@ export default function ThresholdModal({ type }) {
                   className={`thr-step ${i === step ? 'active' : ''} ${i < step ? 'done' : ''} ${s === 'Pause' ? 'thr-step-pause' : ''}`}
                   onClick={() => { if (i <= step) setStep(i); }}
                 >
-                  {s === 'Pause' ? <><Pause size={11} /> Pause</> : s}
+                  {s === 'Pause'
+                    ? <><Pause size={11} /> Pause</>
+                    : s === 'Dua' && isIslamic
+                      ? <IslamicTerm id="dua">Dua</IslamicTerm>
+                      : s
+                  }
                 </button>
               ))}
             </div>
 
-            {/* Body */}
             <div className="thr-body">
               {currentStepName === 'Dua' && data && (
                 <div className="thr-step-content fade-in">
@@ -284,20 +282,20 @@ export default function ThresholdModal({ type }) {
                 </div>
               )}
 
-              {(currentStepName === 'Readiness' || currentStepName === 'Reflection') && data && (
+              {(currentStepName === 'Readiness' || currentStepName === 'Reflection') && (
                 <div className="thr-step-content fade-in">
                   {isOpening && hasInteractiveReadiness ? (
                     <ReadinessCheck
-                      readiness={data.readiness}
+                      readiness={effectiveReadinessData}
                       color={accentColor}
                       interactive={true}
                       selections={readinessSelections}
                       onSelect={handleReadinessSelect}
                     />
                   ) : isOpening ? (
-                    <ReadinessCheck readiness={data.readiness} color={accentColor} />
+                    <ReadinessCheck readiness={data?.readiness} color={accentColor} />
                   ) : (
-                    <ReadinessCheck reflection={data.reflection} color={accentColor} />
+                    <ReadinessCheck reflection={data?.reflection} color={accentColor} />
                   )}
                 </div>
               )}
@@ -308,7 +306,6 @@ export default function ThresholdModal({ type }) {
                     {isIslamic ? PAUSE_ACKNOWLEDGMENT : PAUSE_UNIVERSAL.acknowledgment}
                   </p>
 
-                  {/* Condition-specific ayah from readiness matrix */}
                   {pauseAyah && (
                     <div className="thr-pause-ayah">
                       <p className="thr-pause-ayah-framing">{pauseAyah.framing}</p>
@@ -357,7 +354,6 @@ export default function ThresholdModal({ type }) {
               )}
             </div>
 
-            {/* Footer */}
             <div className="thr-footer">
               {currentStepName === 'Pause' ? (
                 <>
@@ -371,23 +367,20 @@ export default function ThresholdModal({ type }) {
                     <button className="thr-btn thr-btn-ghost" onClick={prev}>Previous</button>
                   )}
 
-                  {/* Interactive readiness: show contextual pause button when any NOT YET */}
                   {currentStepName === 'Readiness' && hasInteractiveReadiness && readinessFilled && !readinessAllYes && !paused && (
                     <button className="thr-btn thr-btn-pause" onClick={triggerPause}>
-                      {getPauseLabel()}
+                      {getPauseLabel(readinessRows, readinessSelections)}
                     </button>
                   )}
 
-                  {/* Non-interactive readiness: original "I'm not yet ready" button */}
                   {currentStepName === 'Readiness' && !hasInteractiveReadiness && isOpening && !paused && (
                     <button className="thr-btn thr-btn-pause" onClick={triggerPause}>I'm not yet ready</button>
                   )}
 
-                  {/* Interactive readiness hint text */}
                   {currentStepName === 'Readiness' && hasInteractiveReadiness && (
                     <span className={`thr-readiness-hint ${readinessFilled ? (readinessAllYes ? 'thr-readiness-hint--yes' : 'thr-readiness-hint--nyt') : ''}`}>
                       {!readinessFilled
-                        ? `${Object.values(readinessSelections).filter((v) => v === null).length} row${Object.values(readinessSelections).filter((v) => v === null).length !== 1 ? 's' : ''} still need a selection.`
+                        ? `${unfilledCount} row${unfilledCount !== 1 ? 's' : ''} still need a selection.`
                         : readinessAllYes
                           ? 'All conditions confirmed. You may proceed.'
                           : ''

@@ -47,6 +47,8 @@ export const useTaskStore = create((set, get) => ({
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       completedAt: null,
+      bbosTaskType: null,
+      bbosFieldData: {},
       ...opts,
     };
     set((s) => {
@@ -203,9 +205,28 @@ export const useTaskStore = create((set, get) => ({
     return results;
   },
 
+  updateBbosFieldData: (projectId, taskId, fieldId, value) => set((s) => {
+    const tasks = (s.tasksByProject[projectId] || []).map((t) => {
+      if (t.id !== taskId) return t;
+      return {
+        ...t,
+        bbosFieldData: { ...(t.bbosFieldData || {}), [fieldId]: value },
+        updatedAt: new Date().toISOString(),
+      };
+    });
+    persistTasks(projectId, tasks);
+    return { tasksByProject: { ...s.tasksByProject, [projectId]: tasks } };
+  }),
+
   getFilteredTasks: (projectId, filters) => {
-    const tasks = get().tasksByProject[projectId] || [];
+    let tasks = get().tasksByProject[projectId] || [];
     if (!filters) return tasks;
+
+    // BBOS stage filter — applied before other filters
+    if (filters.bbosStage) {
+      tasks = tasks.filter((t) => t.bbosStage === filters.bbosStage);
+    }
+
     const { priorities, dueDate, tags } = filters;
     const hasFilters = (priorities?.length > 0) || dueDate || (tags?.length > 0);
     if (!hasFilters) return tasks;

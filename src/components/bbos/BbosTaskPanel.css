@@ -1,0 +1,387 @@
+/* ── BBOS Task Panel ── */
+
+.bbos-task-panel {
+  width: 460px;
+  max-width: 100vw;
+  border-left: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+/* ── Header ── */
+.btp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  flex-shrink: 0;
+  gap: var(--space-2);
+}
+
+.btp-header__stage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.btp-stage-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-xs);
+  white-space: nowrap;
+  opacity: 0.9;
+}
+
+.btp-sublevel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text3);
+  font-weight: 500;
+}
+
+.btp-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btp-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text3);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: background 150ms, color 150ms;
+}
+.btp-close-btn:hover {
+  background: var(--bg2);
+  color: var(--text);
+}
+
+/* ── Islamic Attributes Band ── */
+.btp-attrs-band {
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: #c9a05a;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.btp-attr-name {
+  font-style: italic;
+}
+
+.btp-attr-sep {
+  color: var(--text3);
+  opacity: 0.7;
+}
+
+/* ── Scrollable body ── */
+.btp-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Sections ── */
+.btp-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.btp-section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.btp-purpose-text {
+  font-size: 0.83rem;
+  color: var(--text2);
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+}
+
+.btp-rationale-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: left;
+  gap: var(--space-2);
+  transition: color 150ms;
+}
+.btp-rationale-toggle:hover {
+  color: var(--text2);
+}
+
+.btp-rationale-text {
+  font-size: 0.8rem;
+  color: var(--text3);
+  line-height: 1.6;
+  margin: var(--space-2) 0 0;
+  padding: var(--space-3);
+  background: var(--bg);
+  border-left: 2px solid #c9a05a44;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* ── Divider ── */
+.btp-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 calc(var(--space-4) * -1);
+}
+
+/* ── Form fields ── */
+.btp-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.btp-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.btp-field-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 0.02em;
+}
+
+.btp-field-textarea,
+.btp-field-input,
+.btp-field-select {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.83rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 150ms;
+  box-sizing: border-box;
+}
+
+.btp-field-textarea:focus,
+.btp-field-input:focus,
+.btp-field-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.btp-field-textarea::placeholder,
+.btp-field-input::placeholder {
+  color: var(--text3);
+  font-style: italic;
+}
+
+/* ── G-Label row ── */
+.btp-glabel-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Validation flags ── */
+.btp-flags {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.btp-flag {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: #f59e0b11;
+  border: 1px solid #f59e0b33;
+  border-radius: var(--radius-sm);
+}
+
+.btp-flag-icon {
+  color: #f59e0b;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.btp-flag-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f59e0b;
+  margin-bottom: 2px;
+}
+
+.btp-flag-detail {
+  font-size: 0.75rem;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* ── AI Draft section ── */
+.btp-draft-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.btp-generate-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text2);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: border-color 150ms, color 150ms, background 150ms;
+  width: 100%;
+  justify-content: center;
+}
+.btp-generate-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-muted, #6366f111);
+}
+
+.btp-draft-pending {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.btp-draft-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.75rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.btp-draft-status--pending {
+  background: #6366f111;
+  color: #6366f1;
+  border: 1px solid #6366f133;
+}
+
+.btp-draft-status--accepted {
+  background: #22c55e11;
+  color: #22c55e;
+  border: 1px solid #22c55e33;
+}
+
+.btp-draft-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.btp-draft-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 150ms;
+  border: 1px solid transparent;
+}
+.btp-draft-btn:hover { opacity: 0.8; }
+
+.btp-draft-btn--accept {
+  background: #22c55e;
+  color: white;
+}
+
+.btp-draft-btn--reject {
+  background: var(--bg2);
+  color: var(--text2);
+  border-color: var(--border);
+}
+
+/* ── Footer ── */
+.btp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: var(--space-2);
+}
+
+.btp-footer-meta {
+  font-size: 0.72rem;
+  color: var(--text3);
+}
+
+.btp-footer-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.btp-footer-del {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text3);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 150ms, border-color 150ms;
+}
+.btp-footer-del:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+}

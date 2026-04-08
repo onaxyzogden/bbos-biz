@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import {
   X, Calendar, Tag, Plus, Trash2, CheckCircle2, Square,
   MoreVertical, ChevronDown, ChevronUp, Clock, Paperclip, Users,
@@ -7,6 +7,9 @@ import { useTaskStore } from '../../store/task-store';
 import { useAuthStore } from '../../store/auth-store';
 import { useMobile } from '../../hooks/useMobile';
 import { PRIORITIES } from '../../data/modules';
+import { BBOS_STAGES } from '../../data/bbos-pipeline';
+import GLabelPicker from '../shared/GLabelPicker';
+import BbosTaskPanel from '../bbos/BbosTaskPanel';
 import './TaskDetailPanel.css';
 
 function formatDate(iso) {
@@ -39,6 +42,15 @@ export default function TaskDetailPanel({ project, projectId, taskId, onClose })
   const [newTag, setNewTag] = useState('');
   const [expandedSubtask, setExpandedSubtask] = useState(null);
   const saveTimeout = useRef(null);
+  const titleRef = useRef(null);
+
+  // JS fallback for browsers that don't support field-sizing: content
+  useLayoutEffect(() => {
+    const el = titleRef.current;
+    if (!el || CSS.supports('field-sizing', 'content')) return;
+    el.style.height = '0px';
+    el.style.height = el.scrollHeight + 'px';
+  }, [title]);
 
   const columns = project?.columns || [];
   const currentCol = columns.find((c) => c.id === task?.columnId);
@@ -54,6 +66,18 @@ export default function TaskDetailPanel({ project, projectId, taskId, onClose })
   }, [taskId, task?.title, task?.description]);
 
   if (!task) return null;
+
+  // BBOS tasks get their own dedicated panel
+  if (task.bbosTaskType) {
+    return (
+      <BbosTaskPanel
+        project={project}
+        projectId={projectId}
+        taskId={taskId}
+        onClose={onClose}
+      />
+    );
+  }
 
   const autoSave = (field, value) => {
     clearTimeout(saveTimeout.current);
@@ -129,13 +153,12 @@ export default function TaskDetailPanel({ project, projectId, taskId, onClose })
       <div className="tdp-body">
         {/* ── Title ── */}
         <textarea
+          ref={titleRef}
           className="tdp-title"
           value={title}
           onChange={handleTitleChange}
           placeholder="Task title"
           rows={1}
-          onInput={(e) => { e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px'; }}
-          ref={(el) => { if (el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; } }}
         />
 
         {/* ── Assignee + Priority + Status row ── */}
@@ -170,6 +193,36 @@ export default function TaskDetailPanel({ project, projectId, taskId, onClose })
                 <option key={col.id} value={col.id}>{col.name}</option>
               ))}
             </select>
+          </div>
+        </div>
+
+        {/* ── BBOS Pipeline Stage ── */}
+        {project.bbosEnabled && (
+          <div className="tdp-controls-row" style={{ gap: 'var(--space-3)' }}>
+            <div className="tdp-control-group">
+              <label>Pipeline Stage</label>
+              <select
+                className="tdp-select"
+                value={task.bbosStage || 'FND'}
+                onChange={(e) => updateTask(projectId, taskId, { bbosStage: e.target.value })}
+                style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem' }}
+              >
+                {BBOS_STAGES.map((s) => (
+                  <option key={s.id} value={s.id}>{s.label} ({s.id})</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        )}
+
+        {/* ── G-Label (claim integrity) ── */}
+        <div className="tdp-controls-row" style={{ gap: 'var(--space-3)' }}>
+          <div className="tdp-control-group">
+            <label>Integrity</label>
+            <GLabelPicker
+              value={task.gLabel || null}
+              onChange={(gLabel) => updateTask(projectId, taskId, { gLabel })}
+            />
           </div>
         </div>
 

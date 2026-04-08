@@ -25,8 +25,8 @@ export const OVERVIEW = [
       'Special care for elderly, sick, or struggling neighbors',
     ],
     virtues: [
-      'Jibril (AS) urged it so persistently, the Prophet \uFDFA thought the neighbor would become an heir (Bukhari)',
-      '"He whose neighbor is not safe from his harm is not a true believer" — a prophetic standard (Bukhari)',
+      'Jibril (AS) urged it so persistently, the Prophet \uFDFA thought the neighbor would become an heir (Sahih al-Bukhari 6014, Sahih Muslim 2624)',
+      '"He whose neighbor is not safe from his harm is not a true believer" — a prophetic standard (Sahih al-Bukhari 6016)',
       'A source of community safety, mutual trust, and peace',
       'Brings barakah to the entire neighborhood through righteous presence',
     ],

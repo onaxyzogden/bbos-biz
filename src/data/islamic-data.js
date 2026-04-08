@@ -337,6 +337,593 @@ export const MODULE_ATTRS = {
       ],
     },
   },
+
+  collective: {
+    attrs: [
+      {
+        name: 'Al-Khaliq',
+        name_ar: 'الخالق',
+        title: 'The Creator',
+        body: 'Al-Khaliq brought the earth into being with purpose and precision. Every acre of land, every watershed, every soil microbiome exists by His design. To steward land is to participate in the ongoing expression of His creative will — not as owner, but as khalīfah entrusted with what He made.',
+      },
+      {
+        name: 'Ar-Razzaq',
+        name_ar: 'الرزّاق',
+        title: 'The Provider',
+        body: 'Ar-Razzaq provides through the earth itself — rain becomes river, seed becomes harvest, land becomes sustenance. A faith-rooted land project is an act of trust in His provision: plant with effort, tend with care, and know that the yield belongs to Him.',
+      },
+    ],
+    dua: {
+      title: 'Before Engaging with the Land',
+      resumeTitle: 'Before Returning to the Land',
+      arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا وَرِزْقًا طَيِّبًا وَعَمَلًا مُتَقَبَّلًا',
+      trans: "Allāhumma innī as'aluka ʿilman nāfiʿan wa rizqan ṭayyiban wa ʿamalan mutaqabbalan",
+      meaning: 'O Allah, I ask You for beneficial knowledge, wholesome provision, and accepted deeds.',
+      source: 'Sunan Ibn Majah 925',
+    },
+    readiness: {
+      frame: 'Al-Khaliq asks: are you approaching this land as a steward or as an owner?',
+      governing: [
+        'You see the land as a trust from Allah, not as a personal asset.',
+        'Your intentions for this work serve the community, not just your ambition.',
+        'You are prepared to build slowly, with patience, rather than rush for visible results.',
+      ],
+      notYet: [
+        'You are treating this project as a personal brand rather than a collective stewardship.',
+        'Impatience for visible progress is overriding the discipline of doing it right.',
+        'You have not yet settled into the reality that this work may outlast you — and that is the point.',
+      ],
+    },
+    reflection: {
+      frame: 'Al-Khaliq witnessed today\'s stewardship. Ar-Razzaq held the provision.',
+      governing: [
+        'You made a decision today that prioritised the land\'s long-term health over short-term convenience.',
+        'You approached the community\'s needs with the same care you would give your own family.',
+      ],
+      notYet: [
+        'You cut a corner on quality because no one was watching.',
+        'You prioritised speed or cost over what was genuinely right for the land or the people.',
+      ],
+    },
+  },
+
+  // ─── Pillar-level readiness entries ────────────────────────────────────────
+  // Keyed by pillar ID. Used when a sub-module has no own interactive rows.
+  // ThresholdModal falls back to these via getPillarForModule(moduleId).
+
+  faith: {
+    attrs: [
+      {
+        name: 'Al-Mutakabbir',
+        name_ar: 'الْمُتَكَبِّر',
+        title: 'The Supremely Great',
+        body: 'Greatness belongs to Allah alone. Al-Mutakabbir dissolves the subtle inflations of pride — performing worship for recognition, measuring devotion against others, approaching knowledge as acquisition rather than gift. Pride corrupts Faith not through dramatic arrogance but through these interior distortions.',
+      },
+      {
+        name: 'Al-Wakīl',
+        name_ar: 'الْوَكِيل',
+        title: 'The Trustworthy Disposer',
+        body: 'Al-Wakīl asks for action taken without the anxiety of needing to control the result. Doubt erodes Faith not primarily through intellectual objection but through the refusal to release outcomes. The operator who acts but cannot release is still holding what should be entrusted.',
+      },
+    ],
+    dua: {
+      title: 'Before Faith Engagement',
+      resumeTitle: 'Before Resuming Faith Work',
+      arabic: 'رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي',
+      trans: 'Rabbi ishraḥ lī ṣadrī wa yassir lī amrī',
+      meaning: 'My Lord, expand for me my breast [with assurance] and ease for me my task.',
+      source: 'Surah Ta-Ha 20:25-26',
+    },
+    readiness: {
+      frame: 'Al-Mutakabbir asks: am I approaching this as a servant before Allah, or has self-importance entered the act?',
+      rows: [
+        {
+          id: 'M1', attr: 'Al-Mutakabbir', attr_ar: 'الْمُتَكَبِّر', attrTitle: 'The Supremely Great',
+          attrFrame: 'Am I approaching this as a servant before Allah, or has my sense of self-importance entered the act?',
+          governing: 'I am entering this practice aware that I am the one in need — He needs nothing from me.',
+          notYet: 'I am conscious of how my practice reflects on me, and that consciousness is shaping it.',
+        },
+        {
+          id: 'M2', attr: 'Al-Mutakabbir',
+          governing: 'My worship is between me and Allah — I am not seeking witness or validation from anyone.',
+          notYet: 'I am comparing my level of practice or knowledge with others, measuring my standing.',
+        },
+        {
+          id: 'M3', attr: 'Al-Mutakabbir',
+          governing: 'I am holding my spiritual state honestly — I am not inflating or performing it, even inwardly.',
+          notYet: 'I am approaching this with a sense of entitlement — as though my prior devotion obliges a response.',
+        },
+        {
+          id: 'M4', attr: 'Al-Mutakabbir',
+          governing: 'I can receive correction in matters of faith without my sense of self being threatened by it.',
+          notYet: 'I am holding a position in a matter of faith more tightly than the evidence warrants, because changing it feels like a loss.',
+        },
+        {
+          id: 'W1', attr: 'Al-Wakīl', attr_ar: 'الْوَكِيل', attrTitle: 'The Trustworthy Disposer',
+          attrFrame: 'Am I acting and releasing, or am I acting and still holding the outcome?',
+          governing: 'I am acting from niyyah and releasing the outcome — the result is not mine to control.',
+          notYet: 'I am going through the act but the outcome is still held in my hands rather than entrusted.',
+        },
+        {
+          id: 'W2', attr: 'Al-Wakīl',
+          governing: 'I am present enough in this act to actually turn toward Allah — not just to perform the gesture of turning.',
+          notYet: 'I am fulfilling the form while my attention is elsewhere — or I am acting to resolve anxiety rather than out of genuine trust.',
+        },
+      ],
+      governing: [
+        'I am entering this practice aware that I am the one in need — He needs nothing from me.',
+        'My worship is between me and Allah — I am not seeking witness or validation from anyone.',
+        'I am holding my spiritual state honestly — I am not inflating or performing it, even inwardly.',
+        'I can receive correction in matters of faith without my sense of self being threatened by it.',
+        'I am acting from niyyah and releasing the outcome — the result is not mine to control.',
+        'I am present enough in this act to actually turn toward Allah — not just to perform the gesture of turning.',
+      ],
+      notYet: [
+        'I am conscious of how my practice reflects on me, and that consciousness is shaping it.',
+        'I am comparing my level of practice or knowledge with others, measuring my standing.',
+        'I am approaching this with a sense of entitlement — as though my prior devotion obliges a response.',
+        'I am holding a position in a matter of faith more tightly than the evidence warrants, because changing it feels like a loss.',
+        'I am going through the act but the outcome is still held in my hands rather than entrusted.',
+        'I am fulfilling the form while my attention is elsewhere — or I am acting to resolve anxiety rather than out of genuine trust.',
+      ],
+    },
+    reflection: {
+      frame: 'Al-Mutakabbir reminded me today that greatness belongs to Him. Al-Wakīl held what I released.',
+      governing: [
+        'I entered at least one act of worship with genuine servant-awareness, not self-consciousness.',
+        'I released an outcome I was holding rather than entrusting.',
+      ],
+      notYet: [
+        'I performed a practice with part of my attention on how it reflected on me.',
+        'I am still holding an outcome that belongs to Al-Wakīl.',
+      ],
+    },
+  },
+
+  life: {
+    attrs: [
+      {
+        name: 'Al-Qawī',
+        name_ar: 'الْقَوِيّ',
+        title: 'The All-Strong',
+        body: 'Strength that does not break under pressure. Al-Qawī is not rigidity — it is the capacity to meet adversity without being unmade by it. Its absence shows in quiet attrition: the gradual shrinking of the self under accumulated demand. Al-Qawī asks whether you are drawing from a renewable source or depleting what you have not replenished.',
+      },
+      {
+        name: 'Al-Laṭīf',
+        name_ar: 'اللَّطِيف',
+        title: 'The Subtly Kind',
+        body: 'Attentiveness so fine it perceives what is needed before neglect takes hold. Al-Laṭīf is not softness — it is the quality of perception that notices the subtle signal before it becomes a crisis. Its absence shows in the accumulation of small unattended needs: the rest not taken, the conversation not had, the inner state not named.',
+      },
+    ],
+    dua: {
+      title: 'Before Life Domain Engagement',
+      resumeTitle: 'Before Resuming Life Stewardship',
+      arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَأَعُوذُ بِكَ مِنَ الْعَجْزِ وَالْكَسَلِ',
+      trans: "Allāhumma innī aʿūdhu bika min al-hammi wal-ḥazani wa aʿūdhu bika min al-ʿajzi wal-kasali",
+      meaning: 'O Allah, I seek refuge in You from anxiety and grief, and I seek refuge in You from incapacity and laziness.',
+      source: 'Sahih al-Bukhari 6369',
+    },
+    readiness: {
+      frame: 'Al-Qawī asks: am I engaging from sustained strength, or from depletion I have not acknowledged?',
+      rows: [
+        {
+          id: 'Q1', attr: 'Al-Qawī', attr_ar: 'الْقَوِيّ', attrTitle: 'The All-Strong',
+          attrFrame: 'Am I engaging from a place of sustained strength, or from depletion I have not acknowledged?',
+          governing: 'I am entering this from a foundation that has been attended to — I am not running on reserves I have not acknowledged.',
+          notYet: 'I am carrying a depletion I have not named, and proceeding as if the deficit does not exist.',
+        },
+        {
+          id: 'Q2', attr: 'Al-Qawī',
+          governing: 'I am meeting the demands of this domain without suppressing what is genuinely difficult about them.',
+          notYet: 'I am managing through rather than attending to — treating challenge as something to get past rather than something to meet honestly.',
+        },
+        {
+          id: 'Q3', attr: 'Al-Qawī',
+          governing: 'I am drawing from a source that is being replenished — rest, connection, surrender — not only expending.',
+          notYet: 'I am operating primarily on discipline and willpower without attending to what sustains those capacities.',
+        },
+        {
+          id: 'L1', attr: 'Al-Laṭīf', attr_ar: 'اللَّطِيف', attrTitle: 'The Subtly Kind',
+          attrFrame: 'Am I attending to what is actually present in me right now, or have I stopped noticing?',
+          governing: 'I am present enough to notice what is actually needed right now — not what the schedule requires, but what is true.',
+          notYet: 'I am proceeding on habit and routine without checking whether what I am doing is what I actually need.',
+        },
+        {
+          id: 'L2', attr: 'Al-Laṭīf',
+          governing: 'I am attending to the signals my body, mind, and heart are giving — I have not overridden them to maintain productivity.',
+          notYet: 'I am aware of a signal — fatigue, strain, resistance — and I have chosen to treat it as noise rather than information.',
+        },
+        {
+          id: 'L3', attr: 'Al-Laṭīf',
+          governing: 'I am holding the needs of those in my care with the same attentiveness I bring to external demands.',
+          notYet: 'I am giving those closest to me what remains after external demands are met, rather than what is genuinely due.',
+        },
+      ],
+      governing: [
+        'I am entering this from a foundation that has been attended to — I am not running on reserves I have not acknowledged.',
+        'I am meeting the demands of this domain without suppressing what is genuinely difficult about them.',
+        'I am drawing from a source that is being replenished — rest, connection, surrender — not only expending.',
+        'I am present enough to notice what is actually needed right now — not what the schedule requires, but what is true.',
+        'I am attending to the signals my body, mind, and heart are giving — I have not overridden them to maintain productivity.',
+        'I am holding the needs of those in my care with the same attentiveness I bring to external demands.',
+      ],
+      notYet: [
+        'I am carrying a depletion I have not named, and proceeding as if the deficit does not exist.',
+        'I am managing through rather than attending to — treating challenge as something to get past rather than something to meet honestly.',
+        'I am operating primarily on discipline and willpower without attending to what sustains those capacities.',
+        'I am proceeding on habit and routine without checking whether what I am doing is what I actually need.',
+        'I am aware of a signal — fatigue, strain, resistance — and I have chosen to treat it as noise rather than information.',
+        'I am giving those closest to me what remains after external demands are met, rather than what is genuinely due.',
+      ],
+    },
+    reflection: {
+      frame: 'Al-Qawī sustained me today. Al-Laṭīf noticed what I almost missed.',
+      governing: [
+        'I attended to at least one genuine need today rather than pushing through it.',
+        'I gave those in my care something that was actually theirs, not only what remained.',
+      ],
+      notYet: [
+        'I suppressed a signal my body or heart was giving and told myself it was strength.',
+        'I am still carrying unacknowledged depletion into the next day.',
+      ],
+    },
+  },
+
+  intellect: {
+    attrs: [
+      {
+        name: 'Al-Fattāḥ',
+        name_ar: 'الْفَتَّاح',
+        title: 'The Opener',
+        body: 'Al-Fattāḥ opens what is closed — including the mind that has settled into its current shape. Its absence is not ignorance but closure: approaching learning already knowing what you will find, engaging with new ideas only to confirm prior positions, mistaking familiarity for mastery. The precondition of all genuine learning is a mind that can actually be changed.',
+      },
+      {
+        name: 'Al-ʿAlīm',
+        name_ar: 'الْعَلِيم',
+        title: 'The All-Knowing',
+        body: 'Knowledge belongs to Allah completely. Al-ʿAlīm orients toward knowledge not as a resource to acquire but as a trust to steward. Its absence corrupts through the wrong relationship with knowing: accumulation without application, sharing without accountability, criticism without humility, and treating the limit of current knowledge as the limit of what is knowable.',
+      },
+    ],
+    dua: {
+      title: 'Before Intellectual Engagement',
+      resumeTitle: 'Before Resuming Study or Work',
+      arabic: 'رَبِّ زِدْنِي عِلْمًا',
+      trans: 'Rabbi zidnī ʿilmā',
+      meaning: 'My Lord, increase me in knowledge.',
+      source: 'Surah Ta-Ha 20:114',
+    },
+    readiness: {
+      frame: 'Al-Fattāḥ asks: am I entering this with a mind that can actually be opened, or have I already decided what I will find?',
+      rows: [
+        {
+          id: 'F1', attr: 'Al-Fattāḥ', attr_ar: 'الْفَتَّاح', attrTitle: 'The Opener',
+          attrFrame: 'Am I entering this with a mind that can actually be opened, or have I already decided what I will find?',
+          governing: 'I am entering this willing to be genuinely surprised — what I encounter could change what I currently believe.',
+          notYet: 'I am approaching this to confirm what I already know rather than to discover what I do not yet know.',
+        },
+        {
+          id: 'F2', attr: 'Al-Fattāḥ',
+          governing: 'I am holding my current understanding as provisional — correct enough to act on, but open to being revised.',
+          notYet: 'I am defending a position I have not recently re-examined, treating it as settled because revisiting it feels costly.',
+        },
+        {
+          id: 'A1', attr: 'Al-ʿAlīm', attr_ar: 'الْعَلِيم', attrTitle: 'The All-Knowing',
+          attrFrame: 'Am I approaching this as a steward of knowledge — accountable for how I hold and share it — or as an accumulator?',
+          governing: 'I am engaging with this to understand and apply — not merely to possess or signal that I have encountered it.',
+          notYet: 'I am accumulating without clear intention to use or share — building a store I am not yet accountable for.',
+        },
+        {
+          id: 'A2', attr: 'Al-ʿAlīm',
+          governing: 'I am honest about the limits of what I currently know — I am not extending my authority beyond what the evidence supports.',
+          notYet: 'I am speaking or acting at the edge of my knowledge without naming that edge, presenting inference as established understanding.',
+        },
+        {
+          id: 'A3', attr: 'Al-ʿAlīm',
+          governing: 'I am approaching this with the awareness that I will be accountable for how I share what I learn — I hold it as a trust.',
+          notYet: 'I am treating what I know as mine to use as I choose, without attending to the responsibility that comes with knowing.',
+        },
+        {
+          id: 'A4', attr: 'Al-ʿAlīm',
+          governing: 'I am applying critical thinking as a tool for reaching truth — not as a performance of sophistication or a means of maintaining distance.',
+          notYet: 'I am using critical thinking primarily to establish what I do not accept, rather than to get closer to what is actually true.',
+        },
+      ],
+      governing: [
+        'I am entering this willing to be genuinely surprised — what I encounter could change what I currently believe.',
+        'I am holding my current understanding as provisional — correct enough to act on, but open to being revised.',
+        'I am engaging with this to understand and apply — not merely to possess or signal that I have encountered it.',
+        'I am honest about the limits of what I currently know — I am not extending my authority beyond what the evidence supports.',
+        'I am approaching this with the awareness that I will be accountable for how I share what I learn — I hold it as a trust.',
+        'I am applying critical thinking as a tool for reaching truth — not as a performance of sophistication or a means of maintaining distance.',
+      ],
+      notYet: [
+        'I am approaching this to confirm what I already know rather than to discover what I do not yet know.',
+        'I am defending a position I have not recently re-examined, treating it as settled because revisiting it feels costly.',
+        'I am accumulating without clear intention to use or share — building a store I am not yet accountable for.',
+        'I am speaking or acting at the edge of my knowledge without naming that edge, presenting inference as established understanding.',
+        'I am treating what I know as mine to use as I choose, without attending to the responsibility that comes with knowing.',
+        'I am using critical thinking primarily to establish what I do not accept, rather than to get closer to what is actually true.',
+      ],
+    },
+    reflection: {
+      frame: 'Al-Fattāḥ opened what was closed today. Al-ʿAlīm witnessed how I held what I learned.',
+      governing: [
+        'I encountered something today that genuinely updated or complicated what I previously held.',
+        'I named the limit of my knowledge rather than extending beyond it.',
+      ],
+      notYet: [
+        'I moved through material primarily to confirm what I already believed.',
+        'I shared something as established understanding that was actually still inference.',
+      ],
+    },
+  },
+
+  people: {
+    attrs: [
+      {
+        name: 'Al-Raḥīm',
+        name_ar: 'الرَّحِيم',
+        title: 'The Merciful',
+        body: 'Al-Raḥīm is active mercy — mercy that reaches out toward others rather than waiting to be earned. It is not sentiment but attention: the quality of presence that sees others as they are rather than as they function. Its absence corrupts the People domain not through cruelty but through treating people as roles, extracting from relationships rather than contributing, or allowing difference to become distance.',
+      },
+      {
+        name: 'Al-Jāmiʿ',
+        name_ar: 'الْجَامِع',
+        title: 'The Gatherer',
+        body: 'Al-Jāmiʿ draws together what is dispersed. Its absence shows as fragmentation — the gradual erosion of shared centre. Al-Jāmiʿ is not uniformity; it is the orientation toward a shared centre that makes difference generative rather than fragmenting. The operator entering this domain is asked whether their presence here builds or disperses the social fabric.',
+      },
+    ],
+    dua: {
+      title: 'Before Relational Engagement',
+      resumeTitle: 'Before Resuming People Stewardship',
+      arabic: 'اللَّهُمَّ أَلِّفْ بَيْنَ قُلُوبِنَا وَأَصْلِحْ ذَاتَ بَيْنِنَا',
+      trans: "Allāhumma allif bayna qulūbinā wa aṣliḥ dhāta bayninā",
+      meaning: 'O Allah, unite our hearts and set right what is between us.',
+      source: 'Sunan Abi Dawud 969',
+    },
+    readiness: {
+      frame: 'Al-Raḥīm asks: am I present to the actual person before me, or to my role in relation to them?',
+      rows: [
+        {
+          id: 'R1', attr: 'Al-Raḥīm', attr_ar: 'الرَّحِيم', attrTitle: 'The Merciful',
+          attrFrame: 'Am I present to the actual person before me, or to my role in relation to them?',
+          governing: 'I am approaching this person aware of what they are carrying — my presence is genuinely attentive, not procedural.',
+          notYet: 'I am responding to the role this person occupies rather than to the person themselves.',
+        },
+        {
+          id: 'R2', attr: 'Al-Raḥīm',
+          governing: 'I am holding space for what is genuinely different about this person without letting that difference become distance.',
+          notYet: 'I am letting what is unfamiliar or difficult about this person produce judgment or withdrawal rather than understanding.',
+        },
+        {
+          id: 'R3', attr: 'Al-Raḥīm',
+          governing: 'My presence here adds to this person — I am giving rather than primarily extracting.',
+          notYet: 'I am here more for what I can receive than for what I can genuinely offer.',
+        },
+        {
+          id: 'R4', attr: 'Al-Raḥīm',
+          governing: 'I can hold the difficulty of this relationship honestly without allowing that difficulty to justify hardness toward the person.',
+          notYet: 'I am using the real difficulty of this relationship as permission to withhold the care that is still due.',
+        },
+        {
+          id: 'J1', attr: 'Al-Jāmiʿ', attr_ar: 'الْجَامِع', attrTitle: 'The Gatherer',
+          attrFrame: 'Am I oriented toward the shared centre, or am I carrying fragmentation into this space?',
+          governing: 'I am entering this space oriented toward what holds us together — my private interests are not directing this engagement.',
+          notYet: 'My own needs or agenda are driving this engagement more than the well-being of the relationship or community.',
+        },
+        {
+          id: 'J2', attr: 'Al-Jāmiʿ',
+          governing: 'I am contributing to cohesion — my words and presence here build rather than fragment.',
+          notYet: 'I am carrying unresolved division — consciously or not — into this space, and it is shaping what I bring.',
+        },
+      ],
+      governing: [
+        'I am approaching this person aware of what they are carrying — my presence is genuinely attentive, not procedural.',
+        'I am holding space for what is genuinely different about this person without letting that difference become distance.',
+        'My presence here adds to this person — I am giving rather than primarily extracting.',
+        'I can hold the difficulty of this relationship honestly without allowing that difficulty to justify hardness toward the person.',
+        'I am entering this space oriented toward what holds us together — my private interests are not directing this engagement.',
+        'I am contributing to cohesion — my words and presence here build rather than fragment.',
+      ],
+      notYet: [
+        'I am responding to the role this person occupies rather than to the person themselves.',
+        'I am letting what is unfamiliar or difficult about this person produce judgment or withdrawal rather than understanding.',
+        'I am here more for what I can receive than for what I can genuinely offer.',
+        'I am using the real difficulty of this relationship as permission to withhold the care that is still due.',
+        'My own needs or agenda are driving this engagement more than the well-being of the relationship or community.',
+        'I am carrying unresolved division — consciously or not — into this space, and it is shaping what I bring.',
+      ],
+    },
+    reflection: {
+      frame: 'Al-Raḥīm was present in how I held others today. Al-Jāmiʿ witnessed what my presence built.',
+      governing: [
+        'I was present to at least one person as a person — not a role — and it shaped how I engaged.',
+        'My presence in at least one relational space built rather than fragmented.',
+      ],
+      notYet: [
+        'I responded to someone primarily through the function they serve rather than who they are.',
+        'I carried unresolved tension into an interaction and it shaped what I brought.',
+      ],
+    },
+  },
+
+  wealth: {
+    attrs: [
+      {
+        name: 'Al-Razzāq',
+        name_ar: 'الرَّزَّاق',
+        title: 'The Provider',
+        body: 'All provision originates with Allah. Al-Razzāq orients toward wealth not as personal achievement to protect or expand but as rizq — provision entrusted for a purpose. Its absence corrupts through accumulation that crowds out generosity, ethical compromise justified by financial pressure, treating wealth as evidence of personal worth, and the anxiety of holding rather than trusting.',
+      },
+      {
+        name: 'Al-Ḥasīb',
+        name_ar: 'الْحَسِيب',
+        title: 'The Reckoner',
+        body: 'Precise accountability for what is held, how it is used, and what it produces. Al-Ḥasīb is not anxiety about outcomes — it is the quality of attention that ensures stewardship is legible, both to the operator and to Allah. Its absence shows in recklessness: decisions made without counting the cost, resources deployed without tracking their effect.',
+      },
+    ],
+    dua: {
+      title: 'Before Wealth Stewardship',
+      resumeTitle: 'Before Resuming Financial Work',
+      arabic: 'اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ',
+      trans: "Allāhumma ikfinī bi-ḥalālika ʿan ḥarāmika wa aghninī bi-faḍlika ʿamman siwāk",
+      meaning: 'O Allah, suffice me with what You have allowed instead of what You have forbidden, and make me independent of all others besides You.',
+      source: 'Jami at-Tirmidhi 3563',
+    },
+    readiness: {
+      frame: 'Al-Razzāq asks: am I holding this wealth as a trust from Allah, or as something I have earned and now own?',
+      rows: [
+        {
+          id: 'Z1', attr: 'Al-Razzāq', attr_ar: 'الرَّزَّاق', attrTitle: 'The Provider',
+          attrFrame: 'Am I holding this wealth as a trust from Allah, or as something I have earned and now own?',
+          governing: 'I am approaching this with the awareness that what I hold is provision, not possession — it came from Allah and is accountable to Him.',
+          notYet: 'I am treating what I have accumulated as mine by right, without attending to the trust dimension of holding it.',
+        },
+        {
+          id: 'Z2', attr: 'Al-Razzāq',
+          governing: 'I am making this decision with the ethical boundary intact — financial pressure is not relocating where that boundary sits.',
+          notYet: 'I am allowing the pressure of financial need or opportunity to justify a compromise I would not otherwise accept.',
+        },
+        {
+          id: 'Z3', attr: 'Al-Razzāq',
+          governing: 'I am giving from what I hold with genuine freedom — generosity is not contingent on reaching a threshold of security first.',
+          notYet: 'I am deferring generosity until conditions I keep receding are met — treating charity as a surplus activity rather than an obligation.',
+        },
+        {
+          id: 'Z4', attr: 'Al-Razzāq',
+          governing: 'I can hold an outcome in which I receive less than I expected without it threatening my orientation toward Allah as Provider.',
+          notYet: 'I am measuring my standing with Allah or my own worth partly by what I have been given materially.',
+        },
+        {
+          id: 'H1', attr: 'Al-Ḥasīb', attr_ar: 'الْحَسِيب', attrTitle: 'The Reckoner',
+          attrFrame: 'Am I operating with the precision this trust deserves, or am I proceeding without full accounting?',
+          governing: 'I am entering this with a clear account of what has been deployed, what has been returned, and what remains outstanding.',
+          notYet: 'I am proceeding without a clear reckoning of the current state — moving forward without closing what I opened before.',
+        },
+        {
+          id: 'H2', attr: 'Al-Ḥasīb',
+          governing: 'I am making this decision with full sight of its likely consequences — I have counted the cost before I have committed the resource.',
+          notYet: 'I am acting with optimism about outcomes that I have not honestly examined, deploying resources before the accounting is complete.',
+        },
+      ],
+      governing: [
+        'I am approaching this with the awareness that what I hold is provision, not possession — it came from Allah and is accountable to Him.',
+        'I am making this decision with the ethical boundary intact — financial pressure is not relocating where that boundary sits.',
+        'I am giving from what I hold with genuine freedom — generosity is not contingent on reaching a threshold of security first.',
+        'I can hold an outcome in which I receive less than I expected without it threatening my orientation toward Allah as Provider.',
+        'I am entering this with a clear account of what has been deployed, what has been returned, and what remains outstanding.',
+        'I am making this decision with full sight of its likely consequences — I have counted the cost before I have committed the resource.',
+      ],
+      notYet: [
+        'I am treating what I have accumulated as mine by right, without attending to the trust dimension of holding it.',
+        'I am allowing the pressure of financial need or opportunity to justify a compromise I would not otherwise accept.',
+        'I am deferring generosity until conditions I keep receding are met — treating charity as a surplus activity rather than an obligation.',
+        'I am measuring my standing with Allah or my own worth partly by what I have been given materially.',
+        'I am proceeding without a clear reckoning of the current state — moving forward without closing what I opened before.',
+        'I am acting with optimism about outcomes that I have not honestly examined, deploying resources before the accounting is complete.',
+      ],
+    },
+    reflection: {
+      frame: 'Al-Razzāq held the provision today. Al-Ḥasīb witnessed the reckoning.',
+      governing: [
+        'I made at least one financial decision with the amanah dimension consciously present.',
+        'I counted the cost of a deployment before committing — not after.',
+      ],
+      notYet: [
+        'I treated wealth I hold as mine by right rather than as provision entrusted.',
+        'I moved forward without a clear account of what preceded this step.',
+      ],
+    },
+  },
+
+  environment: {
+    attrs: [
+      {
+        name: 'Al-Wakīl',
+        name_ar: 'الْوَكِيل',
+        title: 'The Trustworthy Disposer',
+        body: 'In the Environment domain, Al-Wakīl frames the earth as something entrusted — not owned, not inherited as a right, but held in custody for those who come after. The operator is asked whether they understand that the ground beneath them is a trust, and that a trustee has obligations to the one who entrusted.',
+      },
+      {
+        name: 'Al-Ḥakīm',
+        name_ar: 'الْحَكِيم',
+        title: 'The All-Wise',
+        body: 'Wisdom that perceives consequences across time and scale. Al-Ḥakīm is the antidote to short-sightedness — not merely prudence, but the quality of perception that sees how present choices propagate into future conditions. Its absence corrupts through the accumulated weight of small decisions made without seeing their full arc.',
+      },
+    ],
+    dua: {
+      title: 'Before Ecological Stewardship',
+      resumeTitle: 'Before Resuming Environmental Work',
+      arabic: 'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ',
+      trans: "Subḥāna alladhī sakhkhara lanā hādhā wa mā kunnā lahu muqrinīn",
+      meaning: 'Glory be to Him who has subjected this to us, and we could not have [otherwise] subdued it.',
+      source: 'Surah Az-Zukhruf 43:13',
+    },
+    readiness: {
+      frame: 'Al-Wakīl asks: am I engaging with this domain as a trustee of what has been entrusted — to me, and through me, to future generations?',
+      rows: [
+        {
+          id: 'K1', attr: 'Al-Wakīl', attr_ar: 'الْوَكِيل', attrTitle: 'The Trustworthy Disposer',
+          attrFrame: 'Am I engaging with this domain as a trustee of what has been entrusted — to me, and through me, to future generations?',
+          governing: 'I am approaching this with the awareness that what I hold, consume, and affect is not mine — it is entrusted for a purpose beyond my own use.',
+          notYet: 'I am treating the resources and ecosystems I engage with as available for my use without attending to the trust dimension of that use.',
+        },
+        {
+          id: 'K2', attr: 'Al-Wakīl',
+          governing: 'I am acting with the awareness that my choices here have consequences for people who are not present — and that accountability extends to them.',
+          notYet: 'I am making this choice based only on its effects on those present and currently visible, without attending to the unseen and the future.',
+        },
+        {
+          id: 'H1', attr: 'Al-Ḥakīm', attr_ar: 'الْحَكِيم', attrTitle: 'The All-Wise',
+          attrFrame: 'Am I seeing far enough — across time, across scale, across those affected — to make this choice wisely?',
+          governing: 'I am seeing the full arc of this choice — its likely effects across time and at a scale beyond my immediate context.',
+          notYet: 'I am making this decision based on its immediate and visible effects, without honestly examining its downstream consequences.',
+        },
+        {
+          id: 'H2', attr: 'Al-Ḥakīm',
+          governing: 'I am willing to accept a present inconvenience or cost in order to preserve a future condition I will not personally witness.',
+          notYet: 'I am prioritising immediate ease or gain in a way that defers a cost I know will fall on others — human or ecological.',
+        },
+        {
+          id: 'H3', attr: 'Al-Ḥakīm',
+          governing: 'I am examining my consumption and project choices with honest attention to their full chain of effects — not only their proximate outcomes.',
+          notYet: 'I am accepting the framing given to me about what is \'sustainable\' or \'ethical\' without examining whether that framing holds under scrutiny.',
+        },
+        {
+          id: 'H4', attr: 'Al-Ḥakīm',
+          governing: 'I am acting from principle rather than from trend — my engagement here is grounded in obligation, not in what currently signals environmental care.',
+          notYet: 'I am participating in environmental stewardship primarily in ways that are visible and culturally recognised, while exempting less visible choices from the same standard.',
+        },
+      ],
+      governing: [
+        'I am approaching this with the awareness that what I hold, consume, and affect is not mine — it is entrusted for a purpose beyond my own use.',
+        'I am acting with the awareness that my choices here have consequences for people who are not present — and that accountability extends to them.',
+        'I am seeing the full arc of this choice — its likely effects across time and at a scale beyond my immediate context.',
+        'I am willing to accept a present inconvenience or cost in order to preserve a future condition I will not personally witness.',
+        'I am examining my consumption and project choices with honest attention to their full chain of effects — not only their proximate outcomes.',
+        'I am acting from principle rather than from trend — my engagement here is grounded in obligation, not in what currently signals environmental care.',
+      ],
+      notYet: [
+        'I am treating the resources and ecosystems I engage with as available for my use without attending to the trust dimension of that use.',
+        'I am making this choice based only on its effects on those present and currently visible, without attending to the unseen and the future.',
+        'I am making this decision based on its immediate and visible effects, without honestly examining its downstream consequences.',
+        'I am prioritising immediate ease or gain in a way that defers a cost I know will fall on others — human or ecological.',
+        'I am accepting the framing given to me about what is \'sustainable\' or \'ethical\' without examining whether that framing holds under scrutiny.',
+        'I am participating in environmental stewardship primarily in ways that are visible and culturally recognised, while exempting less visible choices from the same standard.',
+      ],
+    },
+    reflection: {
+      frame: 'Al-Wakīl witnessed what I held as trust today. Al-Ḥakīm saw how far I looked.',
+      governing: [
+        'I made at least one choice today with the unseen and the future consciously present.',
+        'I examined rather than accepted a framing about sustainability or ethics.',
+      ],
+      notYet: [
+        'I treated a resource I engaged with as available for my use without attending to its trust dimension.',
+        'I made a decision based on immediate effects without honestly examining what comes after.',
+      ],
+    },
+  },
 };
 
 export const ONGOING_DUA = {

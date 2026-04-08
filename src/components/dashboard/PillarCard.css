@@ -32,6 +32,20 @@
   letter-spacing: 0.02em;
 }
 
+.pc-rel-badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  border: 1px solid;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
 .pc-scaffold {
   font-size: 0.8rem; color: var(--text3);
   font-style: italic;

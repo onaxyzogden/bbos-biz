@@ -1,0 +1,454 @@
+/* Money Dashboard */
+.money-dash {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Shared card ── */
+.md-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.md-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-3);
+}
+
+/* ── Typography ── */
+.md-big-number {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  line-height: 1.1;
+}
+
+.md-mid-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.md-label {
+  font-size: 0.8rem;
+  color: var(--text2);
+}
+
+.md-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.md-up { color: var(--success); }
+.md-down { color: var(--danger); }
+
+.md-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+}
+.md-link:hover { color: var(--primary); }
+
+/* ── Rows layout ── */
+.md-row { display: grid; gap: var(--space-4); }
+
+.md-row-top {
+  grid-template-columns: 2fr 1fr 1.2fr;
+}
+
+.md-row-mid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.md-row-bottom {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+/* ── Bar chart ── */
+.md-chart {
+  margin-top: var(--space-3);
+  height: 140px;
+}
+
+.md-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  height: 100%;
+}
+
+.md-chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.md-chart-stack {
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+  width: 100%;
+  flex: 1;
+}
+
+.md-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  min-height: 4px;
+  transition: height 0.4s var(--ease);
+}
+
+.md-bar-savings { background: #fde68a; }
+.md-bar-income { background: var(--mod-money); }
+.md-bar-expenses { background: #86efac; }
+
+.md-chart-label {
+  font-size: 0.7rem;
+  color: var(--text3);
+  margin-top: var(--space-1);
+}
+
+.md-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  color: var(--text2);
+}
+
+.md-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.md-dot-savings { background: #fde68a; }
+.md-dot-income { background: var(--mod-money); }
+.md-dot-expenses { background: #86efac; }
+
+/* ── Summary cards stack ── */
+.md-summary-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.md-summary-item {
+  flex: 1;
+}
+
+/* ── My Card ── */
+.md-visa-card {
+  background: linear-gradient(135deg, #1a1d21 0%, #2d3748 100%);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  color: #fff;
+  margin-bottom: var(--space-3);
+  position: relative;
+  min-height: 100px;
+}
+
+.md-visa-label {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.md-visa-brand {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-style: italic;
+  color: #fbbf24;
+}
+
+.md-visa-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  margin: var(--space-3) 0 var(--space-2);
+  letter-spacing: 2px;
+}
+
+.md-visa-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.md-quick-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.md-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: none;
+  color: var(--text2);
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: all var(--duration) var(--ease);
+  flex: 1;
+}
+.md-action-btn:hover {
+  background: var(--bg3);
+  color: var(--text);
+}
+
+.md-quick-pay h5 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.md-contacts-row {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.md-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: var(--text2);
+}
+
+.md-contact-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ── Spending limit ── */
+.md-limit-bar {
+  height: 10px;
+  background: var(--bg3);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.md-limit-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--mod-money), #86efac);
+}
+
+.md-limit-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text2);
+}
+
+/* ── Cost analysis ── */
+.md-cost-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.md-cost-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+}
+
+.md-cost-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.md-cost-name {
+  flex: 1;
+  color: var(--text2);
+}
+
+.md-cost-pct {
+  font-weight: 600;
+  min-width: 32px;
+  text-align: right;
+}
+
+/* ── Financial health donut ── */
+.md-donut-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--space-4);
+  position: relative;
+}
+
+.md-donut {
+  width: 120px;
+  height: 120px;
+}
+
+.md-donut-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.md-donut-label strong {
+  display: block;
+  font-size: 1.3rem;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.md-donut-label span {
+  font-size: 0.6rem;
+  color: var(--text2);
+  display: block;
+  max-width: 70px;
+}
+
+/* ── Goals ── */
+.md-goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.md-goal-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.md-goal-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.md-goal-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
+
+.md-progress-bar {
+  height: 6px;
+  background: var(--bg3);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+
+.md-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+}
+
+/* ── Transactions ── */
+.md-tx-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.md-tx-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.md-tx-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.md-tx-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.md-tx-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.md-tx-amount-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.md-tx-amount {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.md-tx-status {
+  font-size: 0.7rem;
+  color: var(--success);
+}
+
+.md-tx-status.md-declined {
+  color: var(--danger);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .md-row-top { grid-template-columns: 1fr 1fr; }
+  .md-my-card { grid-column: 1 / -1; }
+  .md-row-bottom { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 700px) {
+  .md-row-top,
+  .md-row-mid,
+  .md-row-bottom {
+    grid-template-columns: 1fr;
+  }
+  .md-my-card { grid-column: auto; }
+}

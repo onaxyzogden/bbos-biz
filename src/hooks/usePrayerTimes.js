@@ -28,7 +28,7 @@ function getActivePrayer(timings, { leadMs = 5 * 60 * 1000, trailMs = 10 * 60 * 
     if (diff >= -leadMs && diff <= trailMs) {
       const windowStart = prayerTime.getTime() - leadMs;
       const msRemaining = (windowStart + totalWindowMs) - now.getTime();
-      return { name, msRemaining: Math.max(0, msRemaining) };
+      return { name, msRemaining: Math.max(0, msRemaining), prayerTimeMs: prayerTime.getTime() };
     }
   }
   return null;

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { safeGetJSON, safeSet } from '../services/storage';
-import { genExpenseId, genInvoiceId, genCategoryId, genBudgetId, genLineItemId, genVendorId, genAccountId, genIncomeId } from '../services/id';
+import { genExpenseId, genInvoiceId, genCategoryId, genBudgetId, genLineItemId, genVendorId, genAccountId, genIncomeId, genAssetId } from '../services/id';
 import { PRESET_CATEGORIES } from '../data/money-categories';
 
 // Persistence helpers
@@ -12,6 +12,7 @@ function persistCounter(n) { safeSet('inv_counter', n); }
 function persistVendors(vendors) { safeSet('money_vendors', vendors); }
 function persistAccounts(accounts) { safeSet('money_accounts', accounts); }
 function persistIncomes(incomes) { safeSet('money_incomes', incomes); }
+function persistAssets(assets) { safeSet('money_assets', assets); }
 
 // Initialize categories — presets on first load
 function initCategories() {
@@ -47,6 +48,7 @@ export const useMoneyStore = create((set, get) => ({
   vendors: safeGetJSON('money_vendors', []),
   accounts: safeGetJSON('money_accounts', []),
   incomes: safeGetJSON('money_incomes', []),
+  assets: safeGetJSON('money_assets', []),
 
   // ── Expenses ──
   addExpense: (data) => {
@@ -338,6 +340,42 @@ export const useMoneyStore = create((set, get) => ({
     const incomes = s.incomes.filter((i) => i.id !== id);
     persistIncomes(incomes);
     return { incomes };
+  }),
+
+  // ── Assets ──
+  addAsset: (data) => {
+    const asset = {
+      id: genAssetId(),
+      name: data.name || '',
+      category: data.category || 'Other',
+      purchaseDate: data.purchaseDate || '',
+      purchasePrice: Number(data.purchasePrice) || 0,
+      currentValue: Number(data.currentValue) || 0,
+      currency: data.currency || 'CAD',
+      notes: data.notes || '',
+      status: 'active',
+      createdAt: new Date().toISOString(),
+    };
+    set((s) => {
+      const assets = [...s.assets, asset];
+      persistAssets(assets);
+      return { assets };
+    });
+    return asset;
+  },
+
+  updateAsset: (id, updates) => set((s) => {
+    const assets = s.assets.map((a) =>
+      a.id === id ? { ...a, ...updates, updatedAt: new Date().toISOString() } : a
+    );
+    persistAssets(assets);
+    return { assets };
+  }),
+
+  deleteAsset: (id) => set((s) => {
+    const assets = s.assets.filter((a) => a.id !== id);
+    persistAssets(assets);
+    return { assets };
   }),
 
   // ── Report getters ──

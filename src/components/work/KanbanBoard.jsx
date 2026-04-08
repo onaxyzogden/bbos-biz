@@ -10,11 +10,12 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useTaskStore } from '../../store/task-store';
+import { getTaskAccessLevel } from '../../data/bbos-role-access';
 import KanbanColumn from './KanbanColumn';
 import KanbanCard from './KanbanCard';
 import './KanbanBoard.css';
 
-export default function KanbanBoard({ project, onSelectTask, filters }) {
+export default function KanbanBoard({ project, onSelectTask, filters, bbosFilter, bbosRole }) {
   const tasksByProject = useTaskStore((s) => s.tasksByProject);
   const getFilteredTasks = useTaskStore((s) => s.getFilteredTasks);
   const moveTask = useTaskStore((s) => s.moveTask);
@@ -22,10 +23,16 @@ export default function KanbanBoard({ project, onSelectTask, filters }) {
   const [activeId, setActiveId] = useState(null);
 
   const allTasks = tasksByProject[project.id] || [];
-  const tasks = useMemo(
+  const filteredTasks = useMemo(
     () => getFilteredTasks(project.id, filters),
     [allTasks, filters, project.id, getFilteredTasks]
   );
+
+  // Apply role-based access filtering: hide tasks with '-' access
+  const tasks = useMemo(() => {
+    if (!bbosRole || bbosRole === 'all') return filteredTasks;
+    return filteredTasks.filter((t) => getTaskAccessLevel(bbosRole, t.bbosTaskType) !== '-');
+  }, [filteredTasks, bbosRole]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -82,7 +89,8 @@ export default function KanbanBoard({ project, onSelectTask, filters }) {
   };
 
   const handleAddTask = (columnId) => {
-    const task = createTask(project.id, columnId, 'Untitled');
+    const opts = bbosFilter ? { bbosStage: bbosFilter } : {};
+    const task = createTask(project.id, columnId, 'Untitled', opts);
     onSelectTask(task.id);
   };
 
@@ -108,6 +116,7 @@ export default function KanbanBoard({ project, onSelectTask, filters }) {
                 tasks={colTasks}
                 onSelectTask={onSelectTask}
                 onAddTask={() => handleAddTask(col.id)}
+                bbosRole={bbosRole}
               />
             </SortableContext>
           );

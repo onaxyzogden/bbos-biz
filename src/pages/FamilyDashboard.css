@@ -1,0 +1,904 @@
+/* ══════════════════════════════════════════════════════════
+   Family Dashboard — "Family (Aql)" module detail layout
+   Scoped warm earth-tone palette under .family-dash
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Scoped palette ── overrides global --faith-* only inside .family-dash */
+.family-dash {
+  --faith-primary: #003636;
+  --faith-on-primary: #ffffff;
+  --faith-primary-container: #104e4e;
+  --faith-on-primary-container: #87bebd;
+  --faith-primary-fixed: #b4edec;
+  --faith-primary-fixed-dim: #99d1d0;
+
+  --faith-secondary: #496550;
+  --faith-on-secondary: #ffffff;
+  --faith-secondary-container: #c8e8cd;
+  --faith-on-secondary-container: #4d6954;
+  --faith-secondary-fixed: #cbead0;
+  --faith-secondary-fixed-dim: #afceb5;
+  --faith-on-secondary-fixed: #052010;
+  --faith-on-secondary-fixed-variant: #324d39;
+
+  --faith-tertiary: #402b14;
+  --faith-on-tertiary: #ffffff;
+  --faith-tertiary-container: #594128;
+  --faith-on-tertiary-container: #cfae8d;
+  --faith-tertiary-fixed: #ffddbb;
+  --faith-tertiary-fixed-dim: #e3c19f;
+  --faith-on-tertiary-fixed: #291803;
+  --faith-on-tertiary-fixed-variant: #5a4229;
+
+  --faith-bg: #fcf9f6;
+  --faith-surface: #fcf9f6;
+  --faith-surface-container: #f0edea;
+  --faith-surface-container-low: #f6f3f0;
+  --faith-surface-container-lowest: #ffffff;
+  --faith-surface-container-high: #eae8e5;
+  --faith-surface-container-highest: #e5e2df;
+  --faith-surface-variant: #e5e2df;
+
+  --faith-on-surface: #1c1c1a;
+  --faith-on-surface-variant: #404848;
+  --faith-outline: #707978;
+  --faith-outline-variant: #bfc8c8;
+
+  --faith-inverse-surface: #31302f;
+  --faith-error: #ba1a1a;
+  --faith-error-container: #ffdad6;
+}
+
+/* ── Root container ── */
+.family-dash {
+  min-height: 100%;
+  background-color: var(--faith-surface);
+  color: var(--faith-on-surface);
+  padding: 3rem;
+  max-width: 1400px;
+}
+
+/* ── Shared label ── */
+.family-label {
+  display: inline-block;
+  font-family: 'Manrope', 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--faith-on-surface-variant);
+}
+
+.family-label--light {
+  color: var(--faith-secondary-fixed);
+}
+
+/* ── Shared badge ── */
+.family-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 1rem;
+  border-radius: 9999px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.family-badge--module {
+  background: var(--faith-primary-container);
+  color: var(--faith-on-primary-container);
+}
+
+.family-badge--dark {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--faith-on-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.family-badge--secondary {
+  background: var(--faith-secondary-container);
+  color: var(--faith-on-secondary-container);
+}
+
+.family-badge--tertiary {
+  background: var(--faith-tertiary-fixed);
+  color: var(--faith-on-tertiary-fixed-variant);
+}
+
+.family-badge--active {
+  background: var(--faith-secondary-fixed);
+  color: var(--faith-on-secondary-fixed);
+  font-size: 10px;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+}
+
+.family-badge--queued {
+  background: var(--faith-surface-variant);
+  color: var(--faith-on-surface-variant);
+  font-size: 10px;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+}
+
+/* ── Shared progress bar ── */
+.family-progress-bar {
+  height: 0.5rem;
+  background: var(--faith-surface-variant);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.family-progress-bar--sm {
+  height: 4px;
+}
+
+.family-progress-bar--onprimary {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.family-progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--faith-secondary), var(--faith-primary));
+  transition: width 600ms ease;
+}
+
+.family-progress-fill--light {
+  background: var(--faith-secondary-fixed);
+}
+
+/* ══════════════════════════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════════════════════════ */
+.family-header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.family-header__left {
+  max-width: 40rem;
+}
+
+.family-header__left .family-badge {
+  margin-bottom: 1.5rem;
+}
+
+.family-header__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 3.75rem;
+  font-weight: 700;
+  color: var(--faith-primary);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.family-header__verse {
+  padding-left: 1.5rem;
+  border-left: 2px solid rgba(0, 54, 54, 0.3);
+  margin-top: 2rem;
+}
+
+.family-header__verse p {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--faith-on-surface-variant);
+  opacity: 0.9;
+  margin: 0;
+}
+
+.family-header__cite {
+  display: block;
+  margin-top: 1rem;
+  font-style: normal;
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(0, 54, 54, 0.6);
+}
+
+.family-header__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.family-header__pct {
+  font-family: 'Noto Serif', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--faith-primary);
+  line-height: 1;
+}
+
+.family-header__pct-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--faith-on-surface-variant);
+}
+
+.family-header__progress-wrap {
+  width: 16rem;
+  margin-top: 0.25rem;
+}
+
+/* ══════════════════════════════════════════════════════════
+   HERO CARD (Current Focus)
+   ══════════════════════════════════════════════════════════ */
+.family-hero-card {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: var(--faith-primary-container);
+  margin-bottom: 4rem;
+}
+
+.family-hero-card__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+}
+
+.family-hero-card__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 54, 54, 0.9), transparent, transparent);
+}
+
+.family-hero-card__content {
+  position: absolute;
+  bottom: 3rem;
+  left: 3rem;
+  z-index: 1;
+}
+
+.family-hero-card__content .family-label {
+  color: var(--faith-secondary-fixed);
+  letter-spacing: 0.4em;
+  margin-bottom: 1rem;
+}
+
+.family-hero-card__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--faith-on-primary);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.family-hero-card__desc {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  max-width: 28rem;
+  margin-bottom: 0;
+}
+
+.family-hero-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  border: none;
+  background: var(--faith-secondary-fixed);
+  color: var(--faith-on-secondary-fixed);
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.family-hero-card__cta:hover {
+  transform: scale(1.05);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PILLARS BENTO GRID
+   ══════════════════════════════════════════════════════════ */
+.family-pillars {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+/* ── Core Pillars (Level 1) ── */
+.family-core-card {
+  background: var(--faith-primary);
+  color: var(--faith-on-primary);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.family-core-card .family-badge {
+  margin-bottom: 1.5rem;
+}
+
+.family-core-card__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.family-core-card__desc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  opacity: 0.7;
+  margin-bottom: 3rem;
+}
+
+.family-core-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 0;
+}
+
+.family-core-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: opacity 0.2s;
+}
+
+.family-core-item--dim {
+  opacity: 0.6;
+}
+
+.family-core-item--clickable {
+  cursor: pointer;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  margin: -0.5rem;
+  transition: opacity 0.2s, background 0.2s;
+}
+
+.family-core-item--clickable:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.family-core-item--growth.family-core-item--clickable:hover,
+.family-core-item--excellence.family-core-item--clickable:hover {
+  background: var(--faith-surface-container);
+}
+
+.family-core-list--growth,
+.family-core-list--excellence {
+  margin-top: auto;
+}
+
+.family-core-item--growth,
+.family-core-item--excellence {
+  color: var(--faith-on-surface);
+}
+
+.family-core-item--growth .family-core-item__pct,
+.family-core-item--excellence .family-core-item__pct {
+  opacity: 0.8;
+  color: var(--faith-on-surface-variant);
+}
+
+.family-core-item__icon-wrap--growth {
+  background: var(--faith-secondary-container);
+  color: var(--faith-on-secondary-container);
+}
+
+.family-core-item__icon-wrap--excellence {
+  background: var(--faith-tertiary-fixed);
+  color: var(--faith-on-tertiary-fixed-variant);
+}
+
+.family-progress-fill--growth {
+  background: linear-gradient(to right, var(--faith-secondary), var(--faith-secondary-container));
+}
+
+.family-progress-fill--excellence {
+  background: linear-gradient(to right, var(--faith-tertiary), var(--faith-tertiary-fixed-dim));
+}
+
+.family-core-item__icon-wrap {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--faith-on-primary);
+}
+
+.family-core-item__info {
+  flex: 1;
+}
+
+.family-core-item__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.family-core-item__label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.family-core-item__pct {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+/* ── Right sub-grid ── */
+.family-pillars__right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* ── Growth Space (Level 2) ── */
+.family-needs-card {
+  background: var(--faith-surface-container-low);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.family-needs-card .family-badge {
+  margin-bottom: 1.5rem;
+}
+
+.family-needs-card__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--faith-primary);
+  margin-bottom: 1rem;
+}
+
+.family-needs-card__desc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--faith-on-surface-variant);
+  margin-bottom: 2rem;
+}
+
+.family-study-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0;
+}
+
+.family-study-item {
+  background: var(--faith-surface-container-lowest);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.family-study-item__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.family-study-item__header svg {
+  color: var(--faith-secondary);
+  flex-shrink: 0;
+}
+
+.family-study-item__name {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--faith-on-surface);
+}
+
+.family-study-item__desc {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--faith-on-surface-variant);
+}
+
+.family-study-item__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.family-study-item__progress {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--faith-primary);
+}
+
+/* ── Queued item (inline) ── */
+.family-queued-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(191, 200, 200, 0.2);
+}
+
+.family-queued-item__label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--faith-on-surface-variant);
+  opacity: 0.7;
+}
+
+.family-queued-item svg {
+  color: var(--faith-outline-variant);
+}
+
+/* ── Embellishments (Level 3) ── */
+.family-excellence-card {
+  background: var(--faith-surface-container-low);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(227, 193, 159, 0.2);
+}
+
+.family-excellence-card .family-badge {
+  margin-bottom: 1.5rem;
+}
+
+.family-excellence-card__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--faith-tertiary);
+  margin-bottom: 1rem;
+}
+
+.family-excellence-card__desc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--faith-on-surface-variant);
+  margin-bottom: 2rem;
+}
+
+.family-locked-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0;
+}
+
+.family-locked-item {
+  border: 1px solid rgba(191, 200, 200, 0.3);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.family-locked-item:hover {
+  border-color: var(--faith-tertiary-fixed-dim);
+  background: var(--faith-surface);
+}
+
+.family-locked-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.family-locked-item__header svg:first-child {
+  color: var(--faith-tertiary);
+}
+
+.family-locked-item__header svg:last-child {
+  color: var(--faith-outline-variant);
+}
+
+.family-locked-item__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--faith-on-surface);
+  margin-bottom: 0.5rem;
+}
+
+.family-locked-item__desc {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--faith-on-surface-variant);
+}
+
+/* ── Familyual Audit Banner ── */
+.family-audit-cta {
+  grid-column: span 2;
+  position: relative;
+  height: 12rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: var(--faith-surface-container-highest);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  border: 1px solid rgba(191, 200, 200, 0.1);
+}
+
+.family-audit-cta__bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  pointer-events: none;
+  background: radial-gradient(circle at center, var(--faith-primary) 0%, transparent 70%);
+  transform: scale(1.5);
+}
+
+.family-audit-cta__content {
+  position: relative;
+  z-index: 1;
+  max-width: 28rem;
+}
+
+.family-audit-cta__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--faith-primary);
+  margin-bottom: 0.25rem;
+}
+
+.family-audit-cta__desc {
+  font-size: 0.875rem;
+  color: var(--faith-on-surface-variant);
+  line-height: 1.5;
+}
+
+.family-audit-cta__btn {
+  position: relative;
+  z-index: 1;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(191, 200, 200, 0.2);
+  background: var(--faith-surface-container-lowest);
+  color: var(--faith-primary);
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.5s;
+}
+
+.family-audit-cta__btn:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* ══════════════════════════════════════════════════════════
+   TARBIYAH BRIDGE
+   ══════════════════════════════════════════════════════════ */
+.family-tarbiyah-bridge {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  border-left: 3px solid #AD6E9E;
+}
+
+.family-tarbiyah-bridge__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  color: #AD6E9E;
+}
+
+.family-tarbiyah-bridge__header h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.family-tarbiyah-bridge__desc {
+  font-size: 0.82rem;
+  color: var(--text2);
+  line-height: 1.5;
+  margin-bottom: var(--space-3);
+}
+
+.family-tarbiyah-bridge__conditions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.family-tarbiyah-bridge__condition {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.78rem;
+  color: var(--text2);
+}
+
+.family-tarbiyah-bridge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--border2);
+  flex-shrink: 0;
+}
+
+.family-tarbiyah-bridge__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #AD6E9E;
+  background: color-mix(in srgb, #AD6E9E 8%, transparent);
+  border: 1px solid color-mix(in srgb, #AD6E9E 20%, transparent);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+}
+
+.family-tarbiyah-bridge__btn:hover {
+  background: color-mix(in srgb, #AD6E9E 14%, transparent);
+}
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════ */
+.family-footer {
+  margin-top: 6rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(191, 200, 200, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.family-footer__text {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.family-footer__text span {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  color: var(--faith-on-surface-variant);
+  opacity: 0.5;
+}
+
+.family-footer__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgba(191, 200, 200, 0.4);
+}
+
+.family-footer__icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.family-footer__icons svg {
+  color: rgba(112, 121, 120, 0.3);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.family-footer__icons svg:hover {
+  color: var(--faith-primary);
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .family-dash { padding: 2rem; }
+  .family-header__title { font-size: 2.75rem; }
+  .family-pillars { grid-template-columns: minmax(0, 1fr); }
+  .family-pillars__right { grid-template-columns: minmax(0, 1fr); min-width: 0; }
+  .family-audit-cta { grid-column: 1 / -1; }
+  .family-audit-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .family-dash { padding: 1rem; }
+  .family-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .family-header__right {
+    align-items: flex-start;
+    width: 100%;
+  }
+  .family-header__progress-wrap { width: 100%; }
+  .family-header__title { font-size: 2rem; }
+  .family-header__verse p { font-size: 1rem; }
+  .family-hero-card { height: 260px; margin-bottom: 2rem; }
+  .family-hero-card__content {
+    bottom: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+  }
+  .family-hero-card__title { font-size: 1.5rem; }
+  .family-hero-card__desc { max-width: 100%; }
+  .family-pillars { gap: 1rem; margin-bottom: 2rem; }
+  .family-core-card,
+  .family-needs-card,
+  .family-excellence-card { padding: 1.25rem; }
+  .family-audit-cta { padding: 1.5rem; }
+  .family-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .family-header__title { font-size: 1.625rem; }
+  .family-hero-card { height: 220px; }
+  .family-hero-card__title { font-size: 1.25rem; }
+}

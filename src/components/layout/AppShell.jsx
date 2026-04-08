@@ -1,5 +1,7 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { PenLine, BookOpen, Plus } from 'lucide-react';
+import { safeGetJSON, safeSet } from '../../services/storage';
 import { useAppStore } from '../../store/app-store';
 import { useProjectStore } from '../../store/project-store';
 import { useTaskStore } from '../../store/task-store';
@@ -19,6 +21,7 @@ import ThresholdModal from '../islamic/ThresholdModal';
 import ResumeOverlay from '../islamic/ResumeOverlay';
 import PrayerOverlay from '../islamic/PrayerOverlay';
 import PrayerWarning from '../islamic/PrayerWarning';
+import NiyyahAct from '../islamic/NiyyahAct';
 import './AppShell.css';
 
 export default function AppShell() {
@@ -38,8 +41,10 @@ export default function AppShell() {
   const isPrayerLocked = useThresholdStore((s) => s.isPrayerLocked);
   const currentPrayerName = useThresholdStore((s) => s.currentPrayerName);
   const prayerMsRemaining = useThresholdStore((s) => s.prayerMsRemaining);
+  const prayerTimeMs = useThresholdStore((s) => s.prayerTimeMs);
   const prayerWarningName = useThresholdStore((s) => s.prayerWarningName);
   const prayerWarningDismissed = useThresholdStore((s) => s.prayerWarningDismissed);
+  const niyyahDate = useThresholdStore((s) => s.niyyahDate);
   const triggerResume = useThresholdStore((s) => s.triggerResume);
   const dismissResume = useThresholdStore((s) => s.dismissResume);
   const setPrayerLock = useThresholdStore((s) => s.setPrayerLock);
@@ -78,7 +83,7 @@ export default function AppShell() {
 
   useEffect(() => {
     if (activePrayer && !isPrayerLocked && valuesLayer === 'islamic' && dismissedPrayerRef.current !== activePrayer.name) {
-      setPrayerLock(true, activePrayer.name, activePrayer.msRemaining);
+      setPrayerLock(true, activePrayer.name, activePrayer.msRemaining, activePrayer.prayerTimeMs);
     }
     // Reset dismissed ref when we move to a different prayer
     if (!activePrayer) {
@@ -112,6 +117,45 @@ export default function AppShell() {
     }
   }, [setPrayerLock, completedOpening, activeModule, triggerResume]);
 
+  const showReflectionPanel = useAppStore((s) => s.reflectionOpen);
+  const setShowReflectionPanel = useAppStore((s) => s.setReflectionOpen);
+  const [isPanelClosing, setIsPanelClosing] = useState(false);
+  const [reflectionDraft, setReflectionDraft] = useState('');
+  const [reflectionEntries, setReflectionEntries] = useState(() =>
+    safeGetJSON('global_journal_reflection', [])
+  );
+
+  const addReflection = () => {
+    if (!reflectionDraft.trim()) return;
+    const entry = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      text: reflectionDraft.trim(),
+      createdAt: new Date().toISOString(),
+    };
+    const updated = [entry, ...reflectionEntries];
+    setReflectionEntries(updated);
+    safeSet('global_journal_reflection', updated);
+    setReflectionDraft('');
+  };
+
+  const closeReflectionPanel = () => {
+    setIsPanelClosing(true);
+    setTimeout(() => {
+      setShowReflectionPanel(false);
+      setIsPanelClosing(false);
+    }, 220);
+  };
+
+  const removeReflection = (id) => {
+    const updated = reflectionEntries.filter((e) => e.id !== id);
+    setReflectionEntries(updated);
+    safeSet('global_journal_reflection', updated);
+  };
+
+  // Daily Niyyah Act gate
+  const today = new Date().toISOString().slice(0, 10);
+  const niyyahNeeded = niyyahDate !== today;
+
   const sidebarCol = sidebarOpen ? 'var(--sidebar-w)' : 'var(--sidebar-w-collapsed)';
   const panelCol = islamicPanelOpen && !mobile ? ' var(--islamic-panel-w)' : '';
   const gridCols = mobile ? '1fr' : `${sidebarCol} 1fr${panelCol}`;
@@ -144,10 +188,11 @@ export default function AppShell() {
       {isPrayerLocked && (
         <PrayerOverlay
           prayerName={currentPrayerName}
-          initialMs={prayerMsRemaining}
+          prayerTimeMs={prayerTimeMs}
           onDismiss={handlePrayerDismiss}
         />
       )}
+      {niyyahNeeded && <NiyyahAct />}
       {prayerWarningName && !prayerWarningDismissed && !isPrayerLocked && (
         <PrayerWarning
           prayerName={prayerWarningName}
@@ -155,6 +200,60 @@ export default function AppShell() {
           minutesUntilLock={minutesUntilLock}
           onDismiss={dismissPrayerWarning}
         />
+      )}
+
+
+      {showReflectionPanel && (
+        <>
+          <div className="journal-panel-overlay" onClick={closeReflectionPanel} />
+          <div className={`journal-panel${isPanelClosing ? ' journal-panel--closing' : ''}`}>
+            <div className="journal-panel__header">
+              <span className="journal-panel__title">Reflection</span>
+              <button className="journal-panel__close" onClick={closeReflectionPanel}>✕</button>
+            </div>
+            <div className="journal-panel__body">
+              <div className="faith-journal">
+                <div className="faith-journal__header">
+                  <BookOpen size={20} style={{ color: 'var(--text2)' }} aria-hidden="true" />
+                  <h3 className="faith-journal__title">Reflection Journal</h3>
+                </div>
+                <p className="faith-journal__desc">A space for personal reflection, intentions, and insights.</p>
+                <div className="faith-journal__compose">
+                  <textarea
+                    className="faith-journal__textarea"
+                    placeholder="Write a reflection..."
+                    value={reflectionDraft}
+                    onChange={(e) => setReflectionDraft(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) addReflection(); }}
+                    rows={3}
+                  />
+                  <button className="btn btn-primary faith-journal__add" onClick={addReflection} disabled={!reflectionDraft.trim()}>
+                    <Plus size={14} aria-hidden="true" /> Add Entry
+                  </button>
+                </div>
+                {reflectionEntries.length === 0 ? (
+                  <div className="faith-journal__empty">No journal entries yet. Start by writing a reflection above.</div>
+                ) : (
+                  <div className="faith-journal__list">
+                    {reflectionEntries.map((entry) => (
+                      <div key={entry.id} className="faith-journal__entry">
+                        <div className="faith-journal__entry-header">
+                          <span className="faith-journal__entry-date">
+                            {new Date(entry.createdAt).toLocaleDateString(undefined, {
+                              weekday: 'short', year: 'numeric', month: 'short', day: 'numeric',
+                            })}
+                          </span>
+                          <button className="faith-journal__entry-remove" onClick={() => removeReflection(entry.id)} title="Remove entry">&times;</button>
+                        </div>
+                        <p className="faith-journal__entry-text">{entry.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </>
   );

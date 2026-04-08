@@ -121,6 +121,9 @@
   line-height: 1.4;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  /* Auto-expand to fit content — Chrome 123+, Firefox 129+ */
+  field-sizing: content;
+  min-height: calc(1.4em + (var(--space-1) * 2));
 }
 .tdp-title:focus {
   border-bottom: 2px solid var(--primary);

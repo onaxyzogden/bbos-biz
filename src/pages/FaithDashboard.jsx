@@ -1,67 +1,67 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import IslamicTerm from '../components/shared/IslamicTerm';
 import {
   CheckCircle2,
   HeartHandshake,
   HandHeart,
   Moon,
-  BookOpen,
-  Languages,
-  Star,
-  Sparkles,
-  Lock,
+  Landmark,
   ArrowRight,
   Leaf,
   Diamond,
   Infinity,
 } from 'lucide-react';
+import { useProjectStore, FAITH_BOARDS } from '../store/project-store';
+import { useTaskStore } from '../store/task-store';
+import { useModulesProgress } from '../hooks/useModuleProgress';
 import './FaithDashboard.css';
 
 const HERO_IMG =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuB7yi2Heav2Z0mqhVMhhut3SHYpURYIRoOs8CGWAQNRGHMHh21moZOuIJz_k-HojEniMWaIgSgOzFcOl_ssP0q59xMBMcKNMK5DPnCzTyzVZZ9ISqoeNGRAvBl10a907uGXQrsWV4-PrKWgMNXgDLOIz7AxMRpqXgCuXIYbCd8JwwDHRqJhbPyDA_bCW3AiFM41zPspFIzfxORnBf0IGrOn3-ETpVDCGt7alE7mzjqMN_ZtILCUEEFI7KHe4xARWOXeUg6yYiFGmrU';
 
+const MODULE_IDS = ['shahada', 'salat', 'zakat', 'siyam', 'hajj'];
+
+const SUBMODULE_ROUTES = {
+  shahada: '/app/faith-shahada',
+  salat: '/app/faith-salah',
+  zakat: '/app/faith-zakah',
+  siyam: '/app/faith-sawm',
+  hajj: '/app/faith-hajj',
+};
+
 const CORE_PILLARS = [
-  { id: 'shahada', label: 'Shahada', pct: 100, Icon: CheckCircle2, active: true },
-  { id: 'salat', label: 'Salat', pct: 85, Icon: HeartHandshake, active: true },
-  { id: 'zakat', label: 'Zakat & Sadaqah', pct: 32, Icon: HandHeart, active: false },
-  { id: 'siyam', label: 'Siyam', pct: 0, Icon: Moon, active: false },
+  { id: 'shahada', label: 'Shahada', glossaryId: 'shahada', Icon: CheckCircle2 },
+  { id: 'salat', label: 'Salah', glossaryId: 'salat', Icon: HeartHandshake },
+  { id: 'zakat', label: 'Zakah', glossaryId: 'zakat', Icon: HandHeart },
+  { id: 'siyam', label: 'Siyam', glossaryId: 'siyam', Icon: Moon },
+  { id: 'hajj', label: 'Hajj', glossaryId: 'hajj', Icon: Landmark },
 ];
 
-const GROWTH_ITEMS = [
-  {
-    id: 'names',
-    Icon: BookOpen,
-    title: '99 Names of Allah',
-    desc: 'Internalizing the Divine attributes to reflect them in character and worship.',
-    status: 'ACTIVE STUDY',
-    statusClass: 'faith-badge--active',
-    progress: '24/99 Known',
-  },
-  {
-    id: 'prayer',
-    Icon: Languages,
-    title: 'Meaning of Prayer',
-    desc: 'Understanding the Arabic translations of daily adhkar and Juz Amma.',
-    status: 'QUEUED',
-    statusClass: 'faith-badge--queued',
-    progress: 'In Progress',
-  },
-];
-
-const EXCELLENCE_ITEMS = [
-  {
-    id: 'representative',
-    Icon: Star,
-    title: 'Representative Excellence',
-    desc: 'Perfecting the outward manifestation of inner faith through conduct.',
-  },
-  {
-    id: 'ascension',
-    Icon: Sparkles,
-    title: 'Spiritual Ascension',
-    desc: 'The final layer of excellence in spiritual intimacy and constant dhikr.',
-  },
-];
 
 export default function FaithDashboard() {
+  const navigate = useNavigate();
+  const ensureFaithProjects = useProjectStore((s) => s.ensureFaithProjects);
+  const projects = useProjectStore((s) => s.projects);
+  const loadTasks = useTaskStore((s) => s.loadTasks);
+
+  // Ensure faith projects exist and load their tasks
+  useEffect(() => {
+    ensureFaithProjects();
+  }, [ensureFaithProjects]);
+
+  useEffect(() => {
+    const faithProjects = projects.filter((p) => p.moduleId && MODULE_IDS.includes(p.moduleId));
+    for (const proj of faithProjects) {
+      loadTasks(proj.id);
+    }
+  }, [projects, loadTasks]);
+
+  const { progressMap: coreProgress, overallPct: coreOverallPct } = useModulesProgress(MODULE_IDS, 'core');
+  const { progressMap: growthProgress, overallPct: growthOverallPct } = useModulesProgress(MODULE_IDS, 'growth');
+  const { progressMap: excelProgress, overallPct: excelOverallPct } = useModulesProgress(MODULE_IDS, 'excellence');
+  const { overallPct } = useModulesProgress(MODULE_IDS);
+
   return (
     <div className="faith-dash font-manrope">
 
@@ -69,7 +69,7 @@ export default function FaithDashboard() {
       <header className="faith-header">
         <div className="faith-header__left">
           <span className="faith-badge faith-badge--module">MODULE I</span>
-          <h1 className="faith-header__title">Faith (Deen)</h1>
+          <h1 className="faith-header__title">Faith (<IslamicTerm id="deen">Deen</IslamicTerm>)</h1>
           <blockquote className="faith-header__verse">
             <p>
               "Those who have believed and whose hearts are assured by the
@@ -80,11 +80,11 @@ export default function FaithDashboard() {
           </blockquote>
         </div>
         <div className="faith-header__right">
-          <span className="faith-header__pct">48%</span>
+          <span className="faith-header__pct">{overallPct}%</span>
           <span className="faith-header__pct-label">Progress to Mastery</span>
           <div className="faith-header__progress-wrap">
             <div className="faith-progress-bar">
-              <div className="faith-progress-fill" style={{ width: '48%' }} />
+              <div className="faith-progress-fill" style={{ width: `${overallPct}%` }} />
             </div>
           </div>
         </div>
@@ -100,9 +100,9 @@ export default function FaithDashboard() {
         <div className="faith-hero-card__gradient" />
         <div className="faith-hero-card__content">
           <span className="faith-label faith-label--light">Current Focus</span>
-          <h2 className="faith-hero-card__title">Correct Creed (Aqidah)</h2>
+          <h2 className="faith-hero-card__title">Correct Creed (<IslamicTerm id="aqidah">Aqidah</IslamicTerm>)</h2>
           <p className="faith-hero-card__desc">
-            Internalizing the foundations of belief and the six pillars of Iman
+            Internalizing the foundations of belief and the six pillars of <IslamicTerm id="iman">Iman</IslamicTerm>{' '}
             with certainty.
           </p>
           <button className="faith-hero-card__cta">
@@ -123,28 +123,36 @@ export default function FaithDashboard() {
             Foundational elements required for the preservation of faith and soul.
           </p>
           <div className="faith-core-list">
-            {CORE_PILLARS.map(({ id, label, pct, Icon, active }) => (
-              <div
-                key={id}
-                className={`faith-core-item${active ? '' : ' faith-core-item--dim'}`}
-              >
-                <div className="faith-core-item__icon-wrap">
-                  <Icon size={20} />
-                </div>
-                <div className="faith-core-item__info">
-                  <div className="faith-core-item__row">
-                    <span className="faith-core-item__label">{label}</span>
-                    <span className="faith-core-item__pct">{pct}%</span>
+            {CORE_PILLARS.map(({ id, label, glossaryId, Icon }) => {
+              const mod = coreProgress[id] || { total: 0, completed: 0, pct: 0 };
+              const active = mod.total > 0;
+              return (
+                <div
+                  key={id}
+                  className={`faith-core-item faith-core-item--clickable${active ? '' : ' faith-core-item--dim'}`}
+                  onClick={() => navigate(SUBMODULE_ROUTES[id])}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && navigate(SUBMODULE_ROUTES[id])}
+                >
+                  <div className="faith-core-item__icon-wrap">
+                    <Icon size={20} />
                   </div>
-                  <div className="faith-progress-bar faith-progress-bar--sm faith-progress-bar--onprimary">
-                    <div
-                      className="faith-progress-fill faith-progress-fill--light"
-                      style={{ width: `${pct}%` }}
-                    />
+                  <div className="faith-core-item__info">
+                    <div className="faith-core-item__row">
+                      <span className="faith-core-item__label"><IslamicTerm id={glossaryId}>{label}</IslamicTerm></span>
+                      <span className="faith-core-item__pct">{mod.pct}%</span>
+                    </div>
+                    <div className="faith-progress-bar faith-progress-bar--sm faith-progress-bar--onprimary">
+                      <div
+                        className="faith-progress-fill faith-progress-fill--light"
+                        style={{ width: `${mod.pct}%` }}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -157,22 +165,41 @@ export default function FaithDashboard() {
             <h3 className="faith-needs-card__title">Growth Space</h3>
             <p className="faith-needs-card__desc">
               Spiritual expansions that deepen the connection and refine the
-              understanding of Deen.
+              understanding of <IslamicTerm id="deen">Deen</IslamicTerm>.
             </p>
-            <div className="faith-study-list">
-              {GROWTH_ITEMS.map(({ id, Icon, title, desc, status, statusClass, progress }) => (
-                <div key={id} className="faith-study-item">
-                  <div className="faith-study-item__header">
-                    <Icon size={20} />
-                    <span className="faith-study-item__name">{title}</span>
+            <div className="faith-core-list faith-core-list--growth">
+              {CORE_PILLARS.map(({ id, label, glossaryId, Icon }) => {
+                const mod = growthProgress[id] || { total: 0, completed: 0, pct: 0 };
+                const active = mod.total > 0;
+                return (
+                  <div
+                    key={id}
+                    className={`faith-core-item faith-core-item--growth faith-core-item--clickable${active ? '' : ' faith-core-item--dim'}`}
+                    onClick={() => navigate(SUBMODULE_ROUTES[id])}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && navigate(SUBMODULE_ROUTES[id])}
+                  >
+                    <div className="faith-core-item__icon-wrap faith-core-item__icon-wrap--growth">
+                      <Icon size={18} />
+                    </div>
+                    <div className="faith-core-item__info">
+                      <div className="faith-core-item__row">
+                        <span className="faith-core-item__label">
+                            <IslamicTerm id={glossaryId}>{label}</IslamicTerm>
+                          </span>
+                        <span className="faith-core-item__pct">{mod.pct}%</span>
+                      </div>
+                      <div className="faith-progress-bar faith-progress-bar--sm">
+                        <div
+                          className="faith-progress-fill faith-progress-fill--growth"
+                          style={{ width: `${mod.pct}%` }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <p className="faith-study-item__desc">{desc}</p>
-                  <div className="faith-study-item__footer">
-                    <span className={statusClass}>{status}</span>
-                    <span className="faith-study-item__progress">{progress}</span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -181,19 +208,41 @@ export default function FaithDashboard() {
             <span className="faith-badge faith-badge--tertiary">LEVEL 3: EXCELLENCE</span>
             <h3 className="faith-excellence-card__title">Embellishments</h3>
             <p className="faith-excellence-card__desc">
-              The refinement of devotion and representative excellence (Ihsan).
+              The refinement of devotion and representative excellence (<IslamicTerm id="ihsan">Ihsan</IslamicTerm>).
             </p>
-            <div className="faith-locked-list">
-              {EXCELLENCE_ITEMS.map(({ id, Icon, title, desc }) => (
-                <div key={id} className="faith-locked-item">
-                  <div className="faith-locked-item__header">
-                    <Icon size={20} />
-                    <Lock size={14} />
+            <div className="faith-core-list faith-core-list--excellence">
+              {CORE_PILLARS.map(({ id, label, glossaryId, Icon }) => {
+                const mod = excelProgress[id] || { total: 0, completed: 0, pct: 0 };
+                const active = mod.total > 0;
+                return (
+                  <div
+                    key={id}
+                    className={`faith-core-item faith-core-item--excellence faith-core-item--clickable${active ? '' : ' faith-core-item--dim'}`}
+                    onClick={() => navigate(SUBMODULE_ROUTES[id])}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && navigate(SUBMODULE_ROUTES[id])}
+                  >
+                    <div className="faith-core-item__icon-wrap faith-core-item__icon-wrap--excellence">
+                      <Icon size={18} />
+                    </div>
+                    <div className="faith-core-item__info">
+                      <div className="faith-core-item__row">
+                        <span className="faith-core-item__label">
+                            <IslamicTerm id={glossaryId}>{label}</IslamicTerm>
+                          </span>
+                        <span className="faith-core-item__pct">{mod.pct}%</span>
+                      </div>
+                      <div className="faith-progress-bar faith-progress-bar--sm">
+                        <div
+                          className="faith-progress-fill faith-progress-fill--excellence"
+                          style={{ width: `${mod.pct}%` }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <h4 className="faith-locked-item__title">{title}</h4>
-                  <p className="faith-locked-item__desc">{desc}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

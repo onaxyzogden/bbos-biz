@@ -1,0 +1,243 @@
+/* Daily Niyyah Act — pre-entry orientation */
+.niyyah-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(60px) saturate(0.3);
+  -webkit-backdrop-filter: blur(60px) saturate(0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  animation: fadeIn 0.3s ease;
+}
+
+.niyyah-card {
+  width: 90%;
+  max-width: 560px;
+  max-height: 88vh;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  animation: scaleIn 0.3s ease;
+  overflow: hidden;
+}
+
+/* Header */
+.niyyah-header {
+  text-align: center;
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.niyyah-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 3px 12px;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+
+.niyyah-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 var(--space-1);
+}
+
+.niyyah-subtitle {
+  font-size: 0.85rem;
+  color: var(--text2);
+  margin: 0;
+}
+
+/* Body */
+.niyyah-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-6);
+}
+
+/* Step: Bismillah */
+.niyyah-bismillah {
+  text-align: center;
+  margin-bottom: var(--space-4);
+}
+
+.niyyah-bismillah-ar {
+  font-family: 'Amiri', serif;
+  font-size: 1.8rem;
+  line-height: 2.2;
+  color: var(--accent);
+  margin: 0;
+}
+
+.niyyah-bismillah-en {
+  font-size: 0.82rem;
+  color: var(--text2);
+  margin: var(--space-1) 0 0;
+}
+
+/* Step: Pillar focus */
+.niyyah-focus-heading {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 var(--space-3);
+}
+
+.niyyah-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.niyyah-pillar-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-3);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  text-align: left;
+}
+
+.niyyah-pillar-btn:hover {
+  border-color: var(--border2);
+  background: var(--surface-hover);
+}
+
+.niyyah-pillar-btn--selected {
+  border-color: var(--primary);
+  background: var(--primary-bg);
+}
+
+.niyyah-pillar-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.niyyah-pillar-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.niyyah-pillar-root {
+  font-size: 0.7rem;
+  color: var(--text3);
+  display: block;
+}
+
+/* Footer */
+.niyyah-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
+.niyyah-confirm {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--duration) var(--ease);
+}
+
+.niyyah-confirm:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.niyyah-confirm:not(:disabled):hover {
+  opacity: 0.88;
+}
+
+.niyyah-skip {
+  padding: var(--space-2) var(--space-4);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  color: var(--text2);
+  cursor: pointer;
+  transition: background var(--duration) var(--ease);
+}
+
+.niyyah-skip:hover {
+  background: var(--bg2);
+}
+
+/* Step indicator dots */
+.niyyah-steps {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.niyyah-step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--border);
+  transition: background var(--duration) var(--ease);
+}
+
+.niyyah-step-dot--active {
+  background: var(--primary);
+}
+
+.niyyah-step-dot--done {
+  background: var(--success);
+}
+
+/* Universal variant tweaks */
+.niyyah-mindfulness {
+  text-align: center;
+  padding: var(--space-4) 0;
+}
+
+.niyyah-mindfulness-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .niyyah-card {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+  .niyyah-pillars {
+    grid-template-columns: 1fr;
+  }
+}

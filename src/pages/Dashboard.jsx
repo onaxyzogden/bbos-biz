@@ -11,6 +11,7 @@ import { useTaskStore } from '../store/task-store';
 import { useSettingsStore } from '../store/settings-store';
 import { useThresholdStore } from '../store/threshold-store';
 import { useOfficeStore } from '../store/office-store';
+import { Zap } from 'lucide-react';
 import { usePrayerTimes } from '../hooks/usePrayerTimes';
 import { MODULES } from '../data/modules';
 import { MAQASID_PILLARS } from '../data/maqasid';
@@ -194,6 +195,7 @@ export default function Dashboard() {
   const valuesLayer = useSettingsStore((s) => s.valuesLayer);
   const completedOpening = useThresholdStore((s) => s.completedOpening);
   const deferred = useThresholdStore((s) => s.deferred);
+  const niyyahFocus = useThresholdStore((s) => s.niyyahFocus);
   const { nextPrayer } = usePrayerTimes();
 
   const [projectFilter, setProjectFilter] = useState('all');
@@ -388,6 +390,23 @@ export default function Dashboard() {
           </Link>
         </div>
       </div>
+
+      {/* ── Pillar summary row ── */}
+      {niyyahFocus?.length > 0 && (
+        <div className="insight-niyyah-row">
+          <Zap size={13} style={{ color: 'var(--accent)' }} />
+          <span className="insight-niyyah-label">Today's focus:</span>
+          {niyyahFocus.map((pid) => {
+            const p = MAQASID_PILLARS.find((pl) => pl.id === pid);
+            if (!p) return null;
+            return (
+              <span key={pid} className="insight-niyyah-pill" style={{ color: p.accentColor, borderColor: p.accentColor + '50', background: p.accentColor + '14' }}>
+                {p.sidebarLabel}
+              </span>
+            );
+          })}
+        </div>
+      )}
 
       {/* ── Maqasid Pillars ── */}
       <div className="insight-pillars">

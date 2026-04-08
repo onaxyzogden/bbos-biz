@@ -16,17 +16,17 @@ const SECTIONS = [
   { id: 'recruit',   label: 'Recruitment',       icon: UserPlus },
 ];
 
-export default function People() {
+export default function People({ embedded = false }) {
   const hasCompletedOpening = useThresholdStore((s) => !!s.completedOpening['people']);
   const [activeSection, setActiveSection] = useState('contacts');
 
-  if (!hasCompletedOpening) {
+  if (!embedded && !hasCompletedOpening) {
     return <CeremonyGate moduleId="people" />;
   }
 
   return (
     <div className="people">
-      <PillarHeader moduleId="people" />
+      {!embedded && <PillarHeader moduleId="people" />}
       <div className="people-tabs">
         {SECTIONS.map((sec) => {
           const Icon = sec.icon;

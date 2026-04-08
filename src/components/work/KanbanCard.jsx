@@ -2,6 +2,8 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Calendar, CheckSquare } from 'lucide-react';
 import { PRIORITIES } from '../../data/modules';
+import GLabelBadge from '../shared/GLabelBadge';
+import { getTaskAccessLevel } from '../../data/bbos-role-access';
 
 function formatDate(dateStr) {
   if (!dateStr) return null;
@@ -15,7 +17,10 @@ function formatDate(dateStr) {
   return { text: d.toLocaleDateString('en', { month: 'short', day: 'numeric' }), color: 'var(--text3)', bg: 'var(--bg4)' };
 }
 
-export default function KanbanCard({ task, onClick, isDragOverlay = false }) {
+export default function KanbanCard({ task, onClick, isDragOverlay = false, bbosRole }) {
+  const accessLevel = getTaskAccessLevel(bbosRole, task.bbosTaskType);
+  const isViewOnly = accessLevel === 'V';
+
   const {
     attributes,
     listeners,
@@ -23,7 +28,7 @@ export default function KanbanCard({ task, onClick, isDragOverlay = false }) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: task.id, disabled: isDragOverlay });
+  } = useSortable({ id: task.id, disabled: isDragOverlay || isViewOnly });
 
   const style = isDragOverlay
     ? undefined
@@ -43,13 +48,40 @@ export default function KanbanCard({ task, onClick, isDragOverlay = false }) {
       style={{
         ...style,
         borderLeft: priority ? `3px solid ${priority.color}` : undefined,
+        opacity: isViewOnly ? 0.55 : undefined,
+        cursor: isViewOnly ? 'default' : undefined,
       }}
       className={`kanban-card ${isDragging ? 'dragging' : ''} ${isDragOverlay ? 'drag-overlay' : ''}`}
       onClick={onClick}
       {...(isDragOverlay ? {} : { ...attributes, ...listeners })}
     >
-      <div className="kanban-card-title">{task.title}</div>
+      <div className="kanban-card-title">
+        {task.gLabel && <GLabelBadge gLabel={task.gLabel} />}
+        {task.bbosStage && (
+          <span style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '0.6rem',
+            fontWeight: 600,
+            padding: '1px 5px',
+            borderRadius: 'var(--radius-xs)',
+            background: 'var(--accent-bg)',
+            color: 'var(--accent)',
+            marginRight: 4,
+          }}>{task.bbosStage}</span>
+        )}
+        {task.title}
+      </div>
       <div className="kanban-card-meta">
+        {bbosRole && bbosRole !== 'all' && accessLevel === 'V' && (
+          <span className="kanban-card-badge" style={{ background: '#64748b18', color: '#64748b', fontWeight: 600, fontSize: '0.58rem', letterSpacing: '0.05em' }}>
+            VIEW
+          </span>
+        )}
+        {bbosRole && bbosRole !== 'all' && accessLevel === 'E' && (
+          <span className="kanban-card-badge" style={{ background: '#3b82f618', color: '#3b82f6', fontWeight: 600, fontSize: '0.58rem', letterSpacing: '0.05em' }}>
+            EDIT
+          </span>
+        )}
         {priority && (
           <span className="kanban-card-badge" style={{ background: priority.bg, color: priority.color }}>
             {priority.label}

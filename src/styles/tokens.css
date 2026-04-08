@@ -159,6 +159,9 @@
   --mod-ethical-consumption: #6E9E9E;
   --mod-community-projects: #8EADC0;
 
+  /* Standalone — Collective (Moontrance) */
+  --mod-collective: #5B8E6E;
+
   /* Maqasid pillar colors */
   --pillar-faith: #C8A96E;
   --pillar-faith-bg: rgba(200, 169, 110, 0.08);
@@ -178,6 +181,9 @@
   --pillar-environment: #6EADAD;
   --pillar-environment-bg: rgba(110, 173, 173, 0.08);
   --pillar-environment-border: rgba(110, 173, 173, 0.25);
+  --pillar-ummah: #AD8E6E;
+  --pillar-ummah-bg: rgba(173, 142, 110, 0.08);
+  --pillar-ummah-border: rgba(173, 142, 110, 0.25);
 }
 
 /* Dark theme */
@@ -252,6 +258,9 @@
   --pillar-environment: #7EBDBD;
   --pillar-environment-bg: rgba(126, 189, 189, 0.1);
   --pillar-environment-border: rgba(126, 189, 189, 0.25);
+  --pillar-ummah: #BD9E7E;
+  --pillar-ummah-bg: rgba(189, 158, 126, 0.1);
+  --pillar-ummah-border: rgba(189, 158, 126, 0.25);
 }
 
 /* ── Faith Dashboard — Material Design 3 color tokens ── */

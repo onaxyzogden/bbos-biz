@@ -1,0 +1,144 @@
+/* ── IslamicTerm — hover tooltip for Islamic/Arabic terms ── */
+
+.islamic-term {
+  display: inline;
+  cursor: help;
+  text-decoration: underline dotted var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* ── Tooltip box (rendered via portal at body level) ── */
+.islamic-term__tooltip {
+  position: fixed;
+  width: 252px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-3) var(--space-4);
+  z-index: 1200;
+  pointer-events: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  /* Fade in */
+  animation: islamic-term-fade 150ms var(--ease) both;
+}
+
+@keyframes islamic-term-fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Caret: default = arrow pointing DOWN (tooltip above term) ── */
+.islamic-term__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--border2);
+}
+
+.islamic-term__tooltip::before {
+  content: '';
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--surface);
+  z-index: 1;
+}
+
+/* ── Caret: flipped = arrow pointing UP (tooltip below term) ── */
+.islamic-term__tooltip--below::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--border2);
+}
+
+.islamic-term__tooltip--below::before {
+  top: auto;
+  bottom: calc(100% - 1px);
+  border-top-color: transparent;
+  border-bottom-color: var(--surface);
+}
+
+/* ── Tooltip header row (term name + arabic) ── */
+.islamic-term__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.islamic-term__name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+.islamic-term__arabic {
+  font-family: 'Amiri', 'Scheherazade New', serif;
+  font-size: 1rem;
+  color: var(--accent);
+  direction: rtl;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+/* ── Transliteration ── */
+.islamic-term__trans {
+  font-size: 0.7rem;
+  color: var(--text3);
+  font-style: italic;
+  margin-top: -2px;
+}
+
+/* ── Meaning ── */
+.islamic-term__meaning {
+  font-size: 0.78rem;
+  color: var(--text2);
+  line-height: 1.55;
+}
+
+/* ── Source ── */
+.islamic-term__source {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.68rem;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+/* ── Dark mode ── */
+[data-theme="dark"] .islamic-term__tooltip {
+  background: var(--surface);
+  border-color: var(--border2);
+}
+
+[data-theme="dark"] .islamic-term__tooltip::after {
+  border-top-color: var(--border2);
+}
+
+[data-theme="dark"] .islamic-term__tooltip::before {
+  border-top-color: var(--surface);
+}
+
+[data-theme="dark"] .islamic-term__tooltip--below::after {
+  border-top-color: transparent;
+  border-bottom-color: var(--border2);
+}
+
+[data-theme="dark"] .islamic-term__tooltip--below::before {
+  border-top-color: transparent;
+  border-bottom-color: var(--surface);
+}

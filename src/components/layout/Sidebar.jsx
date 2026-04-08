@@ -3,13 +3,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Kanban, Wallet, Users, Building2, Shield, Heart, Home, UsersRound, Landmark, BookOpen, ScrollText,
   LayoutDashboard, Settings, Plus, ChevronLeft, ChevronRight,
-  ChevronDown, Bell, BookHeart, HeartPulse, Brain, Coins, TreePine, Moon,
+  ChevronDown, Bell, BookHeart, HeartPulse, Brain, Coins, TreePine, Moon, TrendingUp, Star, CheckCircle2,
   Activity, BrainCircuit, Sparkles, HeartHandshake,
   Library, Wrench, Lightbulb, Share2,
   Baby, CalendarHeart, Handshake,
   GraduationCap, HandHeart, Scale,
   PiggyBank, Store, Gift, BarChart3,
   Leaf, TreeDeciduous, ShoppingBag, Hammer,
+  Droplets, Recycle,
 } from 'lucide-react';
 import { useAppStore } from '../../store/app-store';
 import { useProjectStore } from '../../store/project-store';
@@ -28,8 +29,10 @@ const ICON_MAP = {
   GraduationCap, HandHeart, Scale,
   PiggyBank, Store, Gift, BarChart3,
   Leaf, TreeDeciduous, ShoppingBag, Hammer,
+  Droplets, Recycle,
+  TrendingUp, Star, CheckCircle2, Moon, TreePine,
 };
-const PILLAR_ICON_MAP = { BookHeart, HeartPulse, Brain, Users, Coins, TreePine };
+const PILLAR_ICON_MAP = { BookHeart, HeartPulse, Brain, Users, Coins, TreePine, Globe: TreePine };
 
 const MODULE_ROUTES = {
   work: '/app/work',
@@ -40,37 +43,47 @@ const MODULE_ROUTES = {
   family: '/app/family',
   neighbors: '/app/neighbors',
   community: '/app/community',
-  'five-pillars': '/app/five-pillars',
   quran: '/app/quran',
   hadith: '/app/hadith',
   // Faith
+  'faith-core': '/app/faith-core',
+  'faith-growth': '/app/faith-growth',
+  'faith-excellence': '/app/faith-excellence',
+  'faith-shahada': '/app/faith-shahada',
+  'faith-salah': '/app/faith-salah',
+  'faith-zakah': '/app/faith-zakah',
+  'faith-sawm': '/app/faith-sawm',
+  'faith-hajj': '/app/faith-hajj',
   'islamic-knowledge': '/app/islamic-knowledge',
   'community-engagement': '/app/community-engagement',
   'ethical-living': '/app/ethical-living',
   // Life
-  'physical-wellness': '/app/physical-wellness',
-  'mental-health': '/app/mental-health',
-  'spiritual-health': '/app/spiritual-health',
-  'family-health': '/app/family-health',
+  'life-physical': '/app/life-physical',
+  'life-mental': '/app/life-mental',
+  'life-safety': '/app/life-safety',
+  'life-social': '/app/life-social',
   // Intellect
-  'learning-resources': '/app/learning-resources',
-  'skill-development': '/app/skill-development',
-  'critical-thinking': '/app/critical-thinking',
-  'knowledge-sharing': '/app/knowledge-sharing',
+  'intellect-learning': '/app/intellect-learning',
+  'intellect-thinking': '/app/intellect-thinking',
+  'intellect-cognitive': '/app/intellect-cognitive',
+  'intellect-professional': '/app/intellect-professional',
   // Family
-  'parenting-support': '/app/parenting-support',
-  'family-planning': '/app/family-planning',
-  'intergenerational-support': '/app/intergenerational-support',
+  'family-marriage': '/app/family-marriage',
+  'family-parenting': '/app/family-parenting',
+  'family-kinship': '/app/family-kinship',
+  'family-home': '/app/family-home',
   // Wealth
-  'financial-literacy': '/app/financial-literacy',
-  'ethical-business': '/app/ethical-business',
-  'charity-zakat': '/app/charity-zakat',
-  'resource-management': '/app/resource-management',
+  'wealth-earning': '/app/wealth-earning',
+  'wealth-financial': '/app/wealth-financial',
+  'wealth-ownership': '/app/wealth-ownership',
+  'wealth-circulation': '/app/wealth-circulation',
   // Environment
-  sustainability: '/app/sustainability',
-  conservation: '/app/conservation',
-  'ethical-consumption': '/app/ethical-consumption',
-  'community-projects': '/app/community-projects',
+  'env-resource': '/app/env-resource',
+  'env-waste': '/app/env-waste',
+  'env-ecosystem': '/app/env-ecosystem',
+  'env-sourcing': '/app/env-sourcing',
+  // Standalone
+  collective: '/app/collective',
 };
 
 const modulesById = Object.fromEntries(MODULES.map((m) => [m.id, m]));
@@ -149,7 +162,12 @@ export default function Sidebar() {
                 className={`pillar-header ${hasActiveChild || isPillarActive ? 'has-active' : ''}`}
                 style={{ '--pillar-color': `var(--pillar-${pillar.id})` }}
                 onClick={(e) => {
-                  if (collapsed) return;
+                  if (collapsed) {
+                    toggleSidebar();
+                    navigate(`/app/pillar/${pillar.id}`);
+                    if (!isExpanded) togglePillar(pillar.id);
+                    return;
+                  }
                   navigate(`/app/pillar/${pillar.id}`);
                   if (!isExpanded) togglePillar(pillar.id);
                 }}
@@ -197,6 +215,8 @@ export default function Sidebar() {
             </div>
           );
         })}
+
+        <div className="sidebar-divider" />
       </nav>
 
       {/* Projects */}

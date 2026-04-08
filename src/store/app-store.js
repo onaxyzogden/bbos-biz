@@ -12,6 +12,7 @@ export const useAppStore = create((set, get) => ({
   sidebarOpen: safeGet('sb_open', 'true') === 'true',
   islamicPanelOpen: safeGet('il_open', 'false') === 'true',
   searchOpen: false,
+  reflectionOpen: false,
   activeModule: safeGet('module', 'work'),
   expandedPillars: safeGetJSON('pillars_exp', {}),
   filters: {}, // { [projectId]: { priorities: [], dueDate: null, tags: [] } }
@@ -29,6 +30,7 @@ export const useAppStore = create((set, get) => ({
   }),
 
   setSearchOpen: (open) => set({ searchOpen: open }),
+  setReflectionOpen: (open) => set({ reflectionOpen: open }),
 
   togglePillar: (pillarId) => set((s) => {
     const next = { ...s.expandedPillars, [pillarId]: !s.expandedPillars[pillarId] };

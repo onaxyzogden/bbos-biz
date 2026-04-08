@@ -1,45 +1,57 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-  BookOpen,
+  Library,
+  Lightbulb,
   BrainCircuit,
-  MessageSquare,
-  Circle,
-  GraduationCap,
-  Lock,
+  Wrench,
   ArrowRight,
   ScrollText,
+  BookOpen,
 } from 'lucide-react';
+import { useProjectStore } from '../store/project-store';
+import { useTaskStore } from '../store/task-store';
+import { useModulesProgress } from '../hooks/useModuleProgress';
+import IslamicTerm from '../components/shared/IslamicTerm';
 import './IntellectDashboard.css';
 
 const HERO_IMG =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuAVLUmtYviKYxyCwVDBNoL37ZcmqKsc4f5HAiJ_qRHCqLQq3GH6AzFVRB_LeEAG9f1vW1xE7FP6aTTDxIpkdrf5Ytz6d00InwoXeaDUCwPIrM1wS_qN1a8l8ULH7guCPckCekon-7OfEylwcHXciyu6NXpncc8GpJb_G6iDJfPAQylx6YbVB2oijO345mAzbHHs2ZGvFesxrO8aUs5WPSIwUR1jHIbh5wVAv3GWoHGh2tXmi43rV72GbyxbLfQtIFXBwJrarj9vTMU';
 
-const CORE_PILLARS = [
-  { id: 'literacy', label: 'Learning & Literacy', pct: 100, Icon: BookOpen, active: true },
-  { id: 'cognitive', label: 'Cognitive Integrity', pct: 85, Icon: BrainCircuit, active: true },
-];
+const MODULE_IDS = ['learning', 'thinking', 'cognitive', 'professional'];
 
-const GROWTH_ITEMS = [
-  {
-    id: 'critical-thinking',
-    Icon: MessageSquare,
-    title: 'Critical Thinking',
-    desc: 'Analyzing the intersection of dialectical inquiry and spiritual humility.',
-    status: 'ACTIVE STUDY',
-    statusClass: 'intellect-badge--active',
-    progress: 'In Progress',
-  },
-];
+const SUBMODULE_ROUTES = {
+  learning: '/app/intellect-learning',
+  thinking: '/app/intellect-thinking',
+  cognitive: '/app/intellect-cognitive',
+  professional: '/app/intellect-professional',
+};
 
-const EXCELLENCE_ITEMS = [
-  {
-    id: 'mastery',
-    Icon: GraduationCap,
-    title: 'Professional Mastery',
-    desc: 'Achieving specialized expertise to serve the community through knowledge.',
-  },
+const PILLARS = [
+  { id: 'learning', label: 'Learning & Literacy', Icon: Library },
+  { id: 'thinking', label: 'Critical Thinking', Icon: Lightbulb },
+  { id: 'cognitive', label: 'Cognitive Integrity', Icon: BrainCircuit },
+  { id: 'professional', label: 'Professional Mastery', Icon: Wrench },
 ];
 
 export default function IntellectDashboard() {
+  const navigate = useNavigate();
+  const ensureIntellectProjects = useProjectStore((s) => s.ensureIntellectProjects);
+  const projects = useProjectStore((s) => s.projects);
+  const loadTasks = useTaskStore((s) => s.loadTasks);
+
+  useEffect(() => { ensureIntellectProjects(); }, [ensureIntellectProjects]);
+
+  useEffect(() => {
+    const moduleProjects = projects.filter((p) => p.moduleId && MODULE_IDS.includes(p.moduleId));
+    for (const proj of moduleProjects) { loadTasks(proj.id); }
+  }, [projects, loadTasks]);
+
+  const { progressMap: coreProgress, overallPct: coreOverallPct } = useModulesProgress(MODULE_IDS, 'core');
+  const { progressMap: growthProgress } = useModulesProgress(MODULE_IDS, 'growth');
+  const { progressMap: excelProgress } = useModulesProgress(MODULE_IDS, 'excellence');
+  const { overallPct } = useModulesProgress(MODULE_IDS);
+
   return (
     <div className="intellect-dash font-manrope">
 
@@ -47,7 +59,7 @@ export default function IntellectDashboard() {
       <header className="intellect-header">
         <div className="intellect-header__left">
           <span className="intellect-badge intellect-badge--module">MODULE III</span>
-          <h1 className="intellect-header__title">Intellect (Aql)</h1>
+          <h1 className="intellect-header__title">Intellect (<IslamicTerm id="aql">Aql</IslamicTerm>)</h1>
           <blockquote className="intellect-header__verse">
             <p>
               "Indeed, in the creation of the heavens and the earth and the
@@ -58,11 +70,11 @@ export default function IntellectDashboard() {
           </blockquote>
         </div>
         <div className="intellect-header__right">
-          <span className="intellect-header__pct">64%</span>
+          <span className="intellect-header__pct">{overallPct}%</span>
           <span className="intellect-header__pct-label">Progress to Mastery</span>
           <div className="intellect-header__progress-wrap">
             <div className="intellect-progress-bar">
-              <div className="intellect-progress-fill" style={{ width: '64%' }} />
+              <div className="intellect-progress-fill" style={{ width: `${overallPct}%` }} />
             </div>
           </div>
         </div>
@@ -95,34 +107,39 @@ export default function IntellectDashboard() {
 
         {/* Level 1: Core Pillars */}
         <div className="intellect-core-card">
-          <span className="intellect-badge intellect-badge--dark">LEVEL 1</span>
+          <span className="intellect-badge intellect-badge--dark">LEVEL 1: NECESSITIES</span>
           <h3 className="intellect-core-card__title">Core Pillars</h3>
           <p className="intellect-core-card__desc">
             Foundational elements required for cognitive integrity and literacy.
           </p>
           <div className="intellect-core-list">
-            {CORE_PILLARS.map(({ id, label, pct, Icon, active }) => (
-              <div
-                key={id}
-                className={`intellect-core-item${active ? '' : ' intellect-core-item--dim'}`}
-              >
-                <div className="intellect-core-item__icon-wrap">
-                  <Icon size={20} />
-                </div>
-                <div className="intellect-core-item__info">
-                  <div className="intellect-core-item__row">
-                    <span className="intellect-core-item__label">{label}</span>
-                    <span className="intellect-core-item__pct">{pct}%</span>
+            {PILLARS.map(({ id, label, Icon }) => {
+              const mod = coreProgress[id] || { total: 0, completed: 0, pct: 0 };
+              const active = mod.total > 0;
+              return (
+                <div
+                  key={id}
+                  className={`intellect-core-item intellect-core-item--clickable${active ? '' : ' intellect-core-item--dim'}`}
+                  onClick={() => navigate(SUBMODULE_ROUTES[id])}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && navigate(SUBMODULE_ROUTES[id])}
+                >
+                  <div className="intellect-core-item__icon-wrap">
+                    <Icon size={20} />
                   </div>
-                  <div className="intellect-progress-bar intellect-progress-bar--sm intellect-progress-bar--onprimary">
-                    <div
-                      className="intellect-progress-fill intellect-progress-fill--light"
-                      style={{ width: `${pct}%` }}
-                    />
+                  <div className="intellect-core-item__info">
+                    <div className="intellect-core-item__row">
+                      <span className="intellect-core-item__label">{label}</span>
+                      <span className="intellect-core-item__pct">{mod.pct}%</span>
+                    </div>
+                    <div className="intellect-progress-bar intellect-progress-bar--sm intellect-progress-bar--onprimary">
+                      <div className="intellect-progress-fill intellect-progress-fill--light" style={{ width: `${mod.pct}%` }} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -131,51 +148,77 @@ export default function IntellectDashboard() {
 
           {/* Level 2: Growth Space */}
           <div className="intellect-needs-card">
-            <span className="intellect-badge intellect-badge--secondary">LEVEL 2</span>
+            <span className="intellect-badge intellect-badge--secondary">LEVEL 2: NEEDS</span>
             <h3 className="intellect-needs-card__title">Growth Space</h3>
             <p className="intellect-needs-card__desc">
               Expansions of the mind through structured study and engagement.
             </p>
-            <div className="intellect-study-list">
-              {GROWTH_ITEMS.map(({ id, Icon, title, desc, status, statusClass, progress }) => (
-                <div key={id} className="intellect-study-item">
-                  <div className="intellect-study-item__header">
-                    <Icon size={20} />
-                    <span className="intellect-study-item__name">{title}</span>
+            <div className="intellect-core-list intellect-core-list--growth">
+              {PILLARS.map(({ id, label, Icon }) => {
+                const mod = growthProgress[id] || { total: 0, completed: 0, pct: 0 };
+                const active = mod.total > 0;
+                return (
+                  <div
+                    key={id}
+                    className={`intellect-core-item intellect-core-item--growth intellect-core-item--clickable${active ? '' : ' intellect-core-item--dim'}`}
+                    onClick={() => navigate(SUBMODULE_ROUTES[id])}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && navigate(SUBMODULE_ROUTES[id])}
+                  >
+                    <div className="intellect-core-item__icon-wrap intellect-core-item__icon-wrap--growth">
+                      <Icon size={18} />
+                    </div>
+                    <div className="intellect-core-item__info">
+                      <div className="intellect-core-item__row">
+                        <span className="intellect-core-item__label">{label}</span>
+                        <span className="intellect-core-item__pct">{mod.pct}%</span>
+                      </div>
+                      <div className="intellect-progress-bar intellect-progress-bar--sm">
+                        <div className="intellect-progress-fill intellect-progress-fill--growth" style={{ width: `${mod.pct}%` }} />
+                      </div>
+                    </div>
                   </div>
-                  <p className="intellect-study-item__desc">{desc}</p>
-                  <div className="intellect-study-item__footer">
-                    <span className={statusClass}>{status}</span>
-                    <span className="intellect-study-item__progress">{progress}</span>
-                  </div>
-                </div>
-              ))}
-              {/* Queued item rendered inline */}
-              <div className="intellect-queued-item">
-                <span className="intellect-queued-item__label">Structured Study</span>
-                <Circle size={14} />
-              </div>
+                );
+              })}
             </div>
           </div>
 
           {/* Level 3: Embellishments */}
           <div className="intellect-excellence-card">
-            <span className="intellect-badge intellect-badge--tertiary">LEVEL 3</span>
+            <span className="intellect-badge intellect-badge--tertiary">LEVEL 3: EXCELLENCE</span>
             <h3 className="intellect-excellence-card__title">Embellishments</h3>
             <p className="intellect-excellence-card__desc">
               The refinement of scholarly pursuit into professional mastery.
             </p>
-            <div className="intellect-locked-list">
-              {EXCELLENCE_ITEMS.map(({ id, Icon, title, desc }) => (
-                <div key={id} className="intellect-locked-item">
-                  <div className="intellect-locked-item__header">
-                    <Icon size={20} />
-                    <Lock size={14} />
+            <div className="intellect-core-list intellect-core-list--excellence">
+              {PILLARS.map(({ id, label, Icon }) => {
+                const mod = excelProgress[id] || { total: 0, completed: 0, pct: 0 };
+                const active = mod.total > 0;
+                return (
+                  <div
+                    key={id}
+                    className={`intellect-core-item intellect-core-item--excellence intellect-core-item--clickable${active ? '' : ' intellect-core-item--dim'}`}
+                    onClick={() => navigate(SUBMODULE_ROUTES[id])}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && navigate(SUBMODULE_ROUTES[id])}
+                  >
+                    <div className="intellect-core-item__icon-wrap intellect-core-item__icon-wrap--excellence">
+                      <Icon size={18} />
+                    </div>
+                    <div className="intellect-core-item__info">
+                      <div className="intellect-core-item__row">
+                        <span className="intellect-core-item__label">{label}</span>
+                        <span className="intellect-core-item__pct">{mod.pct}%</span>
+                      </div>
+                      <div className="intellect-progress-bar intellect-progress-bar--sm">
+                        <div className="intellect-progress-fill intellect-progress-fill--excellence" style={{ width: `${mod.pct}%` }} />
+                      </div>
+                    </div>
                   </div>
-                  <h4 className="intellect-locked-item__title">{title}</h4>
-                  <p className="intellect-locked-item__desc">{desc}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

@@ -1,0 +1,510 @@
+/* ── Pillar Board — Level Tabs ── */
+.faith-pillar-tabs {
+  display: flex;
+  gap: var(--space-1);
+  background: var(--bg3);
+  border-radius: var(--radius);
+  padding: 3px;
+  width: fit-content;
+}
+
+.faith-pillar-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-1) var(--space-4);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text2);
+  font-family: 'Manrope', 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.faith-pillar-tab:hover {
+  color: var(--text);
+}
+
+.faith-pillar-tab--active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-xs);
+}
+
+.faith-pillar-tab__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   RICH PILLAR DASHBOARD  (.fpd)
+   ══════════════════════════════════════════ */
+.fpd {
+  padding: var(--space-2) 0 var(--space-12);
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── Ring + Quote section ── */
+.fpd__ring-section {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+}
+
+.fpd__ring-svg {
+  flex-shrink: 0;
+}
+
+.fpd__ring-percent {
+  font-size: 2rem;
+  font-weight: 800;
+  fill: var(--text);
+  font-family: 'Manrope', 'DM Sans', sans-serif;
+}
+
+.fpd__ring-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  fill: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: 'Manrope', 'DM Sans', sans-serif;
+}
+
+.fpd__quote-block {
+  flex: 1;
+  min-width: 0;
+}
+
+.fpd__quote {
+  font-size: 1.05rem;
+  font-style: italic;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: var(--space-3);
+}
+
+.fpd__description {
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* ── 3-Card Grid ── */
+.fpd__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 900px) {
+  .fpd__grid { grid-template-columns: 1fr; }
+  .fpd__ring-section { flex-direction: column; text-align: center; }
+}
+
+.fpd__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.fpd__card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Necessity — dark, prominent */
+.fpd__card--necessity {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.fpd__card--necessity .fpd__card-icon {
+  color: rgba(255,255,255,0.7);
+}
+
+.fpd__card--necessity .fpd__card-badge {
+  color: rgba(255,255,255,0.5);
+}
+
+.fpd__card--necessity .fpd__card-desc {
+  color: rgba(255,255,255,0.7);
+}
+
+.fpd__card--necessity .fpd__card-cta {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.fpd__card--necessity .fpd__card-cta:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Growth — warm mid-tone */
+.fpd__card--growth {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.fpd__card--growth .fpd__card-icon {
+  color: #4ab8a8;
+}
+
+.fpd__card--growth .fpd__card-cta {
+  background: #4ab8a8;
+  color: #fff;
+  border: none;
+}
+
+.fpd__card--growth .fpd__card-cta:hover {
+  background: #3da396;
+}
+
+/* Excellence — light, bordered */
+.fpd__card--excellence {
+  background: var(--bg2, var(--bg));
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.fpd__card--excellence .fpd__card-icon {
+  color: #8b5cf6;
+}
+
+.fpd__card--excellence .fpd__card-cta {
+  background: transparent;
+  color: #8b5cf6;
+  border: 1px solid #8b5cf6;
+}
+
+.fpd__card--excellence .fpd__card-cta:hover {
+  background: rgba(139,92,246,0.08);
+}
+
+/* Card inner elements */
+.fpd__card-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.fpd__card-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.fpd__card-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.fpd__card-desc {
+  font-size: 0.8rem;
+  color: var(--text2);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.fpd__card-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius);
+  font-family: 'Manrope', 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-top: var(--space-2);
+  width: fit-content;
+}
+
+/* ── Banner ── */
+.fpd__banner {
+  position: relative;
+  padding: var(--space-8) var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--banner-color, var(--text));
+  text-align: center;
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+}
+
+.fpd__banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.2) 100%);
+  border-radius: inherit;
+}
+
+.fpd__banner-headline {
+  position: relative;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: var(--space-2);
+}
+
+.fpd__banner-quote {
+  position: relative;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+/* ── FAB ── */
+.fpd__fab {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+  border-radius: 999px;
+  font-family: 'Manrope', 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg, 0 8px 24px rgba(0,0,0,0.2));
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  z-index: 50;
+}
+
+.fpd__fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+}
+
+/* ══════════════════════════════════════════
+   JOURNAL TAB
+   ══════════════════════════════════════════ */
+.faith-journal {
+  padding: var(--space-2) 0;
+  max-width: 720px;
+}
+
+.faith-journal__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.faith-journal__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.faith-journal__desc {
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.5;
+  margin-bottom: var(--space-5);
+}
+
+.faith-journal__compose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.faith-journal__textarea {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: 'Manrope', 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.faith-journal__textarea:focus {
+  border-color: var(--primary);
+}
+
+.faith-journal__add {
+  align-self: flex-end;
+  font-size: 0.8rem;
+}
+
+.faith-journal__empty {
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--text3);
+  font-size: 0.875rem;
+  border: 1px dashed var(--border2);
+  border-radius: var(--radius-lg);
+}
+
+.faith-journal__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.faith-journal__entry {
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.faith-journal__entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.faith-journal__entry-date {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.faith-journal__entry-remove {
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.faith-journal__entry-remove:hover {
+  color: var(--danger);
+}
+
+.faith-journal__entry-text {
+  font-size: 0.875rem;
+  color: var(--text);
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+/* ── Journal Slide Panel ── */
+.journal-panel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.journal-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  min-width: 380px;
+  max-width: 720px;
+  background: var(--bg);
+  z-index: 61;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.15);
+  animation: journalSlideIn 220ms var(--ease);
+}
+
+@keyframes journalSlideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes journalSlideOut {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
+.journal-panel--closing {
+  animation: journalSlideOut 220ms var(--ease) forwards;
+}
+
+.journal-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.journal-panel__title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.journal-panel__close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--text2);
+  cursor: pointer;
+  padding: var(--space-1);
+  line-height: 1;
+}
+
+.journal-panel__close:hover {
+  color: var(--text);
+}
+
+.journal-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+}
+
+@media (max-width: 767px) {
+  .journal-panel {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .fpd__fab {
+    bottom: calc(56px + var(--space-6));
+  }
+}

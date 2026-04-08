@@ -1,0 +1,220 @@
+/* Ummah Dashboard */
+.ummah-dash {
+  max-width: 900px;
+}
+
+.ummah-hero {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-6);
+  margin-bottom: var(--space-6);
+  border-left: 4px solid #AD8E6E;
+}
+
+.ummah-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: var(--space-1);
+}
+
+.ummah-subtitle {
+  color: var(--text2);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-1);
+}
+
+.ummah-arabic {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: #AD8E6E;
+}
+
+/* Sections */
+.ummah-section {
+  margin-bottom: var(--space-6);
+}
+
+.ummah-section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+  color: var(--text);
+}
+
+.ummah-section-desc {
+  font-size: 0.85rem;
+  color: var(--text2);
+  margin-bottom: var(--space-3);
+}
+
+/* Submodule Cards */
+.ummah-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ummah-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+  transition: all var(--duration) var(--ease);
+  width: 100%;
+}
+
+.ummah-card:hover {
+  border-color: #AD8E6E;
+  background: color-mix(in srgb, #AD8E6E 4%, transparent);
+}
+
+.ummah-card-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, #AD8E6E 10%, transparent);
+  color: #AD8E6E;
+  flex-shrink: 0;
+}
+
+.ummah-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ummah-card-body h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.ummah-card-body p {
+  font-size: 0.78rem;
+  color: var(--text2);
+  margin: 0;
+}
+
+.ummah-card-arrow {
+  color: var(--text3);
+  flex-shrink: 0;
+}
+
+/* Milestones */
+.ummah-milestones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ummah-milestone {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.ummah-ms-number {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--bg3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text2);
+  flex-shrink: 0;
+}
+
+.ummah-milestone--active .ummah-ms-number {
+  background: color-mix(in srgb, #AD8E6E 15%, transparent);
+  color: #AD8E6E;
+}
+
+.ummah-ms-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ummah-ms-body h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.ummah-ms-body p {
+  font-size: 0.75rem;
+  color: var(--text2);
+  margin: 0;
+}
+
+.ummah-ms-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+
+/* Atlas Bridge */
+.ummah-atlas {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.ummah-atlas-body {
+  flex: 1;
+}
+
+.ummah-atlas-body h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.ummah-atlas-body p {
+  font-size: 0.78rem;
+  color: var(--text2);
+  margin: 0;
+}
+
+.ummah-atlas-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}

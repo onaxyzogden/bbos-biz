@@ -1,30 +1,30 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { Kanban, List, GanttChart } from 'lucide-react';
+import { useParams, useNavigate, useSearchParams, useLocation, Outlet } from 'react-router-dom';
+import { RefreshCw } from 'lucide-react';
 import { useProjectStore } from '../store/project-store';
+import BbosRolePicker from '../components/bbos/BbosRolePicker';
 import { useTaskStore } from '../store/task-store';
-import { useAppStore } from '../store/app-store';
 import { useThresholdStore } from '../store/threshold-store';
 import CeremonyGate from '../components/islamic/CeremonyGate';
-import KanbanBoard from '../components/work/KanbanBoard';
-import ListView from '../components/work/ListView';
-import GanttView from '../components/work/GanttView';
-import TaskDetailPanel from '../components/work/TaskDetailPanel';
-import FilterBar from '../components/work/FilterBar';
+import ProjectBoard from '../components/work/ProjectBoard';
+
+const TAB_SUFFIXES = ['/people', '/tasks', '/money', '/assets', '/office', '/tech'];
 
 export default function Project() {
   const { projectId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const project = useProjectStore((s) => s.getProject(projectId));
   const updateProject = useProjectStore((s) => s.updateProject);
+  const setBbosRole = useProjectStore((s) => s.setBbosRole);
+  const startNewBbosCycle = useProjectStore((s) => s.startNewBbosCycle);
   const loadTasks = useTaskStore((s) => s.loadTasks);
-  const filters = useAppStore((s) => s.filters[projectId]);
   const hasCompletedOpening = useThresholdStore((s) => !!s.completedOpening['work']);
-  const [view, setView] = useState(project?.defaultView || 'board');
-  const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [editingName, setEditingName] = useState(false);
   const [nameVal, setNameVal] = useState('');
+
+  const isProjectsView = !TAB_SUFFIXES.some((s) => location.pathname.endsWith(s));
 
   useEffect(() => {
     if (projectId) loadTasks(projectId);
@@ -38,7 +38,6 @@ export default function Project() {
   useEffect(() => {
     const taskParam = searchParams.get('task');
     if (taskParam) {
-      setSelectedTaskId(taskParam);
       searchParams.delete('task');
       setSearchParams(searchParams, { replace: true });
     }
@@ -55,6 +54,10 @@ export default function Project() {
         <button className="btn btn-primary" onClick={() => navigate('/app/work')}>Back to Projects</button>
       </div>
     );
+  }
+
+  if (!isProjectsView) {
+    return <Outlet />;
   }
 
   const saveName = () => {
@@ -96,75 +99,37 @@ export default function Project() {
               {project.name}
             </h2>
           )}
-        </div>
-
-        <div style={{ display: 'flex', gap: 'var(--space-1)', background: 'var(--bg3)', borderRadius: 'var(--radius)', padding: 2 }}>
-          <button
-            onClick={() => setView('board')}
-            className="btn btn-ghost"
-            style={{
-              padding: 'var(--space-1) var(--space-3)', fontSize: '0.85rem',
-              borderRadius: 'var(--radius-sm)',
-              background: view === 'board' ? 'var(--surface)' : 'transparent',
-              boxShadow: view === 'board' ? 'var(--shadow-xs)' : 'none',
-              color: view === 'board' ? 'var(--text)' : 'var(--text2)',
-            }}
-          >
-            <Kanban size={14} /> Board
-          </button>
-          <button
-            onClick={() => setView('list')}
-            className="btn btn-ghost"
-            style={{
-              padding: 'var(--space-1) var(--space-3)', fontSize: '0.85rem',
-              borderRadius: 'var(--radius-sm)',
-              background: view === 'list' ? 'var(--surface)' : 'transparent',
-              boxShadow: view === 'list' ? 'var(--shadow-xs)' : 'none',
-              color: view === 'list' ? 'var(--text)' : 'var(--text2)',
-            }}
-          >
-            <List size={14} /> List
-          </button>
-          <button
-            onClick={() => setView('gantt')}
-            className="btn btn-ghost"
-            style={{
-              padding: 'var(--space-1) var(--space-3)', fontSize: '0.85rem',
-              borderRadius: 'var(--radius-sm)',
-              background: view === 'gantt' ? 'var(--surface)' : 'transparent',
-              boxShadow: view === 'gantt' ? 'var(--shadow-xs)' : 'none',
-              color: view === 'gantt' ? 'var(--text)' : 'var(--text2)',
-            }}
-          >
-            <GanttChart size={14} /> Gantt
-          </button>
-        </div>
-      </div>
-
-      {/* Filter Bar */}
-      <FilterBar projectId={projectId} />
-
-      {/* Content */}
-      <div style={{ flex: 1, minHeight: 0, display: 'flex' }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          {view === 'board' ? (
-            <KanbanBoard project={project} onSelectTask={setSelectedTaskId} filters={filters} />
-          ) : view === 'gantt' ? (
-            <GanttView project={project} onSelectTask={setSelectedTaskId} filters={filters} />
-          ) : (
-            <ListView project={project} onSelectTask={setSelectedTaskId} filters={filters} />
+          {project.bbosEnabled && (
+            <span style={{
+              fontSize: '0.68rem', fontFamily: "'JetBrains Mono', monospace",
+              fontWeight: 600, padding: '2px 8px', borderRadius: 'var(--radius-xs)',
+              background: 'color-mix(in srgb, #c9a05a 10%, transparent)',
+              color: '#c9a05a', border: '1px solid color-mix(in srgb, #c9a05a 20%, transparent)',
+            }}>
+              BBOS Cycle {project.bbosCycle || 1}
+            </span>
+          )}
+          {project.bbosEnabled && (
+            <BbosRolePicker
+              value={project.bbosRole || 'all'}
+              onChange={(roleId) => setBbosRole(projectId, roleId)}
+            />
           )}
         </div>
-
-        {selectedTaskId && (
-          <TaskDetailPanel
-            project={project}
-            projectId={projectId}
-            taskId={selectedTaskId}
-            onClose={() => setSelectedTaskId(null)}
-          />
+        {project.bbosEnabled && project.bbosStage === 'OPT' && (
+          <button
+            className="btn btn-ghost"
+            style={{ fontSize: '0.8rem', color: '#c9a05a' }}
+            onClick={() => { if (confirm('Start a new BBOS cycle? This resets the pipeline to Foundation (FND).')) startNewBbosCycle(projectId); }}
+            title="Complete this cycle and start a new one from Foundation"
+          >
+            <RefreshCw size={14} /> New Cycle
+          </button>
         )}
       </div>
+
+      {/* Board */}
+      <ProjectBoard projectId={projectId} project={project} />
     </div>
   );
 }
