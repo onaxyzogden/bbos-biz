@@ -16,6 +16,7 @@ export const useAppStore = create((set, get) => ({
   activeModule: safeGet('module', 'work'),
   expandedPillars: safeGetJSON('pillars_exp', {}),
   filters: {}, // { [projectId]: { priorities: [], dueDate: null, tags: [] } }
+  activeBbosStage: null, // string | null — BBOS stage ID currently selected in the pipeline header
 
   toggleSidebar: () => set((s) => {
     const v = !s.sidebarOpen;
@@ -51,6 +52,9 @@ export const useAppStore = create((set, get) => ({
   clearFilters: (projectId) => set((s) => ({
     filters: { ...s.filters, [projectId]: { ...EMPTY_FILTERS } },
   })),
+
+  setActiveBbosStage: (stageId) => set({ activeBbosStage: stageId }),
+  clearActiveBbosStage: () => set({ activeBbosStage: null }),
 
   getActiveFilterCount: (projectId) => {
     const f = get().filters[projectId];

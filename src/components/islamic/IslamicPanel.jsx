@@ -7,6 +7,8 @@ import { useMobile } from '../../hooks/useMobile';
 import { MODULES } from '../../data/modules';
 import { getModuleData, ONGOING_DUA, ONGOING_UNIVERSAL } from '../../data/islamic-data';
 import { getPillarForModule, getPillarLabel } from '../../data/maqasid';
+import { getStage, getStageLayer } from '../../data/bbos-pipeline';
+import { getBbosStageIslamic } from '../../data/bbos-stage-islamic';
 import AttributeCard from './AttributeCard';
 import DuaSection from './DuaSection';
 import ReadinessCheck from './ReadinessCheck';
@@ -35,6 +37,7 @@ function ILSection({ label, glyph = '\u29C1', color, children, defaultOpen = fal
 
 export default function IslamicPanel() {
   const activeModule = useAppStore((s) => s.activeModule);
+  const activeBbosStage = useAppStore((s) => s.activeBbosStage);
   const toggleIslamicPanel = useAppStore((s) => s.toggleIslamicPanel);
   const valuesLayer = useSettingsStore((s) => s.valuesLayer);
   const setValuesLayer = useSettingsStore((s) => s.setValuesLayer);
@@ -48,8 +51,17 @@ export default function IslamicPanel() {
   const data = getModuleData(activeModule, valuesLayer);
   const isIslamic = valuesLayer === 'islamic';
   const accentColor = 'var(--accent)';
-  const hasOpenedModule = !!completedOpening[activeModule];
-  const hasClosedModule = !!completedClosing[activeModule];
+
+  // BBOS stage mode — overrides module-level content when a stage is selected
+  const bbosStage = activeBbosStage ? getStage(activeBbosStage) : null;
+  const bbosLayer = bbosStage ? getStageLayer(activeBbosStage) : null;
+  const bbosData = bbosStage ? getBbosStageIslamic(activeBbosStage) : null;
+  const stageModeColor = bbosLayer?.color || null;
+  const effectiveData = bbosData || data;
+  const ceremonyKey = bbosStage ? `bbos:${bbosStage.id}` : activeModule;
+
+  const hasOpenedModule = !!completedOpening[ceremonyKey];
+  const hasClosedModule = !!completedClosing[ceremonyKey];
 
   const panelContent = (
     <aside className={`il ${mobile ? 'il-mobile' : ''}`}>
@@ -93,29 +105,62 @@ export default function IslamicPanel() {
         );
       })()}
 
-      {/* Module context badge */}
-      {mod && (
-        <div className="il-module-badge">
-          <div className="il-module-name">{mod.name}</div>
-          {isIslamic && mod.attrs && (
-            <>
-              <div className="il-module-attrs">{mod.attrs}</div>
-              {mod.attrs_ar && <div className="il-module-attrs-ar arabic">{mod.attrs_ar}</div>}
-            </>
+      {/* Module / Stage context badge */}
+      {bbosStage ? (
+        <div
+          className="il-module-badge"
+          style={{ borderLeft: `3px solid ${stageModeColor}`, paddingLeft: 'var(--space-3)' }}
+        >
+          <div className="il-module-name" style={{ color: stageModeColor }}>
+            {bbosStage.label}
+          </div>
+          {bbosLayer && (
+            <div style={{
+              fontSize: '0.68rem', color: stageModeColor, opacity: 0.75,
+              marginBottom: 'var(--space-1)', fontWeight: 600,
+              textTransform: 'uppercase', letterSpacing: '0.06em',
+            }}>
+              {bbosLayer.label} Layer
+            </div>
           )}
-          {!isIslamic && (
-            <div className="il-module-attrs" style={{ color: 'var(--text3)' }}>
-              {data?.principles?.map((p) => p.name).join(' · ') || 'Principles'}
+          {isIslamic && bbosStage.attrs && (
+            <div className="il-module-attrs" style={{ color: stageModeColor }}>
+              {bbosStage.attrs}
+            </div>
+          )}
+          {bbosStage.description && (
+            <div style={{
+              fontSize: '0.75rem', color: 'var(--text3)',
+              marginTop: 'var(--space-1)', lineHeight: 1.5, fontStyle: 'italic',
+            }}>
+              {bbosStage.description}
             </div>
           )}
         </div>
+      ) : (
+        mod && (
+          <div className="il-module-badge">
+            <div className="il-module-name">{mod.name}</div>
+            {isIslamic && mod.attrs && (
+              <>
+                <div className="il-module-attrs">{mod.attrs}</div>
+                {mod.attrs_ar && <div className="il-module-attrs-ar arabic">{mod.attrs_ar}</div>}
+              </>
+            )}
+            {!isIslamic && (
+              <div className="il-module-attrs" style={{ color: 'var(--text3)' }}>
+                {data?.principles?.map((p) => p.name).join(' · ') || 'Principles'}
+              </div>
+            )}
+          </div>
+        )
       )}
 
       {/* Threshold ceremony buttons */}
       <div className="il-threshold-btns">
         <button
           className={`il-thr-btn ${hasOpenedModule ? 'il-thr-done' : ''}`}
-          onClick={() => setOpeningModuleId(activeModule)}
+          onClick={() => setOpeningModuleId(ceremonyKey)}
           title={hasOpenedModule ? 'Opening completed — click to redo' : 'Begin the opening ceremony'}
         >
           <Play size={13} />
@@ -123,7 +168,7 @@ export default function IslamicPanel() {
         </button>
         <button
           className={`il-thr-btn ${hasClosedModule ? 'il-thr-done' : ''}`}
-          onClick={() => setClosingModuleId(activeModule)}
+          onClick={() => setClosingModuleId(ceremonyKey)}
           title={hasClosedModule ? 'Closing completed — click to redo' : 'Close the session'}
         >
           <Square size={11} />
@@ -133,20 +178,20 @@ export default function IslamicPanel() {
 
       {/* Content sections */}
       <div className="il-content">
-        {data && (
+        {effectiveData && (
           <>
             {/* Opening Dua / Mindfulness */}
             <ILSection
               label={isIslamic ? 'Opening Dua' : 'Set Intention'}
               glyph={isIslamic ? '\u29C1' : '\u25CB'}
-              color={accentColor}
+              color={bbosStage ? stageModeColor : accentColor}
               defaultOpen={true}
             >
               {isIslamic ? (
-                <DuaSection dua={data.dua} color={accentColor} />
+                <DuaSection dua={effectiveData.dua} color={bbosStage ? stageModeColor : accentColor} />
               ) : (
                 <div className="il-mindfulness">
-                  <p>{data.mindfulness}</p>
+                  <p>{effectiveData.mindfulness}</p>
                 </div>
               )}
             </ILSection>
@@ -155,15 +200,15 @@ export default function IslamicPanel() {
             <ILSection
               label={isIslamic ? 'Governing Attributes' : 'Guiding Principles'}
               glyph={isIslamic ? '\u29C1' : '\u25CB'}
-              color={accentColor}
+              color={bbosStage ? stageModeColor : accentColor}
               defaultOpen={true}
             >
               {isIslamic
-                ? data.attrs?.map((attr, i) => (
-                    <AttributeCard key={i} attr={attr} color={accentColor} />
+                ? effectiveData.attrs?.map((attr, i) => (
+                    <AttributeCard key={i} attr={attr} color={bbosStage ? stageModeColor : accentColor} />
                   ))
-                : data.principles?.map((p, i) => (
-                    <AttributeCard key={i} attr={p} color={accentColor} />
+                : effectiveData.principles?.map((p, i) => (
+                    <AttributeCard key={i} attr={p} color={bbosStage ? stageModeColor : accentColor} />
                   ))
               }
             </ILSection>
@@ -172,9 +217,9 @@ export default function IslamicPanel() {
             <ILSection
               label="Readiness Check"
               glyph={isIslamic ? '\u29C1' : '\u25CB'}
-              color={accentColor}
+              color={bbosStage ? stageModeColor : accentColor}
             >
-              <ReadinessCheck readiness={data.readiness} color={accentColor} />
+              <ReadinessCheck readiness={effectiveData.readiness} color={bbosStage ? stageModeColor : accentColor} />
             </ILSection>
 
             <div className="il-divider" />
@@ -183,10 +228,10 @@ export default function IslamicPanel() {
             <ILSection
               label={isIslamic ? 'During Work \u00B7 Tawakkul' : 'During Work \u00B7 Presence'}
               glyph={isIslamic ? '\u29C1' : '\u25CB'}
-              color={accentColor}
+              color={bbosStage ? stageModeColor : accentColor}
             >
               {isIslamic ? (
-                <DuaSection dua={ONGOING_DUA} color={accentColor} />
+                <DuaSection dua={ONGOING_DUA} color={bbosStage ? stageModeColor : accentColor} />
               ) : (
                 <div className="il-mindfulness">
                   <p>{ONGOING_UNIVERSAL.meaning}</p>
@@ -200,14 +245,14 @@ export default function IslamicPanel() {
             <ILSection
               label="Reflection"
               glyph={isIslamic ? '\u29C1' : '\u25CB'}
-              color={accentColor}
+              color={bbosStage ? stageModeColor : accentColor}
             >
-              <ReadinessCheck reflection={data.reflection} color={accentColor} />
+              <ReadinessCheck reflection={effectiveData.reflection} color={bbosStage ? stageModeColor : accentColor} />
             </ILSection>
           </>
         )}
 
-        {!data && (
+        {!effectiveData && (
           <div className="il-empty">
             <p>No content available for this module.</p>
           </div>

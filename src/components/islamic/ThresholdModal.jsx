@@ -8,6 +8,8 @@ import {
 } from '../../data/islamic-data';
 import { lookupReadinessAyahByKey } from '../../data/readiness-ayat-router';
 import { getPillarForModule } from '../../data/maqasid';
+import { getStage } from '../../data/bbos-pipeline';
+import { getBbosStageIslamic } from '../../data/bbos-stage-islamic';
 import { useSettingsStore } from '../../store/settings-store';
 import AttributeCard from './AttributeCard';
 import DuaSection from './DuaSection';
@@ -62,15 +64,22 @@ export default function ThresholdModal({ type }) {
 
   if (!moduleId) return null;
 
-  const mod = MODULES.find((m) => m.id === moduleId);
-  const data = getModuleData(moduleId, valuesLayer);
+  // Detect BBOS stage ceremony keys (e.g. 'bbos:FND')
+  const isBbosStage = moduleId?.startsWith('bbos:');
+  const bbosStageId = isBbosStage ? moduleId.slice(5) : null;
+  const bbosStageObj = bbosStageId ? getStage(bbosStageId) : null;
+  const bbosStageData = bbosStageId ? getBbosStageIslamic(bbosStageId) : null;
+
+  const mod = isBbosStage ? null : MODULES.find((m) => m.id === moduleId);
+  const data = isBbosStage ? bbosStageData : getModuleData(moduleId, valuesLayer);
   const isIslamic = valuesLayer === 'islamic';
   const accentColor = 'var(--accent)';
 
   // ── Pillar fallback for readiness rows ──────────────────────────────────────
   // If the module has its own rows, use them.
   // Otherwise fall back to pillar-level rows (e.g. opening a faith sub-module).
-  const pillar = getPillarForModule(moduleId);
+  // For BBOS stages, use the 'work' module's pillar.
+  const pillar = isBbosStage ? getPillarForModule('work') : getPillarForModule(moduleId);
   const pillarData = pillar ? getModuleData(pillar.id, valuesLayer) : null;
   const readinessRows = data?.readiness?.rows ?? pillarData?.readiness?.rows ?? [];
   const effectiveReadinessData = readinessRows.length > 0

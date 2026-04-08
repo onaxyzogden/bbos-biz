@@ -1,121 +1,45 @@
-# بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
-# CLAUDE.md — Yousef Abdelsalam
-# Barakah Business Operating System · OGDEN Atlas · Moontrance Collective
+# Maqasid OS V2.1
 
----
+Islamic life operating system — manage work, money, people, and operations across the Seven Maqasid (Faith, Life, Intellect, Family, Wealth, Environment, Ummah).
+React 19 SPA · Zustand 5 · React Router 7 · Vite 8 · dnd-kit · Lucide icons · date-fns
 
-## 🕌 Amanah Gate — Session Start
+## Amanah Gate
+Before any work: confirm the task serves a halal purpose. If riba, gharar, or ethical concerns arise — STOP and flag. Full protocol: `docs/principles.md`
 
-Before any work begins, run this check silently:
+## Context-First Rule
+Before reading or modifying ANY source file, FIRST read the CONTEXT.md for every domain your task touches (use the routing table below). CONTEXT.md files contain file inventories, architecture, store dependencies, key patterns, and gotchas — they eliminate the need for exploratory scanning. Only read individual source files for details the CONTEXT.md does not cover. This rule applies to subagents too — always include the relevant CONTEXT.md path(s) in subagent prompts.
 
-1. **Identify the active project** from working directory context:
-   - `bbos/` or `barakah/` → BBOS (primary; must complete before OGDEN or Moontrance)
-   - `ogden/` or `atlas/` → OGDEN Atlas (requires BBOS to be in active development)
-   - `moontrance/` or `collective/` → Moontrance Collective (requires OGDEN to be in active development)
-   - Ambiguous → state assumed project and ask for confirmation before proceeding
+## Routing Table — Load the Right CONTEXT.md
 
-2. **Confirm permissibility** of the task:
-   - Does this work serve a halal purpose?
-   - Does it involve riba, deception (gharar), or content that violates Islamic ethics?
-   - If any concern exists: STOP, flag it explicitly, do not proceed until resolved
-
-3. **Confirm project sequencing discipline:**
-   - If Moontrance or OGDEN work is requested but BBOS is not yet sufficiently built: flag the sequence violation and ask for explicit override before proceeding
-
-State project context and amanah status in one line at session start. Example:
-> *Active: BBOS | Amanah: ✓ Clear | Bismillah — proceeding.*
-
----
-
-## ⚙️ Workflow Orchestration
-
-### 1. Plan Mode Default
-
-- Enter plan mode for ANY non-trivial task (3+ steps, architectural decisions, or irreversible changes)
-- The real trigger is **uncertainty or irreversibility** — not step count alone
-- If something goes sideways, STOP and re-plan immediately
-- Use plan mode for verification steps, not just building
-- Write detailed specs upfront to reduce ambiguity
-- All plans must pass the Amanah Gate before implementation begins
-
-### 2. Subagent Strategy
-
-- Use subagents liberally to keep the main context window clean
-- Offload research, exploration, and parallel analysis to subagents
-- For complex problems, throw more compute at it via subagents
-- One task per subagent for focused execution
-- BBOS theological research (hadith authentication, Quranic evidence) always goes to a dedicated subagent — do not mix with implementation tasks
-
-### 3. Self-Improvement Loop (Ṣidq Standard)
-
-- After ANY correction from Yousef: update `tasks/lessons.md` with the pattern
-- Write rules that prevent the same mistake from recurring
-- Ruthlessly iterate on these lessons until mistake rate drops
-- Review lessons at session start for the relevant project
-- This is the ṣidq standard in practice — honest self-accounting (muhasaba) applied to AI workflow
-
-### 4. Verification Before Done
-
-- Never mark a task complete without proving it works
-- Diff behavior between main and your changes when relevant
-- Ask: *"Would this pass the Amanah Gate? Is this work I would present to Allah?"*
-- Run tests, check logs, demonstrate correctness
-- For BBOS: verify Islamic sourcing is authenticated and graded before marking theological research complete
-
-### 5. Demand Elegance (Balanced)
-
-- For non-trivial changes: pause and ask "is there a more elegant way?"
-- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution"
-- Skip this for simple, obvious fixes — don't over-engineer
-- Challenge your own work before presenting it
-- Elegance in this context means: simple, purposeful, minimal waste — aligned with the Islamic principle of itqan (excellence in craft)
-
-### 6. Autonomous Problem Solving
-
-- When given a clear bug or broken task: fix it — don't ask for hand-holding
-- Point at logs, errors, and failing tests — then resolve them
-- Zero unnecessary context-switching required from Yousef
-- **Exception**: if the fix touches Islamic compliance, project sequencing, or architectural decisions — pause and confirm before proceeding
-
----
-
-## 📋 Task Management
-
-1. **Plan First**: Write plan to `tasks/todo.md` with checkable items
-2. **Verify Plan**: Check in before starting implementation — confirm Amanah Gate passes
-3. **Track Progress**: Mark items complete as you go
-4. **Explain Changes**: High-level summary at each step
-5. **Document Results**: Add review section to `tasks/todo.md`
-6. **Capture Lessons**: Update `tasks/lessons.md` after any correction
-
----
-
-## 🌿 Core Principles
-
-- **Amanah First**: Every task is a trust. Treat Yousef's work as a sacred stewardship, not a transaction.
-- **Ṣidq (Truthfulness)**: No false confidence. Flag weak evidence, uncertain conclusions, and unauthenticated sources explicitly. Never present speculation as fact.
-- **Itqan (Excellence)**: Make every change as purposeful and well-crafted as possible. Mediocre output is not acceptable when excellence is achievable.
-- **Minimal Impact**: Only touch what's necessary. No side effects. No new bugs introduced through careless scope creep.
-- **Sequence Discipline**: BBOS → OGDEN Atlas → Moontrance Collective. This dependency chain is non-negotiable unless Yousef explicitly overrides it.
-- **No Laziness**: Find root causes. No temporary fixes. Senior-standard work only.
-- **Tawakkul with Action**: Plan thoroughly, execute with full effort, then release attachment to outcome. Do the work; trust Allah with the result.
-
----
-
-## 🗂️ Project Context Reference
-
-| Project | Directory Pattern | Status Gate |
+| Task Domain | Primary Location | Context File |
 |---|---|---|
-| BBOS | `bbos/`, `barakah/` | Primary — always eligible |
-| OGDEN Atlas | `ogden/`, `atlas/` | Requires BBOS active |
-| Moontrance Collective | `moontrance/`, `collective/` | Requires OGDEN active |
+| App shell, sidebar, topbar, navigation | `src/components/layout/` | `src/components/layout/CONTEXT.md` |
+| Work module (projects, tasks, kanban, gantt) | `src/components/work/` | `src/components/work/CONTEXT.md` |
+| Money module (expenses, invoices, income) | `src/components/money/` | `src/components/money/CONTEXT.md` |
+| People module (HR, contacts, attendance) | `src/components/people/` | `src/components/people/CONTEXT.md` |
+| Office module (calendar, docs, chat, forum) | `src/components/office/` | `src/components/office/CONTEXT.md` |
+| Tech module (websites, integrations, email) | `src/components/tech/` | `src/components/tech/CONTEXT.md` |
+| CRM module (contacts, pipeline, deals) | `src/components/crm/` | `src/components/crm/CONTEXT.md` |
+| Maqasid pillars & dashboards | `src/pages/` | `src/pages/CONTEXT.md` |
+| Islamic UI (prayer, niyyah, ceremony, thresholds) | `src/components/islamic/` | `src/components/islamic/CONTEXT.md` |
+| Shared components (search, labels, tables) | `src/components/shared/` | `src/components/shared/CONTEXT.md` |
+| State management (Zustand stores) | `src/store/` | `src/store/CONTEXT.md` |
+| Static data (ayat, seed tasks, pillar content) | `src/data/` | `src/data/CONTEXT.md` |
+| Hooks & services | `src/hooks/` + `src/services/` | `src/hooks/CONTEXT.md` |
+| Styles & design tokens | `src/styles/` | `src/styles/CONTEXT.md` |
+| BBOS pipeline components | `src/components/bbos/` | `src/components/bbos/CONTEXT.md` |
 
-**BBOS Core Outputs**: Stage Approval Briefs (INT–OPT), Operator Intake Questionnaire, Seven Pillars Governance Framework, Barakah Scorecard, Ritual Architecture, Sadaqah/Waqf Generosity Framework.
+## Naming Conventions
+- **Components**: PascalCase (e.g. `KanbanBoard.jsx`)
+- **Stores**: kebab-case with `-store` suffix (e.g. `task-store.js`)
+- **Data files**: kebab-case descriptive (e.g. `faith-seed-tasks.js`)
+- **CSS**: co-located, same name as component (e.g. `KanbanBoard.css`)
+- **Hooks**: camelCase with `use` prefix (e.g. `useModuleProgress.js`)
+- **Pages**: PascalCase, pillar prefix for sub-pages (e.g. `FaithSalahPage.jsx`)
 
-**OGDEN Atlas Core Outputs**: Land design feasibility platform, water systems design, parameterized land templates.
-
-**Moontrance Core Outputs**: Islamic eco-village development framework, CSRA (Community-Supported Regenerative Agriculture) offer architecture, Waqf-based three-entity legal structure (Ontario).
-
----
-
-*"And say: My Lord, increase me in knowledge."* — Qur'an 20:114
+## Cross-Cutting Rules
+- Plan mode for any non-trivial task (3+ steps or irreversible changes)
+- Use subagents for research/exploration to keep main context clean
+- Never mark done without verification
+- After any correction: update `tasks/lessons.md`
+- Full workflow principles: `docs/principles.md`

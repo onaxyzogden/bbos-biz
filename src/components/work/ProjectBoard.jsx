@@ -16,6 +16,8 @@ import BbosPipelineHeader from '../bbos/BbosPipelineHeader';
 export default function ProjectBoard({ projectId, project }) {
   const loadTasks = useTaskStore((s) => s.loadTasks);
   const filters = useAppStore((s) => s.filters[projectId]);
+  const setActiveBbosStage = useAppStore((s) => s.setActiveBbosStage);
+  const clearActiveBbosStage = useAppStore((s) => s.clearActiveBbosStage);
   const [view, setView] = useState(project?.defaultView || 'board');
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [bbosFilter, setBbosFilter] = useState(project?.bbosStage || 'FND');
@@ -23,6 +25,11 @@ export default function ProjectBoard({ projectId, project }) {
   useEffect(() => {
     if (projectId) loadTasks(projectId);
   }, [projectId]);
+
+  useEffect(() => {
+    if (project?.bbosEnabled) setActiveBbosStage(bbosFilter);
+    return () => clearActiveBbosStage();
+  }, [project?.bbosEnabled]);
 
   if (!project) return null;
 
@@ -84,7 +91,10 @@ export default function ProjectBoard({ projectId, project }) {
         <BbosPipelineHeader
           currentStageId={project.bbosStage}
           activeFilter={bbosFilter}
-          onStageClick={(stageId) => setBbosFilter(stageId)}
+          onStageClick={(stageId) => {
+            setBbosFilter(stageId);
+            setActiveBbosStage(stageId);
+          }}
         />
       )}
 
